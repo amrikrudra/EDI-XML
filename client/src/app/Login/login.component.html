@@ -1,0 +1,32 @@
+  <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div style="margin:100px 0 50px 0;">
+                <img src="/images/05.png" />
+            </div>
+
+            <h3>Welcome System Login </h3>
+            <p>
+                Login to begin managing your facility.
+            </p>
+           
+
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <input asp-for="Email" class="form-control" placeholder="User Name" [(ngModel)]="userName" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input  class="form-control" placeholder="Password"  type="password"  [(ngModel)]="password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+               
+                <button type="button" (click)="LoginMe()" class="btn btn-primary block full-width m-b">Login</button>
+
+                <p>
+                    <a asp-action="ForgotPassword">Forgot your password?</a>
+                </p>
+                <p>{{LogMessage}}</p>
+           
+            <p class="m-t"> <small>Copyright © 2017 Rudra Innovatives Pvt Ltd.<br />All Rights Reserved.</small> </p>
+        </div>
+    </div>

@@ -1,0 +1,39 @@
+<div class="col-lg-6">
+
+    <div class="ibox-content" style="margin-bottom:20px">
+        <div class="row">
+            <div class="col-lg-6"><h2 (click)="randomizeType()">{{ChartTitle}} </h2></div>
+           
+            <div class="col-lg-3" >
+                <div [hidden]="HideCustom">
+                    <select class="form-control"  (change)="onClientChange($event.target.value)">
+                        <option value="0">All</option>
+                        <option *ngFor="let client of ActiveClientList" value="{{client.id}}">{{client.name}}</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <select class="form-control" (change)="onYearChange($event.target.value)">
+                    <option *ngFor="let year of Years" value="{{year}}">{{year}}</option>
+
+                </select>
+            </div>
+        </div>
+
+        <small>{{desc}}</small>
+
+        <canvas baseChart
+                [datasets]="lineChartData"
+                [labels]="lineChartLabels"
+                [options]="lineChartOptions"
+                [legend]="legend"
+                [chartType]="lineChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"></canvas>
+        <!--<div class="col-md-12 text-center" style="margin-top: 10px;height: 50%">
+            <button (click)="randomizeType()" style="display: inline-block">Toggle</button>
+        </div>-->
+    </div>
+
+</div>

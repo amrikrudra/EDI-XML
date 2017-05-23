@@ -1,0 +1,139 @@
+[{
+    "id": "1",
+    "fcode": "ENROUTE",
+    "floc": "Origin",
+    "ttype": "Air",
+    "scode": "01-34--00-at-10",
+    "sdesc": "Picked-up at shipper/supplier",
+    "shipType": "-",
+    "tdirection": "Export",
+    "shiptype": "Air"
+}, {
+    "id": "2",
+    "fcode": "DELIVERED",
+    "floc": "DESTINATION",
+    "ttype": "Air",
+    "scode": "01-39--00-at-16",
+    "sdesc": "Received at Warehouse",
+    "shipType": "-",
+    "tdirection": "Export",
+    "shiptype": "Air"
+}, {
+    "id": "3",
+    "fcode": "ENROUTE",
+    "floc": "ORIGIN",
+    "ttype": "Air",
+    "scode": "01-33--00--00",
+    "sdesc": "Cargo Out for Delivery",
+    "shipType": "-",
+    "tdirection": "Import",
+    "shiptype": "Air"
+}, {
+    "id": "77e83b8b-4b20-6f78-389d-8d930d5d4125",
+    "fcode": "DELIVERED",
+    "floc": "DESTINATION",
+    "ttype": "Air",
+    "scode": "01-12--00-to-04",
+    "sdesc": "Delivered to Consignee",
+    "shipType": "-",
+    "tdirection": "Import",
+    "shiptype": "Air"
+}, {
+    "id": "be1cd439-a23a-c3c0-9444-ff02a94ba7a0",
+    "fcode": "ENROUTE",
+    "fdesc": "",
+    "ttype": "Sea",
+    "scode": "01-34--00-at-10",
+    "sdesc": "Pickup container at shipper/supplier",
+    "shipType": "-",
+    "tdirection": "Export",
+    "floc": "ORIGIN",
+    "shiptype": "FCL"
+}, {
+    "id": "6a0b5bab-e0a4-a40f-3bd1-ec26563201fc",
+    "fcode": "ENROUTE",
+    "fdesc": "",
+    "ttype": "Sea",
+    "scode": "01-34--00-at-10",
+    "sdesc": "Pickup at shipper/supplier",
+    "shipType": "-",
+    "tdirection": "Export",
+    "floc": "ORIGIN",
+    "shiptype": "LCL"
+}, {
+    "id": "2dcae652-5e69-c58c-a88c-1de1185e6815",
+    "fcode": "DELIVERED",
+    "fdesc": "",
+    "ttype": "Sea",
+    "scode": "01-05--17-at-13",
+    "sdesc": "Checked in Container at Terminal",
+    "shipType": "-",
+    "tdirection": "Export",
+    "floc": "DESTINATION",
+    "shiptype": "FCL"
+}, {
+    "id": "b5deb71f-2ca2-c177-bb21-4fabe6c89f39",
+    "fcode": "DELIVERED",
+    "fdesc": "",
+    "ttype": "Sea",
+    "scode": "01-39--00-at-16",
+    "sdesc": "Received at Warehouse",
+    "shipType": "-",
+    "tdirection": "Export",
+    "floc": "DESTINATION",
+    "shiptype": "LCL"
+}, {
+    "id": "0cec7db9-87df-4f44-7f30-f1832d67ea34",
+    "fcode": "ENROUTE",
+    "fdesc": "",
+    "ttype": "Sea",
+    "scode": "01-33--00--00",
+    "sdesc": "Cargo Out for Delivery",
+   
+    "tdirection": "Import",
+    "floc": "ORIGIN",
+    "shiptype": "FCL"
+}, {
+    "id": "be8ef211-9b89-b4bd-5ceb-92c28f9b6e08",
+    "fcode": "ENROUTE",
+    "fdesc": "",
+    "ttype": "Sea",
+    "scode": "01-33--00--00",
+    "sdesc": "Cargo Out for Delivery",
+   
+    "tdirection": "Import",
+    "floc": "ORIGIN",
+    "shiptype": "LCL"
+}, {
+    "id": "8213d858-5276-d802-83d0-ea77bfdf81e1",
+    "fcode": "DELIVERED",
+    "fdesc": "",
+    "ttype": "Sea",
+    "scode": "01-12--00-to-04",
+    "sdesc": "Delivered to Consignee",
+ 
+    "tdirection": "Import",
+    "floc": "DESTINATION",
+    "shiptype": "FCL"
+}, {
+    "id": "06dfff52-4f45-d205-9303-909c5986deef",
+    "fcode": "DELIVERED",
+    "fdesc": "",
+    "ttype": "",
+    "scode": "01-12--00-to-04",
+    "sdesc": "Delivered to Consignee",
+    "tdirection": "Import",
+    "floc": "DESTINATION",
+    "shiptype": "LCL"
+}, {
+    "id": "db49c0bd-7dc7-08f0-903b-3a81e08dd3e4",
+    "fcode": "POD RECEIVED",
+    "fdesc": "",
+    "ttype": "Sea",
+    "scode": "01-44--17-at-13",
+    "sdesc": "Returned Empty Container at Terminal",
+   
+    "tdirection": "Import",
+    "floc": "DESTINATION",
+    "shiptype": "FCL"
+}]

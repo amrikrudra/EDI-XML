@@ -1,0 +1,57 @@
+ {
+    "id": "15310ac0-3be3-11e7-b196-b1cb923d294c",
+    "receiveTime": "05/18/2017 09:30 pm",
+    "client": "RSRAM",
+    "fileName": "200394625_201705180930.xml",
+    "records": [{
+        "messagesdr": "RSRAM",
+        "shipnum": "",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 15:03:00",
+        "stsloccd": "CABRP",
+        "ufileid": "200394625",
+        "contno": ""
+    }]
+}, {
+    "id": "153131d0-3be3-11e7-b196-b1cb923d294c",
+    "receiveTime": "05/18/2017 09:30 pm",
+    "client": "RSRAM",
+    "fileName": "200379076_201705180930.xml",
+    "records": [{
+        "messagesdr": "RSRAM",
+        "shipnum": "",
+        "statuscd": "01-33--00--00",
+        "statusdt": "5/16/17 14:52:00",
+        "stsloccd": "CABRP",
+        "ufileid": "200379076",
+        "contno": "TCNU5625001"
+    }]
+}, {
+    "id": "153158e0-3be3-11e7-b196-b1cb923d294c",
+    "receiveTime": "05/18/2017 09:30 pm",
+    "client": "RSRAM",
+    "fileName": "500044687_201705180930.xml",
+    "records": [{
+        "messagesdr": "RSRAM",
+        "shipnum": "",
+        "statuscd": "01-12--00-to-04",
+        "statusdt": "5/16/17 15:01:00",
+        "stsloccd": "CAAUR",
+        "ufileid": "500044687",
+        "contno": "CAIU8930052"
+    }]
+}, {
+    "id": "1531ce10-3be3-11e7-b196-b1cb923d294c",
+    "receiveTime": "05/18/2017 09:30 pm",
+    "client": "RSRAM",
+    "fileName": "500044772_201705180930.xml",
+    "records": [{
+        "messagesdr": "RSRAM",
+        "shipnum": "",
+        "statuscd": "01-12--00-to-04",
+        "statusdt": "5/16/17 14:55:00",
+        "stsloccd": "CABRP",
+        "ufileid": "500044772",
+        "contno": "MRKU4771083"
+    }]
+},

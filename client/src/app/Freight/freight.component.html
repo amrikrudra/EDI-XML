@@ -1,0 +1,122 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
+        <div class="ibox-content">
+          <div class="row">
+              <div class=col-sm-4>Freight Status-xRef &nbsp; &nbsp; &nbsp; <input type="button" class="btn btn-sucess" (click)="onNew()" value=" Add New"></div>
+              <div class="col-sm-4 pull-right search-section">
+              <input class="form-control" id="namesearch" placeholder="Search By Status Code	" type="text" (keyup)="showCross()" [(ngModel)]="firstNameFilter">
+              <i class="fa fa-search" [hidden]="!HideCross"></i> <i class="fa fa-times" [hidden]="HideCross" (click)="onRemove()"></i>
+            </div>
+          </div>
+        </div>
+        <div class="ibox-content">
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover dataTables-example">
+              <thead>
+                <tr>
+                  <th>Freight Code</th>
+                  <th class="text-center">Dispatchment Loc</th>
+                  <th class="text-center">TType</th>
+                  <th class="text-center">Status Code</th>
+                   <th class="text-center">Description</th>
+                    <th class="text-center">Ship Type</th>
+                   <th class="text-center">T Direction</th>
+                  <th class="text-center" width="140">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="gradeX" *ngFor="let c of Settings |userFilter:firstNameFilter| paginate: { itemsPerPage: 10, currentPage: p };let i=index" [class.active]="i==selectedRow">
+                <td>{{c.fcode}}</td>
+                <td class="text-center">{{c.floc}}</td>
+                <td class="text-center">{{c.ttype}}</td>
+                <td class="text-center">{{c.scode}}</td>
+                <td class="text-center">{{c.sdesc}}</td>
+                <td class="text-center">{{c.shiptype}}</td>
+                <td class="text-center">{{c.tdirection}}</td>
+                <td class="text-center">
+                    <a (click)="onEdit(c,i)" class="fa fa-pencil" style="margin-bottom:-2px;"></a>
+                    <a (click)="onDel(c)" class="fa fa-trash" style="margin-bottom:-2px;"></a>
+                  </td>
+                </tr>
+
+              </tbody>
+              <tfoot>
+
+                <tr>
+                  <td colspan="8" class="footable-visible text-right">
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+        </div>
+        <div class="ibox-content" *ngIf="oSetting">
+      <form ngNoForm id="FreightForm" novalidate="novalidate">
+          <div class="row">
+            <div class="col-md-12 form-group">
+              <div class="col-md-6">
+                <div class="col-md-4">Freight Code</div>
+                <div class="col-md-8"><input class="form-control"  [(ngModel)]="oSetting.fcode" name="fcode"  required/> </div>
+              </div>
+              <div class="col-md-6">
+                <div class="col-md-4">Dispathment Location</div>
+                <div class="col-md-8"><input class="form-control"  [(ngModel)]="oSetting.floc" name="floc"  required/> </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 form-group">
+              <div class="col-md-6">
+                <div class="col-md-4">TType</div>
+                <div class="col-md-8"><input class="form-control"  [(ngModel)]="oSetting.ttype" name="ttype"  required/> </div>
+              </div>
+              <div class="col-md-6">
+                <div class="col-md-4">Status Code</div>
+                <div class="col-md-8"><input class="form-control" type="text"  [(ngModel)]="oSetting.scode" name="scode"  required/> </div>
+              </div>
+            </div>
+          </div>
+
+      <div class="row">
+            <div class="col-md-12 form-group">
+              <div class="col-md-6">
+                <div class="col-md-4">Description</div>
+                <div class="col-md-8"><input class="form-control"  [(ngModel)]="oSetting.sdesc" name="sdesc"  required /> </div>
+              </div>
+              <div class="col-md-6">
+                <div class="col-md-4">Ship Type</div>
+                <div class="col-md-8"><input class="form-control" type="text"  [(ngModel)]="oSetting.shiptype" name="shiptype"  required /> </div>
+              </div>
+            </div>
+          </div>
+             <div class="row">
+            <div class="col-md-12 form-group">
+              <div class="col-md-6">
+                <div class="col-md-4">T Direction</div>
+                <div class="col-md-8"><input class="form-control"  [(ngModel)]="oSetting.tdirection"  name="tdirection"  required/> </div>
+              </div>
+              
+            </div>
+          </div>
+          <div class="row">
+
+            <div class="col-sm-12">
+              <div class="form-group col-sm-12 text-right">
+                <button class="btn btn-primary" type="button" (click)="Save()"><i class="fa fa-save fa-fw"></i> Save</button>
+                <a (click)="onBack()" class="btn btn-white">Cancel</a>
+              </div>
+            </div>
+
+
+          </div>
+      </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

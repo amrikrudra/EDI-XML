@@ -1,0 +1,8 @@
+<div id="wrapper">
+  <ng-container *ngIf="Login===false">
+    <app-login (CheckLogin)="UpdateMaster($event)"></app-login>
+  </ng-container>
+  <ng-container *ngIf="Login===true">
+    <app-master (LogOut)="UpdateMaster($event)"></app-master>
+  </ng-container>
+</div>

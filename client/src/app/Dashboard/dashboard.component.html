@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="col-lg-4">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <span class="label label-success pull-right">Today</span>
+        <h5>Daily Transaction</h5>
+      </div>
+      <div class="ibox-content">
+        <h1 class="no-margins">
+          <a [routerLink]="['/client/procpro']"></a>
+        </h1>
+
+        <small>60 records</small>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <span class="label label-success pull-right">Total</span>
+        <h5>XML Transactions</h5>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-md-6">
+            <h1 class="no-margins">
+              <a [routerLink]="['/client/clientCatalog']"></a>
+            </h1>
+            <div class="stat-percent font-bold text-success"></div>
+            <small>Shipment</small> 20
+          </div>
+          <div class="col-md-6">
+            <h1 class="no-margins">
+              <a [routerLink]="['/client/clientCatalog']"></a>
+            </h1>
+            <div class="stat-percent font-bold text-success"></div>
+            <small>ufile</small> 40
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <span class="label label-success pull-right">Today</span>
+        <h5>System Users</h5>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="col-md-6">
+            <h1 class="no-margins">
+              <a [routerLink]="['/Notification/ShowLowLevelItem']"></a>
+            </h1>
+            <div class="stat-percent font-bold text-success"></div>
+            <small>Admin(s)</small> 2
+          </div>
+          <div class="col-md-6">
+            <h1 class="no-margins">
+              <a [routerLink]="['/Notification/ShowAll', 60]"></a>
+            </h1>
+            <div class="stat-percent font-bold text-success"></div>
+            <small>Client(s)</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <my-chart [ChartData]="TotalItemUsed" [ChartTitle]="'Items'" [desc]="'No. of items used year-over-year'" [HideCustom]="false"
+    [ActiveClientList]="clientItemList"></my-chart>
+  <my-chart [ChartData]="TotalProceduresByClient" [ChartTitle]="'Procedures'" [desc]="'No. of procedures completed year-over-year'"
+    [HideCustom]="false" [ActiveClientList]="clientItemList"></my-chart>
+</div>
