@@ -6,6 +6,7 @@ import { RouterModule} from '@angular/router';
 import { CountryComponent} from './country.component';
 import {  Ng2PaginationModule} from 'ng2-pagination';
 import { CountryFilterPipe } from './country.filter';
+import { FileUploadModule} from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { CountryFilterPipe } from './country.filter';
     CommonModule,
     HttpModule,
     Ng2PaginationModule,
+    FileUploadModule,
   
     RouterModule.forRoot([ 
       {path:'country',component:CountryComponent}

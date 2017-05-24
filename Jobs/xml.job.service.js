@@ -65,7 +65,7 @@ var XMLService = {
 
 
         }
-        console.log("Country DB", dataRows[0]);
+        console.log("Country DB", dataRows.length);
         cb(dataRows);
     },
     ReadExcel: function (InputFile, Client, cb) {

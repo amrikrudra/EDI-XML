@@ -19,7 +19,7 @@ var CountryDB = {
     SaveCountry: function (data, fileName, ClientName, cb) {
         var str = JSON.stringify(data);
         str = str.substr(1, str.length-2);
-        fs.appendFile(filePath, str + ",", function (err) {
+        fs.writeFile(filePath, str + ",", function (err) {
             if (err == null)
                 cb("{\"Status\":\"OK\"}");
         });

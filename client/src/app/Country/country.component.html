@@ -4,7 +4,16 @@
       <div class="ibox float-e-margins">
         <div class="ibox-content">
           <div class="row">
-              <div class=col-sm-4>Country Codes</div>
+            <div class=col-sm-4>Country Codes <input type="file" ng2FileSelect [uploader]="uploader" *ngIf="uploader.queue.length==0" />
+              <ng-container *ngIf="uploader.queue.length>0">
+                <button type="button" class="btn btn-success btn-xs" (click)="uploader.queue[0].upload()" *ngIf="!uploader.queue[0].isSuccess">
+                            <span class="glyphicon glyphicon-upload"></span> Upload
+                        </button>
+                         <span *ngIf="uploader.queue[0].isSuccess">[File Uploaded]</span>
+              </ng-container>
+
+
+            </div>
             <div class="col-sm-4 pull-right search-section">
               <input class="form-control" id="namesearch" placeholder="Search By Location Name" type="text" (keyup)="showCross()" [(ngModel)]="firstNameFilter">
               <i class="fa fa-search" [hidden]="!HideCross"></i> <i class="fa fa-times" [hidden]="HideCross" (click)="onRemove()"></i>
@@ -20,7 +29,7 @@
                   <th class="text-center">UNCODE</th>
                   <th class="text-center">LOCNAME</th>
                   <th class="text-center">SUBDIV</th>
-                   <th class="text-center">LOCALNAME</th>
+                  <th class="text-center">LOCALNAME</th>
                   <th class="text-center" width="140">Action</th>
                 </tr>
               </thead>
@@ -31,11 +40,11 @@
                   <td class="text-center">{{c.UNCODE}}</td>
                   <td class="text-center">{{c.LOCNAME}}</td>
                   <td class="text-center">{{c.SUBDIV}}</td>
-                   <td class="text-center">{{c.LOCALNAME}}</td>
+                  <td class="text-center">{{c.LOCALNAME}}</td>
 
                   <td class="text-center">
-                   <!-- <a (click)="onEdit(c)" class="btn btn-success listcss" style="margin-bottom:-2px;">View</a>-->
-                   
+                    <!-- <a (click)="onEdit(c)" class="btn btn-success listcss" style="margin-bottom:-2px;">View</a>-->
+
 
                   </td>
                 </tr>
@@ -54,16 +63,16 @@
 
         </div>
         <div class="ibox-content" *ngIf="oSetting">
-  
+
           <div class="row">
             <div class="col-md-12 form-group">
               <div class="col-md-6">
                 <div class="col-md-4">Freight Code</div>
-                <div class="col-md-8"><input class="form-control"  [(ngModel)]="oSetting.fcode" /> </div>
+                <div class="col-md-8"><input class="form-control" [(ngModel)]="oSetting.fcode" /> </div>
               </div>
               <div class="col-md-6">
                 <div class="col-md-4">Dispathment Location</div>
-                <div class="col-md-8"><input class="form-control"  [(ngModel)]="oSetting.floc" /> </div>
+                <div class="col-md-8"><input class="form-control" [(ngModel)]="oSetting.floc" /> </div>
               </div>
             </div>
           </div>
@@ -71,34 +80,34 @@
             <div class="col-md-12 form-group">
               <div class="col-md-6">
                 <div class="col-md-4">TType</div>
-                <div class="col-md-8"><input class="form-control"  [(ngModel)]="oSetting.ttype" /> </div>
+                <div class="col-md-8"><input class="form-control" [(ngModel)]="oSetting.ttype" /> </div>
               </div>
               <div class="col-md-6">
                 <div class="col-md-4">Status Code</div>
-                <div class="col-md-8"><input class="form-control" type="text"  [(ngModel)]="oSetting.scode" /> </div>
+                <div class="col-md-8"><input class="form-control" type="text" [(ngModel)]="oSetting.scode" /> </div>
               </div>
             </div>
           </div>
 
-      <div class="row">
+          <div class="row">
             <div class="col-md-12 form-group">
               <div class="col-md-6">
                 <div class="col-md-4">Description</div>
-                <div class="col-md-8"><input class="form-control"  [(ngModel)]="oSetting.sdesc" /> </div>
+                <div class="col-md-8"><input class="form-control" [(ngModel)]="oSetting.sdesc" /> </div>
               </div>
               <div class="col-md-6">
                 <div class="col-md-4">Ship Type</div>
-                <div class="col-md-8"><input class="form-control" type="text"  [(ngModel)]="oSetting.shiptype" /> </div>
+                <div class="col-md-8"><input class="form-control" type="text" [(ngModel)]="oSetting.shiptype" /> </div>
               </div>
             </div>
           </div>
-             <div class="row">
+          <div class="row">
             <div class="col-md-12 form-group">
               <div class="col-md-6">
                 <div class="col-md-4">T Direction</div>
-                <div class="col-md-8"><input class="form-control"  [(ngModel)]="oSetting.tdirection" /> </div>
+                <div class="col-md-8"><input class="form-control" [(ngModel)]="oSetting.tdirection" /> </div>
               </div>
-              
+
             </div>
           </div>
           <div class="row">

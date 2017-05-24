@@ -10,8 +10,8 @@ var fs = require('fs');
 exports.CheckNewFiles = {
 
     after: { // Configuring this job to run after this period. 
-        seconds: 1,
-        minutes: 10,
+        seconds: 10,
+        minutes: 0,
         hours: 0,
         days: 0
     },
@@ -67,24 +67,14 @@ exports.CountryExcel = {
 
     after: { // Configuring this job to run after this period. 
         seconds: 10,
-        minutes: 10,
+        minutes: 0,
         hours: 0,
         days: 0
     }, // Cron tab instruction. 
     job: function () {
-        setting.GetActiveSetting(function (data) {
-            // loop through all the setting  and Read Data for Source Location
-            try {
-                if (data.length > 0)
-                    ProcessCountryExcel(data, 0);
-             
-            } catch (ex) {
-                console.log("Error", ex);
-            }
 
-
-
-        });
+        ProcessCountryExcel();
+       
     },
     spawn: false // If false, the job will not run in a separate process. 
 }
@@ -100,19 +90,17 @@ function RemoveAll(data, item) {
 
 
 function ProcessCountryExcel(Data, SettingIndex) {
-    var Setting = Data[SettingIndex];
-    var SourceFile = Setting.sourceFile + "\\CountryDB.xls";
-    if (fs.existsSync(SourceFile)) {
-        XMLService.ReadCountryExcel(SourceFile, "Dummay", function (excelData) {
-            fs.renameSync(SourceFile, Setting.dailyLog + "\\CountryDB_" + dateFormat(Date.now(), "yyyymmddhhMM") + ".xls");
-            CountryDB.SaveCountry(excelData, "", "", function () {
-                   SettingIndex++;
-                if (Data[SettingIndex] != undefined)
-                    ProcessCountryExcel(Data, SettingIndex);
-            }); // Country Save
-        }); // Country Read Excel Data
-    }
+   var basePath=__dirname.replace("jobs","DataDB");
+    var SourceFile = basePath + "\\CountryDB.xls";
+    console.log("Source File Path",SourceFile);
+     if (fs.existsSync(SourceFile)) {
+            XMLService.ReadCountryExcel(SourceFile, "Dummay", function (excelData) {
+                fs.renameSync(SourceFile, basePath+ "\\CountryDB_" + dateFormat(Date.now(), "yyyymmddhhMM") + ".xls");
+                CountryDB.SaveCountry(excelData, "", "", function () {
 
+                }); // Country Save
+            }); // Country Read Excel Data
+        }
 }
 
 
@@ -156,7 +144,7 @@ function ProcessFile(SourceFile, Setting, type, cb) {
                 XMLService.GroupByJsonData(ExcelJson, function (GRecord) {
                     var TotalRecord = GRecord.length;
                     var ProcessRecord = 0;
-                
+
                     GRecord.forEach(function (Record) {
                         ProcessRecord++;
                         //  var uRecord = ExcelJson.filter(m => m.PO == Record.PO); // Get All Record for same PO

@@ -2,12 +2,24 @@ var express=require('express');
 var path= require('path');
 var bodyParser=require('body-parser');
 var cronjob = require('node-cron-job');
-
+var fs = require('fs');
+var multer = require('multer');
 //var index= require('./routes/index');
 //var tasks =require('./routes/tasks');
 
 var app=express();
 
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'DataDB')
+  },
+  filename: function (req, file, cb) {
+    console.log(file)
+    cb(null, file.originalname)
+  }
+})
+
+var upload = multer({ storage: storage }).any();
 // View Engine
 
 app.set('views',path.join(__dirname,'client/dist'));
@@ -26,8 +38,10 @@ app.all('/*', function(req, res, next) {
   // CORS headers
   res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+   
+  res.setHeader('Access-Control-Allow-Credentials', true);
   // Set custom headers for CORS
-  res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With,content-type,Content-type,Accept,X-Access-Token,X-Key');
   if (req.method == 'OPTIONS') {
     res.status(200).end();
   } else {
@@ -42,8 +56,20 @@ app.all('/*', function(req, res, next) {
 // are sure that authentication is not needed
 
  
-app.use('/api/', require('./routes'));
+
  
+
+
+app.use('/api/', require('./routes'));
+app.post('/fileupload',function (req, res) {
+  upload(req,res,function(err){
+    if(err)
+    console.log("Error"+err);
+    res.send("Done");
+  })
+ 
+ 
+});
 // If no route is matched by now, it must be a 404
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
