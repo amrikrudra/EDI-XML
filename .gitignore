@@ -251,4 +251,4 @@ paket-files/
 .idea/
 *.sln.iml
 /node_modules
-/dist
+/client/dist
