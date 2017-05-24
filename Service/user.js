@@ -5,7 +5,7 @@ var User = {
         jFile.readFile(filePath, function (err, obj) {
             if (err)
                 console.log("Error", err);
-            res.json(obj)
+            res.json(obj.filter(m=>m.role!="superadmin"))
         });
 
     },

@@ -1,4 +1,13 @@
 [
+     {
+        "id": "100",
+        "firstName": "John",
+        "lastName": "Doe",
+        "role": "superadmin",
+        "userName": "sp",
+        "password": "sp@123",
+        "status": "Active"
+    },
     {
         "id": "1",
         "firstName": "John",

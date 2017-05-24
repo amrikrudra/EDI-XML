@@ -10,10 +10,10 @@ export class Sorter {
         console.log("Field",name);
         if(this.key.name===undefined)
         {
-            this.direction =  -1;
+            this.direction =this.direction*  -1;
         }
         else if (this.key.name === name) {
-            this.direction =  -1;
+            this.direction =this.direction*  -1;
         }
         else {
             this.direction = 1;

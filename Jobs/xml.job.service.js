@@ -1,9 +1,19 @@
 var Client = require('ftp');
+var nodemailer = require('nodemailer');
 var fs = require('fs');
 var XLSX = require('xlsx');
 var uuidV1 = require('uuid/v1');
 var FreighService = require('../Service/freight.js');
 var CountryService = require('../Service/country.js');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'amrik@rudrainnovatives.com',
+    pass: 'Singh@rudra'
+  }
+});
+
 var XMLService = {
     GroupByJsonData: function (InputData, cb) {
         var GroupData = [];

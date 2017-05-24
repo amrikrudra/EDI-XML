@@ -5,6 +5,7 @@ var CountryDB = require('../Service/country.js');
 var XML = require('../Service/xmllog.js');
 var XMLService = require('./xml.job.service.js');
 var path = require('path');
+var nodemailer = require('nodemailer');
 var dateFormat = require('dateformat');
 var fs = require('fs');
 exports.CheckNewFiles = {
@@ -73,6 +74,29 @@ exports.CountryExcel = {
     }, // Cron tab instruction. 
     job: function () {
 
+
+      /*  var transporter = nodemailer.createTransport({
+        service: 'gmail',
+            auth: {
+            user: 'amrik@rudrainnovatives.com',
+            pass: 'Singh@rudra'
+            }
+        });
+
+        var mailOptions = {
+            from: 'amrik@rudrainnovatives.com',
+            to: 'amrik0347@gmail.com;amrik@rudaainnovatives.com',
+            subject: 'Sending Email using Node.js',
+            text: 'That was easy!'
+        };
+
+        transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+              console.log(error);
+        } else {
+           console.log('Email sent: ' + info.response);
+        }
+        });*/
         ProcessCountryExcel();
        
     },
