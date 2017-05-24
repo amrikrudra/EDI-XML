@@ -1,6 +1,7 @@
 import {  Component,  EventEmitter,  Output} from '@angular/core';
 import {  FreightService} from '../../Services/freight.service';
 import {  Router,  ActivatedRoute} from '@angular/router';
+import {  Sorter} from '../../Services/app.sort';
 import {  UUID} from 'angular2-uuid';
 import swal from 'sweetalert2';
 import {  Valid,  ValidateMe,  ValidateMeRule} from '../shared/app.helper';
@@ -9,15 +10,84 @@ import {  Valid,  ValidateMe,  ValidateMeRule} from '../shared/app.helper';
   selector: 'app-freight',
   templateUrl: './freight.component.html',
 
-  providers: [FreightService]
+  providers: [FreightService,Sorter]
 })
 export class FreightComponent {
   oSetting: any;
   Settings: any[];
+  prev:number=-1;
+   cols:any[]=[
+
+  {
+      name:"fcode",
+      title:"Freight Code",
+      sorted:false,
+      sortAs:"",
+      sortable:true
+      
+      
+    },
+    {
+      name:"floc",
+      title:"Dispatchment Loc",
+      sorted:false,
+      sortAs:"",
+       sortable:true
+    },
+    {
+      name:"ttype",
+      title:"TType",
+      sorted:false,
+      sortAs:"",
+       sortable:true
+    },
+    {
+      name:"scode",
+      title:"Status Code",
+      sorted:false,
+      sortAs:"",
+       sortable:true
+    },
+    {
+      name:"sdesc",
+      title:"Description",
+      sorted:false,
+      sortAs:""
+      ,
+       sortable:true
+    }
+    ,
+    {
+      name:"shiptype",
+      title:"Ship Type",
+      sorted:false,
+      sortAs:""      ,
+      sortable:true
+    },
+
+{
+      name:"tdirection",
+      title:"T Direction",
+      sorted:false,
+      sortAs:""      ,
+      sortable:true
+    },
+
+{
+      name:"",
+      title:"Action",
+      sorted:false,
+      sortAs:""      ,
+      sortable:false
+    }
+
+
+
+   ];
   selectedRow:number;
   firstNameFilter:string;
   HideCross:boolean=true;
-  constructor(private _route: ActivatedRoute, private _router: Router, private userService: FreightService) {
+  constructor(private _route: ActivatedRoute, private _router: Router, private userService: FreightService,private sortService:Sorter) {
     userService.GetUser().subscribe(m => {
       this.Settings = m;
     });
@@ -45,6 +115,10 @@ export class FreightComponent {
     this.oSetting = Object.assign({}, obj); // obj;
 
   }
+  SortColumn(key)
+{
+  this.sortService.sort(key,this.Settings);
+}
   onDel(obj) {
     this.userService.DeleteUser(obj).subscribe(m => {
       swal('Success', 'Freight statuscode deleted successfully...', 'success');

@@ -1,8 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Output
-} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {
   CountryService
 } from '../../Services/country.service';
@@ -17,16 +13,73 @@ import swal from 'sweetalert2';
 import {
   FileUploader
 } from 'ng2-file-upload';
+import {  Sorter} from '../../Services/app.sort';
 
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
 
-  providers: [CountryService]
+  providers: [CountryService,Sorter]
 })
 export class CountryComponent {
   oSetting: any;
   Settings: any[];
+    prev:number=-1;
+     cols:any[]=[
+     
+     {
+      name:"COUNTRY",
+      title:"COUNTRY",
+      sorted:false,
+      sortAs:"",
+      sortable:true
+      
+      
+    },
+    {
+      name:"UNCODE",
+      title:"UNCODE",
+      sorted:false,
+      sortAs:"",
+       sortable:true
+    },
+    {
+      name:"LOCNAME",
+      title:"LOCNAME",
+      sorted:false,
+      sortAs:"",
+       sortable:true
+    },
+    {
+      name:"SUBDIV",
+      title:"SUBDIV",
+      sorted:false,
+      sortAs:"",
+       sortable:true
+    },
+      {
+      name:"LOCALNAME",
+      title:"LOCALNAME",
+      sorted:false,
+      sortAs:"",
+       sortable:true
+    },
+    {
+      name:"",
+      title:"Action",
+      sorted:false,
+      sortAs:""
+      ,
+       sortable:false
+    }
+
+     
+     ];
+     
+     
+     
+     
+
   public hasBaseDropZoneOver: boolean = false;
   selectedRow: number;
   firstNameFilter: string;
@@ -34,7 +87,7 @@ export class CountryComponent {
   public uploader: FileUploader = new FileUploader({
     url: '/fileupload'
   });
-  constructor(private _route: ActivatedRoute, private _router: Router, private userService: CountryService) {
+  constructor(private _route: ActivatedRoute, private _router: Router, private userService: CountryService,private sortService:Sorter) {
     userService.GetCountry().subscribe(m => {
       this.Settings = m;
     });
@@ -48,6 +101,10 @@ export class CountryComponent {
     this.oSetting = Object.assign({}, obj); // obj;
 
   }
+   SortColumn(key)
+{
+ this.sortService.sort(key,this.Settings);
+}
 
   showCross() {
 

@@ -16,14 +16,16 @@
             <table class="table table-striped table-bordered table-hover dataTables-example">
               <thead>
                 <tr>
-                  <th>Freight Code</th>
-                  <th class="text-center">Dispatchment Loc</th>
-                  <th class="text-center">TType</th>
-                  <th class="text-center">Status Code</th>
-                   <th class="text-center">Description</th>
-                    <th class="text-center">Ship Type</th>
-                   <th class="text-center">T Direction</th>
-                  <th class="text-center" width="140">Action</th>
+                 <ng-container *ngFor="let col of cols">
+                    <th *ngIf="col.sortable" class="text-center" (click)="SortColumn(col)">
+                      {{col.title}}
+                      <ng-container *ngIf="col.sorted==true && col.sortable==true">
+                        <i [class]="col.sortAs"></i>
+                      </ng-container>
+                    </th>
+                    <th class="text-center" *ngIf="!col.sortable">{{col.title}}</th>
+                  </ng-container>
+
                 </tr>
               </thead>
               <tbody>

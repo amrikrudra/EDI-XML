@@ -1,5 +1,6 @@
 import {  Component,  EventEmitter,  Output} from '@angular/core';
 import {  SettingService} from '../../Services/setting.service';
+import {  Sorter} from '../../Services/app.sort';
 import {  Router,  ActivatedRoute} from '@angular/router';
 import {  Valid,  ValidateMe,  ValidateMeRule} from '../shared/app.helper';
 import {  UUID} from 'angular2-uuid';
@@ -9,15 +10,63 @@ import swal from 'sweetalert2';
   selector: 'app-setting',
   templateUrl: './setting.component.html',
  
-  providers: [SettingService]
+  providers: [SettingService,Sorter]
 })
 export class SettingComponent {
   oSetting: any;
   Settings: any[];
+   prev:number=-1;
+ cols:any[]=[
+     {
+      name:"serverName",
+      title:"URL",
+      sorted:false,
+      sortAs:"",
+      sortable:true
+    },
+    {
+      name:"clientName",
+      title:"	Client Name",
+      sorted:false,
+     sortAs:"",
+      sortable:true
+    },
+    {
+      name:"endPoint",
+      title:"End Point",
+      sorted:false,
+     sortAs:"",
+      sortable:true
+    },
+    {
+      name:"sourceFile",
+      title:"Source File",
+      sorted:false,
+      sortAs:"",
+      sortable:true
+    },
+    {
+      name:"status",
+      title:"Status",
+      sortAs:"",
+      sortable:false
+    }
+    ,
+    {
+      name:"",
+      title:"Action",
+      sorted:false,
+      sortAs:"",
+      sortable:false
+    }
+  ];
+ 
+
+
    selectedRow:number;
    firstNameFilter:string;
    HideCross:boolean=true;
-  constructor(private _route: ActivatedRoute, private _router: Router, private settingService: SettingService) {
+  constructor(private _route: ActivatedRoute, private _router: Router, private settingService: SettingService , private sortService:Sorter) {
     settingService.GetSetting().subscribe(m => {
       this.Settings = m;
     });
@@ -47,6 +96,15 @@ export class SettingComponent {
         this.HideCross=true;
     
   }
+
+
+SortColumn(key)
+{
+ this.sortService.sort(key,this.Settings);
+}
+
+
+
   onRemove()
   {
     

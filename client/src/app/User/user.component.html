@@ -5,7 +5,7 @@
         <div class="ibox-content">
           <div class="row">
             <div class=col-sm-4>User <input type="button" class="btn btn-sucess" (click)="onNew()" value=" Add New"></div>
-             <div class="col-sm-4 pull-right search-section">
+            <div class="col-sm-4 pull-right search-section">
               <input class="form-control" id="namesearch" placeholder="Search By Login Name" type="text" (keyup)="showCross()" [(ngModel)]="firstNameFilter">
               <i class="fa fa-search" [hidden]="!HideCross"></i> <i class="fa fa-times" [hidden]="HideCross" (click)="onRemove()"></i>
             </div>
@@ -16,18 +16,25 @@
             <table class="table table-striped table-bordered table-hover dataTables-example">
               <thead>
                 <tr>
-                  <th  *ngFor="let col of cols" class="text-center"  (click)="SortColumn(col.name)">{{col.title}}
-                    <ng-container *ngIf="col.sorted">
-                      <i [class]="col.sortAs"></i>
-                    </ng-container>
-                  </th>
+                  <ng-container *ngFor="let col of cols">
+                    <th *ngIf="col.sortable" class="text-center" (click)="SortColumn(col)">
+                      {{col.title}}
+                      <ng-container *ngIf="col.sorted==true && col.sortable==true">
+                        <i [class]="col.sortAs"></i>
+                      </ng-container>
+                    </th>
+                    <th class="text-center" *ngIf="!col.sortable">{{col.title}}</th>
+                  </ng-container>
+
+
                 </tr>
-                  
+
               </thead>
               <tbody>
-                <tr class="gradeX" *ngFor="let c of Settings |userFilter:firstNameFilter| paginate: { itemsPerPage: 10, currentPage: p };let i=index"  [class.active]="i==selectedRow">
+                <tr class="gradeX" *ngFor="let c of Settings |userFilter:firstNameFilter| paginate: { itemsPerPage: 10, currentPage: p };let i=index"
+                  [class.active]="i==selectedRow">
                   <td>{{c.userName}}</td>
-                  <td class="text-center">{{c.firstName}}</td>
+                  <td class="text-center ">{{c.firstName}}</td>
                   <td class="text-center">{{c.lastName}}</td>
                   <td class="text-center">{{c.role}}</td>
                   <td class="text-center">{{c.status}}</td>
@@ -48,10 +55,10 @@
                 </tr>
               </tfoot>
             </table>
-          <!-- <ng-container *ngIf="Settings">
+            <!-- <ng-container *ngIf="Settings">
                <app-grid [data]="Settings" [columns]="columns"></app-grid>
            </ng-container>-->
-          
+
           </div>
 
         </div>

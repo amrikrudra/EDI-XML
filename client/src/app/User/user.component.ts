@@ -15,43 +15,53 @@ import swal from 'sweetalert2';
 export class UserComponent {
   oSetting: any;
   Settings: any[];
+  prev:number=-1;
   cols:any[]=[
     {
       name:"userName",
       title:"Login Name",
-      sorted:true,
-      sortAs:"fa-sort-alpha-asc"
+      sorted:false,
+      sortAs:"",
+      sortable:true
+      
+      
     },
     {
       name:"firstName",
       title:"First Name",
-      sorted:true,
-      sortAs:"fa-sort-alpha-desc"
+      sorted:false,
+      sortAs:"",
+       sortable:true
     },
     {
       name:"lastName",
       title:"Last Name",
-      sorted:true,
-      sortAs:"fa-sort-asc"
+      sorted:false,
+      sortAs:"",
+       sortable:true
     },
     {
       name:"role",
       title:"Role",
-      sorted:true,
-      sortAs:"fa-sort-desc"
+      sorted:false,
+      sortAs:"",
+       sortable:true
     },
     {
       name:"status",
       title:"Status",
       sorted:false,
       sortAs:""
+      ,
+       sortable:false
     }
     ,
     {
       name:"",
       title:"Action",
       sorted:false,
-      sortAs:""
+      sortAs:""      ,
+      sortable:false
     }
   ];
   selectedRow: number;
@@ -61,6 +71,8 @@ export class UserComponent {
   constructor(private _route: ActivatedRoute, private _router: Router, private userService: UserService,private sortService:Sorter) {
     userService.GetUser().subscribe(m => {
       this.Settings = m;
+       this.sortService.sort(this.cols[0],this.Settings);
+        this.sortService.sort(this.cols[0],this.Settings);
     });
 
   }
@@ -75,7 +87,7 @@ export class UserComponent {
 
 SortColumn(key)
 {
-  this.sortService.sort(key,this.Settings);
+      this.sortService.sort(key,this.Settings);
 }
 
   onRemove() {

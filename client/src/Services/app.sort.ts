@@ -1,25 +1,32 @@
 export class Sorter {
     direction: number;
-    key: string;
+    key: any={};
+    lastIndex:number=-1;
     constructor() {
-        this.direction = 1;
+        this.direction = -1;
     }
-    sort(key, data) {       
-        if (this.key === key) {
-            this.direction = this.direction * -1;
+    sort(key, data) {   
+        var name = key.name;    
+        console.log("Field",name);
+        if(this.key.name===undefined)
+        {
+            this.direction =  -1;
+        }
+        else if (this.key.name === name) {
+            this.direction =  -1;
         }
         else {
             this.direction = 1;
         }
-        this.key = key;
+     
         data.sort((a, b) => {
-            if (a[key] != null) {
-                if (b[key] != null) {
+            if (a[name] != null) {
+                if (b[name] != null) {
 
-                    if (a[key].toString().toLowerCase() === b[key].toString().toLowerCase()) {
+                    if (a[name].toString().toLowerCase() === b[name].toString().toLowerCase()) {
                         return 0;
                     }
-                    else if (a[key].toString().toLowerCase() > b[key].toString().toLowerCase()) {
+                    else if (a[name].toString().toLowerCase() > b[name].toString().toLowerCase()) {
                         return 1 * this.direction;
                     }
                     else {
@@ -35,5 +42,23 @@ export class Sorter {
             }
          
         });
-    }
+            if(this.key.name!=undefined)
+            {
+                this.key.sorted = false;
+                
+            }
+             this.key=key;
+             key.sorted=true;
+                if(this.direction==1)
+                {
+                   key.sortAs="fa fa-sort-alpha-asc";
+                }
+                else
+                {
+                    key.sortAs="fa fa-sort-alpha-desc";
+                }
+              
+              
+            }
+           
 }

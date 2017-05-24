@@ -16,12 +16,15 @@
             <table class="table table-striped table-bordered table-hover dataTables-example">
               <thead>
                 <tr>
-                  <th>Receive Time</th>
-                    <th class="text-center">File Name</th>
-                    <th class="text-center">Client</th>
-                    <th class="text-center">No Of Records</th>
-
-                    <th class="text-center" width="140">Action</th>
+                  <ng-container *ngFor="let col of cols;let i=index;">
+                    <th *ngIf="col.sortable" class="text-center" (click)="SortColumn(col,i)">
+                      {{col.title}}
+                      <ng-container *ngIf="col.sorted==true && col.sortable==true">
+                        <i [class]="col.sortAs"></i>
+                      </ng-container>
+                    </th>
+                    <th class="text-center" *ngIf="!col.sortable">{{col.title}}</th>
+                  </ng-container>
                 </tr>
               </thead>
               <tbody>
