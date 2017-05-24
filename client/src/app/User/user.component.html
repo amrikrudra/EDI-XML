@@ -7,7 +7,7 @@
             <div class=col-sm-4>User <input type="button" class="btn btn-sucess" (click)="onNew()" value=" Add New"></div>
             <div class="col-sm-4 pull-right search-section">
               <input class="form-control" id="namesearch" placeholder="Search By Login Name" type="text" (keyup)="showCross()" [(ngModel)]="firstNameFilter">
-              <i class="fa fa-search" [hidden]="!HideCross"></i> <i class="fa fa-times" [hidden]="HideCross" (click)="onRemove()"></i>
+            <i class="fa fa-search" *ngIf="HideCross"></i> <i class="fa fa-times" *ngIf="!HideCross" (click)="onRemove()"></i>
             </div>
           </div>
         </div>

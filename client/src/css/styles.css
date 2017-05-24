@@ -8672,9 +8672,7 @@ body.landing-page {
         }
 }
 
-body.rtls {
-    /* Theme config */
-}
+
 
     body.rtls #page-wrapper {
         margin: 0 220px 0 0;
@@ -10214,25 +10212,12 @@ margin-top:50px;
 /*search-section*/
 
 
-.search-section i.fa-search{position: absolute;
-    right: 27px;
-    top: 11px;}
-
-
-
-    .col-sm-4.search-section input.form-control {padding: 6px 30px 6px 12px;}
-
+.search-section i.fa-search{position: absolute;    right: 27px;    top: 11px;}
+.col-sm-4.search-section input.form-control {padding: 6px 30px 6px 12px;}
 .col-sm-4.search-section input.form-control:focus i.fa-search {display: none;}
-
-
-.search-section i.fa-times{position: absolute;
-    right: 27px;
-    top: 11px;}
-
-
+.search-section i.fa-times{position: absolute;    right: 27px;    top: 11px;}
 
 /*.col-sm-4.search-section input.form-control:focus + i.fa-search + i.fa-times{display: block;}
-
 .col-sm-4.search-section input.form-control:focus +  i.fa-search{display: none;}*/
 
  .mt-bottom-15{margin-bottom: 15px !important;}
@@ -10244,19 +10229,11 @@ margin-top:50px;
  }
 
 
-     body{
-	margin:0;
-	padding:0;
-}
-h1, h2, h3, h4, h5, h6, p, ul{
-	margin:0;
-	padding:0;
-}
-.setup_left_sec {
+ .setup_left_sec {
     border: 1px solid rgb(204, 204, 204);
     float: left;
     padding: 40px;
-    width: 100%;
+    width: 100%; background-color:#fff;
 }
 .user_sec h4 {
     display: inline-block;
@@ -10275,6 +10252,7 @@ h1, h2, h3, h4, h5, h6, p, ul{
     right: -50px;
     top: -23px;
 }
+
 .dott p {
     border: 2px solid rgb(0, 0, 0);
     color: rgb(0, 0, 0);
@@ -10362,7 +10340,7 @@ h1, h2, h3, h4, h5, h6, p, ul{
     border: 1px solid rgb(204, 204, 204);
     float: left;
     padding: 40px;
-    width: 100%;
+    width: 100%; background-color: #fff;
 }
 .log {
     display: inline-block;
@@ -10456,4 +10434,22 @@ h1, h2, h3, h4, h5, h6, p, ul{
     position: absolute;
     right: -41px;
     top: -29px;
+}
+.dott{
+display:none;
+}
+.user_sec a:hover+ .dott{
+	display:block;
+}
+.user_sec.scnd a:hover+ .dott{
+	display:block;
+}
+.shuttr_left a:hover+ .dott{
+	display:block;
+}
+.shuttr_left.scndd a:hover+ .dott{
+	display:block;
+}
+.log a:hover+ .dott{
+	display:block;
 }

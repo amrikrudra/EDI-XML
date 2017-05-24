@@ -27,7 +27,7 @@ export class DashboardComponent {
       title:"File Name",
       sorted:false,
       sortAs:"",
-      sortable:true
+      sortable:false
       
       
     },
@@ -36,14 +36,14 @@ export class DashboardComponent {
       title:"Created Time",
       sorted:false,
       sortAs:"",
-       sortable:true
+       sortable:false
     },
      {
       name:"records.length",
       title:"No Of Records",
       sorted:false,
       sortAs:"",
-       sortable:true
+       sortable:false
     },
     
 
@@ -61,7 +61,7 @@ export class DashboardComponent {
       title:"Receive Time",
       sorted:false,
       sortAs:"",
-      sortable:true
+      sortable:false
       
       
     },
@@ -70,14 +70,14 @@ export class DashboardComponent {
       title:"File Name",
       sorted:false,
       sortAs:"",
-       sortable:true
+       sortable:false
     },
      {
       name:"records.length",
       title:"No Of Records",
       sorted:false,
       sortAs:"",
-       sortable:true
+       sortable:false
     },
     
    ];

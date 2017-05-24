@@ -54,12 +54,6 @@ export class DailyTranComponent {
       ,
        sortable:false
     }
-
-
-
-
-
-
    ];
    selectedRow:number;
    firstNameFilter:string;
