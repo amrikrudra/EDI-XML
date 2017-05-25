@@ -155,7 +155,8 @@ function ProcessFile(SourceFile, Setting, type, cb) {
             else
                 pFile = "PALCL";
             // Move File to Archive Folder
-            fs.renameSync(SourceFile, Setting.dailyLog + "\\" + pFile + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + ".xls");
+            var DailyArchive=Setting.dailyLog + "\\" + pFile + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + ".xls";
+            fs.renameSync(SourceFile, DailyArchive);
             // Write to DB
 
 

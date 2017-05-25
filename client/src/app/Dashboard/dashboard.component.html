@@ -137,82 +137,123 @@
     </div>
   </div>-->
 </div>
-					<div class="row">
-				<div class="col-md-6">
-					<div class="setup_left_sec">
-						<div class="user_sec">
-							<a  [routerLink]="['/user']" class="dd1"><img src="images/user.jpg" alt=""></a>
-							<div class="dott"><p>User</p></div>
-						</div>
-						
-						<div class="user_sec scnd">
-							<a [routerLink]="['/setting']"  class="dd1"><img src="images/setting.png" alt=""></a>
-							<div class="dott"><p>Setting</p></div>
-							<div class="right_r"><img src="images/right.png" alt=""></div>
-							<div class="right_ff"><img src="images/left.png" alt=""></div>
-							<div class="top_arr_s"><img src="images/top-arr.png" alt=""></div>
-							
-						</div>
-						<div class="shuttr_main">
-							<div class="shuttr_left">
-								<a [routerLink]="['/freightscode']"  class="dd1"><img src="images/shuttr.png" alt=""></a>
-								<div class="dott"><p>Freight-StatusCd Xref</p></div>
-							</div>
-							<div class="shuttr_left scndd">
-								<a [routerLink]="['/country']"  class="dd1"><img src="images/shuttr1.png" alt=""></a>
-								<div class="dott"><p>Canada UNLOC Database</p></div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-6">
-				
-					<div class="setup_right_sec">
-					<div class="right_top">
-					<div class="right_sec1">
-						<div class="log">
-							<a [routerLink]="['/dailytran']"  class="dd1"><img src="images/log.png" alt=""/></a>
-							<div class="dott"><p>Xls Logs</p></div>
-							<div class="right_r"><img src="images/right.png" alt=""></div>
-							<div class="right_ff"><img src="images/left1.png" alt=""></div>
-						</div>
-						</div>
-						<div class="right_sec1">
-						<div class="log lg1">
-							<a [routerLink]="['/dailytran']" class="dd1"><img src="images/log1.png" alt=""/></a>
-							<div class="dott"><p>Archived Xls Logs</p></div>
-						</div>
-						</div>
-						</div>
-						
-						
-						<div class="right_bott">
-					<div class="right_sec1">
-						<div class="log">
-							<a  [routerLink]="['/xmllog']" class="dd1"><img src="images/log2.png" alt=""/></a>
-							<div class="dott"><p>Processed XML</p></div>
-							<div class="right_r"><img src="images/right.png" alt=""></div>
-							<div class="right_ff"><img src="images/right1.png" alt=""></div>
-						</div>
-						</div>
-						<div class="shuttr_main">
-							<div class="shuttr_left">
-								<a  [routerLink]="['/xmllog']" class="dd1"><img src="images/xml1.png" alt=""></a>
-								<div class="dott"><p>Archived XML</p></div>
-							</div>
-							<div class="shuttr_left scndd">
-								<a  [routerLink]="['/xmllog']" class="dd1"><img src="images/last.png" alt=""></a>
-								<div class="dott"><p>Ftp XML</p></div>
-							</div>
-						</div>
-						</div>
-						
-						<!-- <div class="user_sec scnd">
+<div class="row">
+  <div class="col-md-6">
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <span class="label label-success pull-right"></span>
+        <h5>Setup</h5>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+          <div class="setup_left_sec">
+            <div class="user_sec">
+              <a [routerLink]="['/user']" class="dd1"><img src="images/user.jpg" alt=""></a>
+              <div class="dott">
+                <p>User</p>
+              </div>
+            </div>
+
+            <div class="user_sec scnd">
+              <a [routerLink]="['/setting']" class="dd1"><img src="images/setting.png" alt=""></a>
+              <div class="dott">
+                <p>Setting</p>
+              </div>
+              <div class="right_r"><img src="images/right.png" alt=""></div>
+              <div class="right_ff"><img src="images/left.png" alt=""></div>
+              <div class="top_arr_s"><img src="images/top-arr.png" alt=""></div>
+
+            </div>
+            <div class="shuttr_main">
+              <div class="shuttr_left">
+                <a [routerLink]="['/freightscode']" class="dd1"><img src="images/shuttr.png" alt=""></a>
+                <div class="dott">
+                  <p>Freight-StatusCd Xref</p>
+                </div>
+              </div>
+              <div class="shuttr_left scndd">
+                <a [routerLink]="['/country']" class="dd1"><img src="images/shuttr1.png" alt=""></a>
+                <div class="dott">
+                  <p>Canada UNLOC Database</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+
+    <div class="ibox float-e-margins">
+      <div class="ibox-title">
+        <span class="label label-success pull-right"></span>
+        <h5>Process Flow</h5>
+      </div>
+      <div class="ibox-content">
+        <div class="row">
+
+          <div class="setup_right_sec">
+            <div class="right_top">
+              <div class="right_sec1">
+                <div class="log">
+                  <a [routerLink]="['/dailytran']" class="dd1"><img src="images/log.png" alt="" /></a>
+                  <div class="dott">
+                    <p>Xls Logs</p>
+                  </div>
+                  <div class="right_r"><img src="images/right.png" alt=""></div>
+                  <div class="right_ff"><img src="images/left1.png" alt=""></div>
+                </div>
+              </div>
+              <div class="right_sec1">
+                <div class="log lg1">
+                  <a [routerLink]="['/dailytran']" class="dd1"><img src="images/log1.png" alt="" /></a>
+                  <div class="dott">
+                    <p>Archived Xls Logs</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="right_bott">
+              <div class="right_sec1">
+                <div class="log">
+                  <a [routerLink]="['/xmllog']" class="dd1"><img src="images/log2.png" alt="" /></a>
+                  <div class="dott">
+                    <p>Processed XML</p>
+                  </div>
+                  <div class="right_r"><img src="images/right.png" alt=""></div>
+                  <div class="right_ff"><img src="images/right1.png" alt=""></div>
+                </div>
+              </div>
+              <div class="shuttr_main">
+                <div class="shuttr_left">
+                  <a [routerLink]="['/xmllog']" class="dd1"><img src="images/xml1.png" alt=""></a>
+                  <div class="dott">
+                    <p>Archived XML</p>
+                  </div>
+                </div>
+                <div class="shuttr_left scndd">
+                  <a [routerLink]="['/xmllog']" class="dd1"><img src="images/last.png" alt=""></a>
+                  <div class="dott">
+                    <p>Ftp XML</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="user_sec scnd">
 							<img src="images/setting.png" alt="">
 							<div class="right_r"><img src="images/right.png" alt=""></div>
 							<div class="right_ff"><img src="images/left.png" alt=""></div>
 							<div class="dott"><p>Setting</p></div>
 						</div> -->
-					</div>
-				</div>
-			</div>
+      </div>
+    </div>
+  </div>
+</div>
+
