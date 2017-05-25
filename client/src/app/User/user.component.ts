@@ -72,7 +72,7 @@ export class UserComponent {
     userService.GetUser().subscribe(m => {
       this.Settings = m;
        this.sortService.sort(this.cols[0],this.Settings);
-        this.sortService.sort(this.cols[0],this.Settings);
+       
     });
 
   }
