@@ -1,10 +1,17 @@
 var Client = require('ftp');
+var nodemailer = require('nodemailer');
 var fs = require('fs');
 var XLSX = require('xlsx');
 var uuidV1 = require('uuid/v1');
 var FreighService = require('../Service/freight.js');
 var CountryService = require('../Service/country.js');
+
+
+
 var XMLService = {
+    SendEmail:function(){
+
+    },
     GroupByJsonData: function (InputData, cb) {
         var GroupData = [];
         InputData.forEach(function (Item) {

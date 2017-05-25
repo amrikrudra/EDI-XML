@@ -19,7 +19,17 @@ export class MasterComponent  implements  AfterViewInit {
          this.CurrentUser=   this.appG.GetUser();
          if(this.CurrentUser)
          {
-             if(this.CurrentUser.role=="admin")
+             if(this.CurrentUser.role=="superadmin")
+             {
+                 this.URLS= [
+                 
+                    {url:'/user',cssClass:'fa fa-users',text:'User'},
+                    {url:'/settings',cssClass:'fa fa-wrench',text:'Setting'},
+                  
+                    ];
+             
+             }
+            else if(this.CurrentUser.role=="admin")
              {
             this.URLS= [
                     {url:'/dashboard',cssClass:'fa fa-th-large',text:'Dashboard'},

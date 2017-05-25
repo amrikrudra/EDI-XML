@@ -13,7 +13,12 @@
     "xmlFile": "C:\\Projects\\EDIXML Files\\xmlarchive",
     "compareFile": "Yes",
     "dailyArchive": 10,
-    "xmlHistory": 10
+    "xmlHistory": 10,
+    "fullFileName":"",
+    "halfFileName":"",
+    "sendEmail":"Yes",
+    "userEmail":"",
+    "clientEmail":""
 }, {
     "id": "2",
     "serviceType": "1",
@@ -29,5 +34,10 @@
     "xmlFile": "C:\\Projects\\EDIXML File\\xmlarchive",
     "compareFile": "Yes",
     "dailyArchive": 10,
-    "xmlHistory": 10
+    "xmlHistory": 10,
+    "fullFileName":"",
+    "halfFileName":"",
+    "sendEmail":"Yes",
+    "userEmail":"",
+    "clientEmail":""
 }]
