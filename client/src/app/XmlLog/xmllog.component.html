@@ -31,7 +31,7 @@
               <tbody>
                 <tr class="gradeX" *ngFor="let c of Settings |userFilter:firstNameFilter| paginate: { itemsPerPage: 10, currentPage: p };let i=index" [class.active]="i==selectedRow">
               
-
+                   <td class="text-center">{{c.batchid}}</td>
                   <td class="text-center">{{c.fileName}}</td>
                   <td class="text-center">{{c.client}}</td>
                       <td>{{c.receiveTime}}</td>
@@ -39,9 +39,14 @@
 
 
                   <td class="text-center">
-                 <a (click)="onEdit(c,i)" class="fa fa-eye" style="margin-bottom:-2px;"></a>
-                 
-
+                      <a (click)="onEdit(c,i)" class="fa fa-eye" style="margin-bottom:-2px;" title="View"></a>&nbsp;&nbsp;
+                      <a href="/api/xmldownload/{{c.id}}" class="fa fa-download" title="Download XML"></a>&nbsp;&nbsp;
+                      
+                      <a class="fa fa-reply" title="Send XML" [swal]="{title:'Alert', text:'if you want to send all the XML from this batch or just the selected one.',type:'question',confirmButtonText:'Full Batch',cancelButtonText:'No Selected only',showCloseButton:true,showCancelButton:true,allowEscapeKey:false}"
+        (confirm)="reSend(c.id,$event)"
+        (cancel)="Single(c.id,$event)" >
+  
+</a>
                   </td>
                 </tr>
 
@@ -49,7 +54,7 @@
               <tfoot>
 
                 <tr>
-                  <td colspan="5" class="footable-visible text-right">
+                  <td colspan="6" class="footable-visible text-right">
                     <pagination-controls (pageChange)="p = $event"></pagination-controls>
                   </td>
                 </tr>
@@ -58,6 +63,13 @@
           </div>
 
         </div>
+         </div>
+    </div>
+  </div>
+
+          <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
         <div class="ibox-content" *ngIf="oSetting">
 
           <div class="table-responsive">

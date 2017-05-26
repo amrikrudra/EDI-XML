@@ -20,7 +20,7 @@ export class FreightComponent {
 
   {
       name:"fcode",
-      title:"Freight Code",
+      title:"FreightCd",
       sorted:false,
       sortAs:"",
       sortable:true
@@ -67,7 +67,7 @@ export class FreightComponent {
 
 {
       name:"tdirection",
-      title:"T Direction",
+      title:"TDirection",
       sorted:false,
       sortAs:""      ,
       sortable:true

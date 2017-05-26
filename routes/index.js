@@ -35,12 +35,16 @@ router.get('/dailytran', Daily.GetDaily);
 router.post('/dailytran', Daily.SaveDaily);
 router.put('/dailytran/:id', Daily.UpdateDaily);
 router.delete('/dailytran/:id', Daily.DeleteDaily);
+router.get('/dailydownload/:id', Daily.download);
 
 
 router.get('/xmllog', XmlLog.GetXmlLog);
 router.post('/xmllog', XmlLog.SaveXmlLog);
 router.put('/xmllog/:id', XmlLog.UpdateXmlLog);
 router.delete('/xmllog/:id', XmlLog.DeleteXmlLog);
+router.get('/xmldownload/:id', XmlLog.download);
+router.get('/xmlresend/:id', XmlLog.resend);
+router.get('/xmlresendb/:id', XmlLog.resendb);
 
 
 router.get('/country', Country.GetCountry);

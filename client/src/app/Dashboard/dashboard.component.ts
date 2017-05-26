@@ -24,7 +24,7 @@ export class DashboardComponent {
 
  {
       name:"fileName",
-      title:"File Name",
+      title:"XML File Name",
       sorted:false,
       sortAs:"",
       sortable:false
@@ -58,7 +58,7 @@ export class DashboardComponent {
        cols:any[]=[
   {
       name:"receiveTime",
-      title:"Receive Time",
+      title:"File Receive Time",
       sorted:false,
       sortAs:"",
       sortable:false
@@ -67,7 +67,7 @@ export class DashboardComponent {
     },
     {
       name:"fileName",
-      title:"File Name",
+      title:"Transaction File Name",
       sorted:false,
       sortAs:"",
        sortable:false

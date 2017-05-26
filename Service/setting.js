@@ -1,6 +1,13 @@
 var jFile = require('jsonfile');
 var filePath = './DataDB/setting.json';
 var Setting = {
+    GetSettingByID:function(id,cb){
+          jFile.readFile(filePath, function (err, obj) {
+            if (err)
+                console.log("Setting Error", err);
+           cb(obj.filter(m => m.id == id)[0]);
+        });
+    },
     GetSetting: function (req, res) {
         jFile.readFile(filePath, function (err, obj) {
             if (err)

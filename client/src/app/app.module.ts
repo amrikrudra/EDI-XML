@@ -9,7 +9,7 @@ import { MasterComponent } from './master/master.component';
 
 import { DashboardModule } from './dashboard/dashboard.module';
 import { SettingdModule } from './setting/setting.module';
-
+import { SettingsdModule } from './settings/settings.module';
 import { UserModule } from './user/user.module';
 import { FreightModule } from './freight/freight.module';
 import { DailyTranModule } from './dailytran/dailytran.module';
@@ -27,6 +27,7 @@ import { CountryModule } from './country/country.module';
    
     DashboardModule,
     SettingdModule,
+    SettingsdModule,
     FormsModule,
     UserModule,
     FreightModule,

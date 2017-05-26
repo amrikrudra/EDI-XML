@@ -18,7 +18,8 @@ import { BasicChartReport } from '../chart/chart.base.component';
     HttpModule,
     ChartsModule,
     RouterModule.forRoot([ 
-      {path:'dashboard',component:DashboardComponent}
+      {path:'dashboard',component:DashboardComponent},
+        {path:'',component:DashboardComponent}
      
     ]),
     RouterModule

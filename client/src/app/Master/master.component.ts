@@ -1,7 +1,7 @@
 import {  Component ,Output,EventEmitter ,AfterViewInit} from '@angular/core';
 import {  AppGlobals} from '../../Services/app.global';
 import {  Router,  ActivatedRoute} from '@angular/router';
-import { correctHeight,  BindAll } from '../shared/app.helper';
+import { correctHeight,  BindAll,Login } from '../shared/app.helper';
 
 @Component({
   selector: 'app-master',
@@ -16,6 +16,7 @@ export class MasterComponent  implements  AfterViewInit {
   @Output() LogOut= new EventEmitter<boolean>();
   constructor(private appG: AppGlobals,private _route: ActivatedRoute,
         private _router: Router) {
+         
          this.CurrentUser=   this.appG.GetUser();
          if(this.CurrentUser)
          {
@@ -23,8 +24,8 @@ export class MasterComponent  implements  AfterViewInit {
              {
                  this.URLS= [
                  
-                    {url:'/user',cssClass:'fa fa-users',text:'User'},
-                    {url:'/settings',cssClass:'fa fa-wrench',text:'Setting'},
+                    {url:'/user',cssClass:'fa fa-users',text:'User Setup'},
+                    {url:'/settings',cssClass:'fa fa-wrench',text:'System Setting'},
                   
                     ];
              
@@ -33,9 +34,9 @@ export class MasterComponent  implements  AfterViewInit {
              {
             this.URLS= [
                     {url:'/dashboard',cssClass:'fa fa-th-large',text:'Dashboard'},
-                    {url:'/user',cssClass:'fa fa-users',text:'User'},
-                    {url:'/setting',cssClass:'fa fa-wrench',text:'Setting'},
-                    {url:'/freightscode',cssClass:'fa fa-gear',text:'FreightCd-StatusCd Xref'},
+                    {url:'/user',cssClass:'fa fa-users',text:'User Setup'},
+                    {url:'/setting',cssClass:'fa fa-wrench',text:'System Setting'},
+                    {url:'/freightscode',cssClass:'fa fa-gear',text:'FreightCd Reference'},
                     {url:'/dailytran',cssClass:'fa fa-file-text-o',text:'Daily Log'},
                     {url:'/xmllog',cssClass:'fa fa-file-code-o',text:'XML History-Send Log'},
                     {url:'/country',cssClass:'fa fa-file-code-o',text:'Country Code'}
@@ -46,7 +47,7 @@ export class MasterComponent  implements  AfterViewInit {
              {
                   this.URLS= [
                         {url:'/dashboard',cssClass:'fa fa-th-large',text:'Dashboard'},
-                        {url:'/freightscode',cssClass:'fa fa-gear',text:'FreightCd-StatusCd Xref'},
+                        {url:'/freightscode',cssClass:'fa fa-gear',text:'FreightCd Reference'},
                         {url:'/dailytran',cssClass:'fa fa-file-text-o',text:'Daily Log'},
                         {url:'/xmllog',cssClass:'fa fa-file-code-o',text:'XML History-Send Log'},
                         {url:'/country',cssClass:'fa fa-file-code-o',text:'Country Code'}
@@ -63,6 +64,7 @@ export class MasterComponent  implements  AfterViewInit {
              }
              
          }
+        
 
   }
 
@@ -77,6 +79,7 @@ export class MasterComponent  implements  AfterViewInit {
         setTimeout(() => {
             correctHeight();
             BindAll();
+            this._router.navigate(['/dashboard']);
         }, 3000)
 
     }

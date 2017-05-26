@@ -75,30 +75,9 @@ exports.CountryExcel = {
     job: function () {
 
 
-      /*  var transporter = nodemailer.createTransport({
-        service: 'gmail',
-            auth: {
-            user: 'amrik@rudrainnovatives.com',
-            pass: 'Singh@rudra'
-            }
-        });
 
-        var mailOptions = {
-            from: 'amrik@rudrainnovatives.com',
-            to: 'amrik0347@gmail.com;amrik@rudaainnovatives.com',
-            subject: 'Sending Email using Node.js',
-            text: 'That was easy!'
-        };
-
-        transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-              console.log(error);
-        } else {
-           console.log('Email sent: ' + info.response);
-        }
-        });*/
         ProcessCountryExcel();
-       
+
     },
     spawn: false // If false, the job will not run in a separate process. 
 }
@@ -114,24 +93,25 @@ function RemoveAll(data, item) {
 
 
 function ProcessCountryExcel(Data, SettingIndex) {
-   var basePath=__dirname.replace("jobs","DataDB");
+    var basePath = __dirname.replace("jobs", "DataDB");
     var SourceFile = basePath + "\\CountryDB.xls";
-    console.log("Source File Path",SourceFile);
-     if (fs.existsSync(SourceFile)) {
-            XMLService.ReadCountryExcel(SourceFile, "Dummay", function (excelData) {
-                fs.renameSync(SourceFile, basePath+ "\\CountryDB_" + dateFormat(Date.now(), "yyyymmddhhMM") + ".xls");
-                CountryDB.SaveCountry(excelData, "", "", function () {
+    //   console.log("Source File Path", SourceFile);
+    if (fs.existsSync(SourceFile)) {
+        XMLService.ReadCountryExcel(SourceFile, "Dummay", function (excelData) {
 
-                }); // Country Save
-            }); // Country Read Excel Data
-        }
+            fs.renameSync(SourceFile, basePath + "\\CountryDB_.xls");
+            CountryDB.SaveCountry(excelData, "", "", function () {
+
+            }); // Country Save
+        }); // Country Read Excel Data
+    }
 }
 
 
 function CallSettingOneByOne(Data, SettingIndex) {
     var Setting = Data[SettingIndex];
-    var SourceFile = Setting.sourceFile + "\\PAFCL.xls";
-    var SourceFileShip = Setting.sourceFile + "\\PALCL.xls";
+    var SourceFile = Setting.sourceFile + "\\" + Setting.fullFileName;
+    var SourceFileShip = Setting.sourceFile + "\\" + Setting.halfFileName;
 
     ProcessFile(SourceFile, Setting, "f", function () {
         ProcessFile(SourceFileShip, Setting, "h", function (data) {
@@ -145,64 +125,187 @@ function CallSettingOneByOne(Data, SettingIndex) {
 
 }
 
+function GetXMLFileName(Setting, fileobj) {
+    var FileName = "";
+    if (Setting.fullFileName == fileobj.base) {
+        if (Setting.combinefullFile == "") {
+            FileName = fileobj.name + "_" + dateFormat(Date.now(), 'yyyymmddhhMM') + ".xml";
+        } else {
+            FileName = path.parse(Setting.combinefullFile).base + "_" + dateFormat(Date.now(), 'yyyymmddhhMM') + ".xml";
+        }
+    } else {
+        if (Setting.combinehalfFile == "") {
+            FileName = fileobj.name + "_" + dateFormat(Date.now(), 'yyyymmddhhMM') + ".xml";
+        } else {
+            FileName = path.parse(Setting.combinehalfFile).base + "_" + dateFormat(Date.now(), 'yyyymmddhhMM') + ".xml";
+        }
+    }
+
+    console.log("File name", FileName);
+    return FileName;
+}
+
 function ProcessFile(SourceFile, Setting, type, cb) {
     if (fs.existsSync(SourceFile)) {
+        console.log("Starting");
         XMLService.ReadExcel(SourceFile, Setting.clientName, function (ExcelJson) {
-
-            var pFile;
-            if (type == "f")
-                pFile = "PAFCL";
-            else
-                pFile = "PALCL";
-            // Move File to Archive Folder
-            var DailyArchive=Setting.dailyLog + "\\" + pFile + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + ".xls";
-            fs.renameSync(SourceFile, DailyArchive);
-            // Write to DB
+            console.log("Read Excel");
+            var fData = path.parse(SourceFile);
+            Daily.XMLRecordExistMultiple(ExcelJson, function (JsonRecord) {
+                console.log("Compare");
+                XMLService.GroupByJsonData(JsonRecord, function (GRecord) {
 
 
-            Daily.SaveDaily(ExcelJson, pFile + ".xls", Setting.clientName, function (data) {
-
-
-
-
-                // Create XML Process
-                XMLService.GroupByJsonData(ExcelJson, function (GRecord) {
-                    var TotalRecord = GRecord.length;
-                    var ProcessRecord = 0;
-
+                    var TotalGRecord = GRecord.length;
+                    var ProcessGRecord = 0;
+                    var CombineXML = "";
+                    var CombineLog = [];
+                    var xmlCol = [];
+                    // console.log("GRecod out Foreach");
                     GRecord.forEach(function (Record) {
-                        ProcessRecord++;
-                        //  var uRecord = ExcelJson.filter(m => m.PO == Record.PO); // Get All Record for same PO
-                        //  ExcelJson = RemoveAll(ExcelJson, Record.PO); // Remove from ExcelJson Prcess Records
-
+                        console.log("GRecod in Foreach");
                         XMLService.CreateXML(Record.Records, Setting.clientName, type == "f" ? true : false, function (xmlData) {
-                            var FileName = Record.ID + "_" + dateFormat(Date.now(), 'yyyymmddhhMM') + ".xml";
-                            var ShipmentNumber = Setting.xmlFile + "\\" + FileName;
-                            fs.appendFileSync(ShipmentNumber, xmlData.xml); // Archiving XML file
-                            XMLService.UploadToFtp(Setting.serverName, Setting.userName, Setting.password, Setting.endPoint + "/" + FileName, xmlData.xml, function (ftpInfo) {
+                            //   console.log("XML Creation");
+                            batchNumber= Date.now();
+                            ProcessGRecord++;
+                            //  console.log("Total ProcessGRecord " +ProcessGRecord,TotalGRecord);
+                            CombineXML += xmlData.xml;
+                            xmlData.ID = Record.ID;
+                            xmlCol.push(xmlData);
+                            CombineLog.concat(xmlData.log);
+                            if (TotalGRecord == ProcessGRecord) // Upload 
+                            {
+                                console.log("Entererererererer r erer er er ", xmlCol.filter(m => m.xml.length == 0).length);
+                                if (xmlCol.filter(m => m.xml.length == 0).length > 0) {
+                                    if (fs.existsSync(SourceFile))
+                                        fs.unlinkSync(SourceFile);
+                                    // Send Error Email Stating that there is error in Source file unable to process.
+                                    var msg = "Hi,\n\n";
+                                    msg += " The file " + fData.base + " has found following error:\n\n";
+                                    msg += " Error: "+ xmlData.msg +"\n\n";
+                                    msg += "\nFile process action is aborted. \n";
+                                    msg += "Correct the error in the file or recreate the file \n";
+                                    msg += "Drop the file at Source location : " + Setting.sourceFile + " \n";
+                                    msg += "\nEDI-XML Team \n";
 
-                                XML.SaveXmlLog(xmlData.log, FileName, Setting.clientName, function () {
-                                    if (ProcessRecord == TotalRecord) {
-                                        cb("data");
+                                    msg += "RS RUSH \n";
+                                    SendLogEmail(Setting.userEmail, "XML files Processing error :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
+                                    cb("Done With Errors");
+
+                                } else {
+                                    if (Setting.combineXML == "Yes") {
+                                        FileName = GetXMLFileName(Setting, fData);
+                                        var XMLString = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?> <scp_edistatusqueue>" + CombineXML + "</scp_edistatusqueue>";
+                                        XMLService.UploadToFtp(Setting.serverName, Setting.userName, Setting.password, Setting.endPoint + "/" + FileName, XMLString, function (ftpInfo) {
+                                            var DailyArchive = Setting.dailyLog + "\\" + fData.name + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + fData.ext;
+                                            fs.renameSync(SourceFile, DailyArchive); // Daily Archiving
+                                            Daily.SaveDaily(ExcelJson, fData.base, DailyArchive, Setting.clientName, function () {
+                                                var ShipmentNumber = Setting.xmlFile + "\\" + FileName;
+                                                fs.appendFileSync(ShipmentNumber, XMLString); // Archiving XML file
+                                                if (Setting.sendEmail === "1") {
+                                                    var msg = "Hi,\n\n";
+                                                    msg += " Incoming file :" + fData.base + "\n\n";
+                                                    msg += " The following XMLs has been send send successfully:\n\n";
+                                                    msg += FileName + "  " + ftpInfo + "\n\n";
+                                                    msg += "\nFor complete history or more details : http://35.162.147.238:83 \n";
+                                                    msg += "\nEDI-XML Team \n";
+                                                    msg += "RS RUSH \n";
+                                                    SendLogEmail(Setting.clientEmail + "," + Setting.userEmail, "XML files (" + xmlCol.length + ") Successfilly send :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
+                                                }
+                                                XML.SaveXmlLog(xmlData.log, FileName, ShipmentNumber, Setting.id,batchNumber, Setting.clientName, function (data) {
+                                                    //    console.log("Saved XML ", FileName);
+                                                    cb("Done");
+                                                });
+
+                                            }); // Save Daily Reacords
+                                        }); // ftp Upload
+                                    } // Combine End
+                                    else {
+                                        console.log("Single File");
+                                        var TotalS = xmlCol.length;
+                                        var PS = 0;
+                                        var FileNames = "";
+                                        xmlCol.forEach(function (Item) {
+                                            var FileName = Item.ID + "_" + dateFormat(Date.now(), 'yyyymmddhhMM') + ".xml";
+                                            var XMLString = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?> <scp_edistatusqueue>" + Item.xml + "</scp_edistatusqueue>";
+                                            XMLService.UploadToFtp(Setting.serverName, Setting.userName, Setting.password, Setting.endPoint + "/" + FileName, XMLString, function (ftpInfo) {
+                                                var DailyArchive = Setting.dailyLog + "\\" + fData.name + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + fData.ext;
+                                                fs.renameSync(SourceFile, DailyArchive); // Daily Archiving
+                                                Daily.SaveDaily(ExcelJson, fData.base, DailyArchive, Setting.clientName, function () {
+                                                    var ShipmentNumber = Setting.xmlFile + "\\" + FileName;
+                                                    fs.appendFileSync(ShipmentNumber, XMLString); // Archiving XML file
+                                                    if (Setting.sendEmail === "1") {
+                                                        var msg = "Hi,\n\n";
+                                                        msg += " Incoming file :" + fData.base + "\n\n";
+                                                        msg += " The following XMLs has been send send successfully:\n\n";
+                                                        msg += FileName + "  " + ftpInfo + "\n\n";
+                                                        msg += "\nFor complete history or more details : http://35.162.147.238:83 \n";
+                                                        msg += "\nEDI-XML Team \n";
+                                                        msg += "RS RUSH \n";
+                                                        SendLogEmail(Setting.clientEmail + "," + Setting.userEmail, "XML files (" + xmlCol.length + ") Successfilly send :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
+                                                    }
+                                                    XML.SaveXmlLog(xmlData.log, FileName, ShipmentNumber, Setting.id, batchNumber, Setting.clientName, function (data) {
+                                                        //    console.log("Saved XML ", FileName);
+                                                        if (TotalS == PS)
+                                                            cb("Done");
+                                                    });
+
+                                                }); // Save Daily Reacords
+                                            }); // ftp Upload
+
+                                        })
                                     }
 
-                                });
+                                } // Let Process All Records
+                            }
 
 
-                            })
-
-                        });
 
 
-                    }); // ExcelJson for Each
+                        }); // Create XML
+                    }); // Group Data One By One
 
-                }); // Group By Close
+                }); // Group By PO
 
-            }); // Save Fuction End
-        });
+            }) // Reach IsNew Multiple
+
+
+
+
+
+        }); // Read Exl
 
 
     } else {
         cb("data");
     }
+}
+
+
+
+
+
+function SendLogEmail(to, subject, body) {
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'amrik@rudrainnovatives.com',
+            pass: 'Singh@rudra'
+        }
+    });
+
+    var mailOptions = {
+        from: "info@rudrainnovatives.com",
+        to: to,
+        subject: subject,
+        text: body
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
 }

@@ -22,7 +22,12 @@ export class XmlLognService {
      DeleteXmlLog(data){
          return this.http.delete("/api/xmllog/"+data.id,data).map(res=>res.json());
     }
-    
+     Resend(id){
+         return this.http.get("/api/xmlresend/"+id).map(res=>res.json());
+    }
+     ResendB(id){
+         return this.http.get("/api/xmlresendb/"+id).map(res=>res.json());
+    }
 }
 
 

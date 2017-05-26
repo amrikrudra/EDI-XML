@@ -27,6 +27,7 @@ export class LoginComponent {
               this.appG.SetToken(m.user.userName);
               this.appG.SetUser(m.user);
               this.CheckLogin.emit(true);
+            
            }
            else
            {

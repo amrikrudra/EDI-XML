@@ -66,6 +66,7 @@ var CountryDB = {
     }
 ,
     GetUnCode: function (COUNTRY,LOCNAME,SUBDIV,cb) {
+       
         fs.readFile(filePath, function (err, obj) {
             if (err)
                 console.log("Error", err);
@@ -74,7 +75,7 @@ var CountryDB = {
            var res=  index = ddd.filter(function (item) {
                 return (item.COUNTRY.toString().toLowerCase() ==COUNTRY.toString().toLowerCase() && item.LOCNAME.toString().toLowerCase()==LOCNAME.toString().toLowerCase() && item.SUBDIV.toString().toLowerCase()==SUBDIV.toString().toLowerCase());
             });
-          //  console.log("CCCC",res);
+        
            if(res.length>0)
              cb(res[0]);
              else

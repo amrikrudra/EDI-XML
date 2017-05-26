@@ -4,7 +4,7 @@
       <div class="ibox float-e-margins">
         <div class="ibox-content">
           <div class="row">
-            <div class=col-sm-4>User <input type="button" class="btn btn-sucess" (click)="onNew()" value=" Add New"></div>
+            <div class=col-sm-4>User <input type="button" class="btn btn-primary" (click)="onNew()" value=" Add New"></div>
             <div class="col-sm-4 pull-right search-section">
               <input class="form-control" id="namesearch" placeholder="Search By Login Name" type="text" (keyup)="showCross()" [(ngModel)]="firstNameFilter">
             <i class="fa fa-search" *ngIf="HideCross"></i> <i class="fa fa-times" *ngIf="!HideCross" (click)="onRemove()"></i>
@@ -39,8 +39,8 @@
                   <td class="text-center">{{c.role}}</td>
                   <td class="text-center">{{c.status}}</td>
                   <td class="text-center">
-                    <a (click)="onEdit(c,i)" class="fa fa-pencil" style="margin-bottom:-2px;"></a>
-                    <a (click)="onDel(c)" class="fa fa-trash" style="margin-bottom:-2px;"></a>
+                    <a (click)="onEdit(c,i)" class="fa fa-pencil" style="margin-bottom:-2px;" title="Edit"></a>&nbsp;&nbsp;
+                    <a (click)="onDel(c)" class="fa fa-trash" style="margin-bottom:-2px;" title="Delete"></a>
 
                   </td>
                 </tr>
@@ -62,6 +62,13 @@
           </div>
 
         </div>
+         </div>
+    </div>
+  </div>
+
+          <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
         <div class="ibox-content" *ngIf="oSetting">
 
           <form ngNoForm id="myForm" novalidate="novalidate">

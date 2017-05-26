@@ -115,13 +115,16 @@ var XMLService = {
         cb(dataRows);
     },
     CreateXML: function (JsonData, Client, isuFile, cb) {
+      
         var interXML = "";
         var TotalRecord = JsonData.length;
         var Processed = 0;
         var logData = [];
 
+
         JsonData.forEach(function (item) {
             FreighService.GetStatusAndLocDB(item.OriginZone, item.DestinationZone, item.Freight, function (data) {
+               
                 var country = "CA";
                 var locName;
                 var subdiv;
@@ -138,17 +141,20 @@ var XMLService = {
                         CountryService.GetUnCode(country, locName, subdiv, function (unCode) {
                             Processed++;
                             if (unCode == null) {
+                                unCode={};
                                 unCode.COUNTRY = "CA";
                                 unCode.UNCODE = "";
                             }
                          
 
                             if (isuFile == false) {
+                                  if(item.IsNew){
                                 interXML += "<Scp_edistatusqueue><messagesdr>" + Client + "</messagesdr>" +
                                     "<shipnum>" + item.PO + "</shipnum> " +
                                     "<statuscd>" + data.scode + "</statuscd>" +
                                     "<statusdt>" + item.Date + " " + item.Time + "</statusdt>" +
                                     "<stsloccd>" + unCode.COUNTRY + unCode.UNCODE + "</stsloccd></Scp_edistatusqueue>";
+                                  }
                                 logData.push({
                                     "messagesdr": Client,
                                     "shipnum": item.PO,
@@ -156,14 +162,17 @@ var XMLService = {
                                     "statusdt": item.Date + " " + item.Time,
                                     "stsloccd": unCode.COUNTRY + unCode.UNCODE,
                                     "ufileid": "",
-                                    "contno": ""
+                                    "contno": "",
+                                    "IsNew": item.IsNew
                                 });
                             } else {
+                                  if(item.IsNew){
                                 interXML += "<Scp_edistatusqueue><messagesdr>" + Client + "</messagesdr>" +
                                     "<ufileid>" + item.PO + "</ufileid><contno>" + item.TraceCd + "</contno>" +
                                     "<statuscd>" + data.scode + "</statuscd>" +
                                     "<statusdt>" + item.Date + " " + item.Time + "</statusdt>" +
                                     "<stsloccd>" + unCode.COUNTRY + unCode.UNCODE + "</stsloccd></Scp_edistatusqueue>";
+                                  }
                                 logData.push({
                                     "messagesdr": Client,
                                     "shipnum": "",
@@ -171,42 +180,61 @@ var XMLService = {
                                     "statusdt": item.Date + " " + item.Time,
                                     "stsloccd": unCode.COUNTRY + unCode.UNCODE,
                                     "ufileid": item.PO,
-                                    "contno": item.TraceCd
+                                    "contno": item.TraceCd,
+                                    "IsNew": item.IsNew
                                 });
                             }
 
                             if (Processed == TotalRecord)
-                               
-                                cb({
-                                    "xml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?> <scp_edistatusqueue>" + interXML + "</scp_edistatusqueue>",
-                                    "log": logData
+                               if(interXML=="")
+                               {
+                                   cb({
+                                    "xml":  interXML ,
+                                    "log": logData,
+                                    "msg":"No  new record found"
                                 });
+                               }
+                               else
+                               {
+                                cb({
+                                    "xml":  interXML ,
+                                    "log": logData,
+                                    "msg":""
+                                });
+                               }
                         }); // UnCode
                     } else {
                         Processed++;
                         if (Processed == TotalRecord)
-                            cb({
-                                "xml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?> <scp_edistatusqueue>" + interXML + "</scp_edistatusqueue>",
-                                "log": []
+                             cb({
+                               "xml":"",
+                                "log": [],
+                                "msg":"Unable to find statloccd or statuscd"
                             });
+                             // "xml": "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?> <scp_edistatusqueue>" + interXML + "</scp_edistatusqueue>",
+                      
 
                    // }
                 }
             });
-
-
+            
         });
 
     },
     UploadToFtp(Host, userName, Password, fileName, content, cb) {
-
+      
         var c = new Client();
         c.on('ready', function () {
             c.put(content, fileName, function (err) {
-                if (err) throw err;
+                if (err) console.log("ftp error"+ err);
                 c.end();
                 cb("ok");
             });
+        });
+        c.on('error', function () {
+             console.log("ftp error");
+             cb("error");
+             
         });
         // connect to localhost:21 as anonymous 
         c.connect({

@@ -1,20 +1,11 @@
 <div class="row">
   <div class="col-lg-6">
     <div class="ibox float-e-margins">
-      <div class="ibox-title">
-        <span class="label label-success pull-right">Today</span>
-        <h5>Daily Transaction</h5>
-      </div>
+    
       <div class="ibox-content">
-        <h1 class="no-margins">
-          <a [routerLink]="['/client/procpro']"></a>
-        </h1>
+        
 
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="ibox float-e-margins">
-
-              <div class="ibox-content">
+              
                 <div class="table-responsive">
                   <table class="table table-striped table-bordered table-hover dataTables-example">
                     <thead>
@@ -46,9 +37,6 @@
 
                 </div>
 
-              </div>
-            </div>
-          </div>
 
         </div>
 
@@ -57,20 +45,10 @@
 
       </div>
     </div>
-  </div>
+  
   <div class="col-lg-6">
     <div class="ibox float-e-margins">
-      <div class="ibox-title">
-        <span class="label label-success pull-right">Total</span>
-        <h5>XML Transactions</h5>
-      </div>
-      <div class="ibox-content">
-        <div class="row">
-
-          <h1 class="no-margins">
-            <a [routerLink]="['/client/clientCatalog']"></a>
-          </h1>
-          <div class="stat-percent font-bold text-success"></div>
+   
           <div class="ibox-content">
             <div class="table-responsive">
               <table class="table table-striped table-bordered table-hover dataTables-example">
@@ -105,8 +83,6 @@
 
           </div>
 
-        </div>
-      </div>
     </div>
   </div>
 
@@ -137,123 +113,161 @@
     </div>
   </div>-->
 </div>
-<div class="row">
-  <div class="col-md-6">
-    <div class="ibox float-e-margins">
-      <div class="ibox-title">
-        <span class="label label-success pull-right"></span>
-        <h5>Setup</h5>
-      </div>
-      <div class="ibox-content">
-        <div class="row">
-          <div class="setup_left_sec">
-            <div class="user_sec">
-              <a [routerLink]="['/user']" class="dd1"><img src="images/user.jpg" alt=""></a>
-              <div class="dott">
-                <p>User</p>
-              </div>
-            </div>
 
-            <div class="user_sec scnd">
-              <a [routerLink]="['/setting']" class="dd1"><img src="images/setting.png" alt=""></a>
-              <div class="dott">
-                <p>Setting</p>
-              </div>
-              <div class="right_r"><img src="images/right.png" alt=""></div>
-              <div class="right_ff"><img src="images/left.png" alt=""></div>
-              <div class="top_arr_s"><img src="images/top-arr.png" alt=""></div>
+ 
+            <div class="row">
+               <div class="cl-section">
+                  <div class="col-md-6 left-column">
+                     <div class="setup_left_sec">
+                        <div class="onetime">
+                           <h4 class="text-white comic-font">One time Setup</h4>
+                        </div>
+                        <!-- onetime -->
+                        <div class="content-box">
+                           <div class="centerDiv">
+                              <div class="user_sec">
+                                 <div class="contentBlock">
+                                    <a href="#" class="dd1"><img src="images/member_icon.png" alt=""></a>
+                                    <div class="sidetitle firstSide">
+                                       <p><strong>User <br/>
+                                          Setup</strong>
+                                       </p>
+                                    </div>
 
-            </div>
-            <div class="shuttr_main">
-              <div class="shuttr_left">
-                <a [routerLink]="['/freightscode']" class="dd1"><img src="images/shuttr.png" alt=""></a>
-                <div class="dott">
-                  <p>Freight-StatusCd Xref</p>
-                </div>
-              </div>
-              <div class="shuttr_left scndd">
-                <a [routerLink]="['/country']" class="dd1"><img src="images/shuttr1.png" alt=""></a>
-                <div class="dott">
-                  <p>Canada UNLOC Database</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <div class="col-md-6">
+                                 </div>
+                              </div>
+                              <div class="user_sec">
+                                 <div class="top_arr_s"><img src="images/arrow.png" alt=""></div>
+                              </div>
+                              <div class="user_sec">
+                                 <div class="contentBlock third-step">
+                                    <a href="#" class="dd1"><img src="images/cog.png" alt=""></a>
+                                    <div class="dott secondTooltip">
+                                       <p>System Setup</p>
+                                    </div>
+                                    <div class="sidetitle secondSide">
+                                       <p><strong>System <br/>
+                                          Setup</strong>
+                                       </p>
+                                    </div>
+                                    <div class="right_r"><img src="images/arrow_3.png" alt=""></div>
+                                    <div class="right_ff"><img src="images/arrow_2.png" alt=""></div>
+                                 </div>
+                              </div>
+                              <div class="shuttr_main ccp">
+                                 <div class="shuttr_left copyp pull-left">
+                                    <a href="#" class="dd1"><img src="images/copypen.png" alt=""></a>
+                                    
+                                    <div class="sidetitle forthSide">
+                                       <p><strong>Freight<br/> 
+                                          StatusCd</strong>
+                                       </p>
+                                    </div>
 
-    <div class="ibox float-e-margins">
-      <div class="ibox-title">
-        <span class="label label-success pull-right"></span>
-        <h5>Process Flow</h5>
-      </div>
-      <div class="ibox-content">
-        <div class="row">
-
-          <div class="setup_right_sec">
-            <div class="right_top">
-              <div class="right_sec1">
-                <div class="log">
-                  <a [routerLink]="['/dailytran']" class="dd1"><img src="images/log.png" alt="" /></a>
-                  <div class="dott">
-                    <p>Xls Logs</p>
+                                 </div>
+                                 <div class="shuttr_left scndd pull-right">
+                                    <a href="#" class="dd1"><img src="images/location.png" alt=""></a>
+                                    <div class="sidetitle thirdSide">
+                                       <p><strong>Canada<br/> 
+                                          UNLOC <br/>
+                                          Database</strong>
+                                       </p>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="clearfix"></div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="clearfix"></div>
                   </div>
-                  <div class="right_r"><img src="images/right.png" alt=""></div>
-                  <div class="right_ff"><img src="images/left1.png" alt=""></div>
-                </div>
-              </div>
-              <div class="right_sec1">
-                <div class="log lg1">
-                  <a [routerLink]="['/dailytran']" class="dd1"><img src="images/log1.png" alt="" /></a>
-                  <div class="dott">
-                    <p>Archived Xls Logs</p>
+                  <div class="col-md-6 right-column">
+                     <div class="setup_right_sec">
+                        <div class="onetime">
+                           <h4 class="text-white">Process flow to send XML</h4>
+                        </div>
+                        <!-- onetime -->
+                        <div class="content-box">
+                           <div class="leftDiv">
+                              <div class="right_top">
+                                 <div class="right_sec1">
+                                    <div class="log">
+                                       <div class="contentBlock">
+                                          <a href="#" class="dd1"><img src="images/book.png" alt=""/></a>
+                                          <div class="sidetitle fifthSide">
+                                             <p><strong>Transaction<br/> 
+                                                Log</strong>
+                                             </p>
+                                          </div>
+                                          <div class="right_r"><img src="images/arrow_5.png" alt=""></div>
+                                          <div class="right_ff"><img src="images/arrow_4.png" alt=""></div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="right_sec1 secondDiv pull-left">
+                                    <div class="log lg1">
+                                       <div class="contentBlock logAchive">
+                                          <a href="#" class="dd1"><img src="images/locker.png" alt=""/></a>
+                                          <div class="sidetitle sixthSide">
+                                             <p><strong>Transaction<br/> 
+                                                Log achive</strong>
+                                             </p>
+                                          </div>
+
+
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="right_bott pull-right">
+                                    <div class="right_sec1">
+                                       <div class="log">
+                                          <div class="contentBlock transaction">
+                                             <a href="#" class="dd1"><img src="images/attach.png" alt=""/></a>
+                                             <div class="sidetitle seventhSide">
+                                                <p><strong>Transaction<br/> 
+                                                   XML</strong>
+                                                </p>
+                                             </div>
+
+                                             <div class="right_r"><img src="images/arrow_7.png" alt=""></div>
+                                             <div class="right_ff"><img src="images/arrow_6.png" alt=""></div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                    <div class="shuttr_main">
+                                       <div class="shuttr_left bbag pull-left">
+                                          <a href="#" class="dd1"><img src="images/bag.png" alt=""></a>
+                                          <div class="sidetitle eightSide">
+                                             <p><strong>XML<br/> 
+                                                Achive</strong>
+                                                
+                                             </p>
+                                          </div>
+                                       </div>
+                                       <div class="shuttr_left scndd ww pull-left">
+                                          <a href="#" class="dd1"><img class="img-responsive" src="images/cog-person.png" alt=""></a>
+                                          <div class="dott ninthTooltip">
+                                             <p>Client</p>
+                                          </div>
+                                          <div class="sidetitle ninthSide">
+                                             <p><strong>Client</strong></p>
+                                          </div>
+                                          
+                                       </div>
+                                       <div class="clearfix"></div>
+                                    </div>
+                                 </div>
+                                 <div class="clearfix"></div>
+                              </div>
+                              <div class="clearfix"></div>
+                           </div>
+                        </div>
+                        <!-- content-box -->
+                     </div>
+                     <div class="clearfix"></div>
                   </div>
-                </div>
-              </div>
+                  <div class="clearfix"></div>
+               </div>
             </div>
-
-
-            <div class="right_bott">
-              <div class="right_sec1">
-                <div class="log">
-                  <a [routerLink]="['/xmllog']" class="dd1"><img src="images/log2.png" alt="" /></a>
-                  <div class="dott">
-                    <p>Processed XML</p>
-                  </div>
-                  <div class="right_r"><img src="images/right.png" alt=""></div>
-                  <div class="right_ff"><img src="images/right1.png" alt=""></div>
-                </div>
-              </div>
-              <div class="shuttr_main">
-                <div class="shuttr_left">
-                  <a [routerLink]="['/xmllog']" class="dd1"><img src="images/xml1.png" alt=""></a>
-                  <div class="dott">
-                    <p>Archived XML</p>
-                  </div>
-                </div>
-                <div class="shuttr_left scndd">
-                  <a [routerLink]="['/xmllog']" class="dd1"><img src="images/last.png" alt=""></a>
-                  <div class="dott">
-                    <p>Ftp XML</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- <div class="user_sec scnd">
-							<img src="images/setting.png" alt="">
-							<div class="right_r"><img src="images/right.png" alt=""></div>
-							<div class="right_ff"><img src="images/left.png" alt=""></div>
-							<div class="dott"><p>Setting</p></div>
-						</div> -->
-      </div>
-    </div>
-  </div>
-</div>
 

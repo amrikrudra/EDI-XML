@@ -4,7 +4,7 @@
       <div class="ibox float-e-margins">
         <div class="ibox-content">
           <div class="row">
-              <div class=col-sm-4>Freight Status-xRef &nbsp; &nbsp; &nbsp; <input type="button" class="btn btn-sucess" (click)="onNew()" value=" Add New"></div>
+              <div class=col-sm-4>FreightCd Reference &nbsp; &nbsp; &nbsp; <input type="button" class="btn btn-primary" (click)="onNew()" value=" Add New"></div>
               <div class="col-sm-4 pull-right search-section">
               <input class="form-control" id="namesearch" placeholder="Search By Status Code	" type="text" (keyup)="showCross()" [(ngModel)]="firstNameFilter">
             <i class="fa fa-search" *ngIf="HideCross"></i> <i class="fa fa-times" *ngIf="!HideCross" (click)="onRemove()"></i>
@@ -38,8 +38,8 @@
                 <td class="text-center">{{c.shiptype}}</td>
                 <td class="text-center">{{c.tdirection}}</td>
                 <td class="text-center">
-                    <a (click)="onEdit(c,i)" class="fa fa-pencil" style="margin-bottom:-2px;"></a>
-                    <a (click)="onDel(c)" class="fa fa-trash" style="margin-bottom:-2px;"></a>
+                    <a (click)="onEdit(c,i)" class="fa fa-pencil" style="margin-bottom:-2px;" title="Edit"></a>&nbsp;&nbsp;
+                    <a (click)="onDel(c)" class="fa fa-trash" style="margin-bottom:-2px;" title="Delete"></a>
                   </td>
                 </tr>
 
@@ -56,6 +56,13 @@
           </div>
 
         </div>
+      </div>
+    </div>
+  </div>
+
+          <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox float-e-margins">
         <div class="ibox-content" *ngIf="oSetting">
       <form ngNoForm id="FreightForm" novalidate="novalidate">
           <div class="row">
@@ -98,7 +105,7 @@
              <div class="row">
             <div class="col-md-12 form-group">
               <div class="col-md-6">
-                <div class="col-md-4">T Direction</div>
+                <div class="col-md-4">TDirection</div>
                 <div class="col-md-8"><input class="form-control"  [(ngModel)]="oSetting.tdirection"  name="tdirection"  required/> </div>
               </div>
               

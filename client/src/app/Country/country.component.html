@@ -4,13 +4,15 @@
       <div class="ibox float-e-margins">
         <div class="ibox-content">
           <div class="row">
-            <div class=col-sm-4>Country Codes <input type="file" ng2FileSelect [uploader]="uploader" *ngIf="uploader.queue.length==0" />
+            <div class=col-sm-6>Country Codes <input type="file" ng2FileSelect [uploader]="uploader" *ngIf="uploader.queue.length==0" />
               <ng-container *ngIf="uploader.queue.length>0">
                 <button type="button" class="btn btn-success btn-xs" (click)="uploader.queue[0].upload()" *ngIf="!uploader.queue[0].isSuccess">
                             <span class="glyphicon glyphicon-upload"></span> Upload
                         </button>
                          <span *ngIf="uploader.queue[0].isSuccess">[File Uploaded]</span>
               </ng-container>
+              &nbsp;
+              <a href="/DataBD/CountryDB_.xls" class="fa fa-download" target="_blank" title="download">Download</a>
 
 
             </div>

@@ -67,7 +67,7 @@ var Freight = {
     GetStatusAndLocDB: function (Origin, Destination, Freight, cb) {
         jFile.readFile(filePath, function (err, obj) {
            
-          
+          console.log(Origin, Destination, Freight);
             index = obj.filter(function (item) {
                 return (item.tdirection.toString().toLowerCase() == Destination.toString().toLowerCase() && item.shiptype.toString().toLowerCase() == Origin.toString().toLowerCase() && item.fcode.toString().toLowerCase() == Freight.toString().toLowerCase());
             });

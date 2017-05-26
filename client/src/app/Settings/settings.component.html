@@ -4,7 +4,7 @@
       <div class="ibox float-e-margins">
         <div class="ibox-content">
           <div class="row">
-            <div class=col-sm-4>Setting <input type="button" class="btn btn-primary" (click)="onNew()" value=" Add New"></div>
+            <div class=col-sm-4>Setting</div>
             <div class="col-sm-4 pull-right search-section">
               <input class="form-control" id="namesearch" placeholder="Search By URL" type="text" (keyup)="showCross()" [(ngModel)]="firstNameFilter">
              <i class="fa fa-search" *ngIf="HideCross"></i> <i class="fa fa-times" *ngIf="!HideCross" (click)="onRemove()"></i>
@@ -134,82 +134,45 @@
 
             <div class="row">
               <div class="col-md-12 form-group">
-                <label class="mt-bottom-15">File Locations( Local or Network Path)</label>
+                <label class="mt-bottom-15">FCL and LCL File Name</label>
 
 
                 <div class="row">
                   <div class="col-md-12 form-group">
                     <div class="col-md-6">
-                      <div class="col-md-4">Source file location</div>
-                      <div class="col-md-8"><input class="form-control" type="text" [(ngModel)]="oSetting.sourceFile" required/> </div>
+                      <div class="col-md-4">FCL File Name</div>
+                      <div class="col-md-8"><input class="form-control" type="text" [(ngModel)]="oSetting.fullFileName" required/> </div>
                     </div>
                     <div class="col-md-6">
-                      <div class="col-md-4">Archive location</div>
-                      <div class="col-md-8"><input class="form-control" type="text" [(ngModel)]="oSetting.dailyLog" required/> </div>
+                      <div class="col-md-4">LCL File</div>
+                      <div class="col-md-8"><input class="form-control" type="text" [(ngModel)]="oSetting.halfFileName" required/> </div>
+                    </div>
+                  </div>
+                </div>
+              
+                <div class="row">
+                  <div class="col-md-12 form-group">
+                    <div class="col-md-6">
+                      <div class="col-md-4">Combine XML</div>
+                      <div class="col-md-8"><input class="" type="radio" [(ngModel)]="oSetting.combineXML" value="Yes"/>Yes&nbsp;<input class="" type="radio" [(ngModel)]="oSetting.combineXML" value="No"/> No </div>
                     </div>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-12 form-group">
                     <div class="col-md-6">
-                      <div class="col-md-4">XML file location</div>
-                      <div class="col-md-8"><input class="form-control" type="text" [(ngModel)]="oSetting.xmlFile" required/> </div>
+                      <div class="col-md-4">FCL Target File Name</div>
+                      <div class="col-md-8"><input class="form-control" type="text" [(ngModel)]="oSetting.combinefullFile" /> </div>
                     </div>
-
+                    <div class="col-md-6">
+                      <div class="col-md-4">LCL Target File</div>
+                      <div class="col-md-8"><input class="form-control" type="text" [(ngModel)]="oSetting.combinehalfFile" /> </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-12 form-group">
-                <label class="mt-bottom-15">History backup (days)</label>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-12 form-group">
-                <div class="col-md-6">
-                  <div class="col-md-4">Daily log archive(Days)</div>
-                  <div class="col-md-8"><input class="form-control" type="number" [(ngModel)]="oSetting.dailyArchive" name="dailyArchive" required
-                    /> </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="col-md-4">XML history(Days) </div>
-                  <div class="col-md-8"><input class="form-control" type="number" [(ngModel)]="oSetting.xmlHistory" name="xmlHistory" required
-                    /> </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-12 form-group">
-                <label class="mt-bottom-15">XML Confirmation email address</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 form-group">
-                <div class="col-md-6">
-                  <div class="col-md-4">Send Email</div>
-                  <div class="col-md-8">
-                    <input class="" type="radio" [(ngModel)]="oSetting.sendEmail" value="1"/>Yes&nbsp;<input class="" type="radio" [(ngModel)]="oSetting.sendEmail" value="2"/> No
-                    </div>
-                </div>
-
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 form-group">
-                <div class="col-md-6">
-                  <div class="col-md-4">User email address</div>
-                  <div class="col-md-8"><input class="form-control" type="text" [(ngModel)]="oSetting.userEmail" name="dailyArchive" required />                    </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="col-md-4">Client email address</div>
-                  <div class="col-md-8"><input class="form-control" type="text" [(ngModel)]="oSetting.clientEmail" name="xmlHistory" required />                    </div>
-                </div>
-              </div>
-            </div>
-
+          
 
 
             <div class="row">

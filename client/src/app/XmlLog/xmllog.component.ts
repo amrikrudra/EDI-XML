@@ -1,8 +1,21 @@
-import {  Component,  EventEmitter,  Output} from '@angular/core';
-import {  XmlLognService} from '../../Services/xmllog.service';
-import {  Sorter} from '../../Services/app.sort';
-import {  Router,  ActivatedRoute} from '@angular/router';
-import {  UUID} from 'angular2-uuid';
+import {
+  Component,
+  EventEmitter,
+  Output
+} from '@angular/core';
+import {
+  XmlLognService
+} from '../../Services/xmllog.service';
+import {
+  Sorter
+} from '../../Services/app.sort';
+import {
+  Router,
+  ActivatedRoute
+} from '@angular/router';
+import {
+  UUID
+} from 'angular2-uuid';
 import swal from 'sweetalert2';
 
 @Component({
@@ -15,7 +28,17 @@ export class XmlLogComponent {
   oSetting: any;
   Settings: any[];
   prev: number = -1;
+
   cols: any[] = [{
+
+      name: "batchid",
+      title: "Batch #",
+      sorted: true,
+      sortAs: "",
+      sortable: true
+    },
+    {
+
       name: "fileName",
       title: "File Name",
       sorted: false,
@@ -57,7 +80,8 @@ export class XmlLogComponent {
   constructor(private _route: ActivatedRoute, private _router: Router, private userService: XmlLognService, private sortService: Sorter) {
     userService.GetXmlLog().subscribe(m => {
       this.Settings = m;
-      this.sortService.sort(this.cols[0], this.Settings);
+      this.sortService.direction = 1;
+      this.sortService.sort(this.cols[3], this.Settings);
     });
 
   }
@@ -85,4 +109,21 @@ export class XmlLogComponent {
     this.firstNameFilter = "";
   }
 
+  reSend(id, event) {
+   
+    this.userService.ResendB(id).subscribe(m => {
+      swal('Success', 'XMLs resended successfully..', 'success');
+    });
+
+
+  }
+  Single(id, event) {
+  
+    if (event == "cancel") {
+      this.userService.Resend(id).subscribe(m => {
+        swal('Success', 'XML resended successfully..', 'success');
+      });
+    }
+
+  }
 }

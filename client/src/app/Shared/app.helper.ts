@@ -65,7 +65,7 @@ export function smoothlyMenu() {
     }
 }
 export function Login() {
-    window.location.href = "/Account/Logout";
+    window.location.href = "/dashboard";
 }
 
 export function ValidateMe(id)
