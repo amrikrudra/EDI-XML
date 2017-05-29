@@ -1,1 +1,281 @@
-{"id":"c7ab3ee1-4238-11e7-8518-87a5761b8749","receiveTime":"05/26/2017 10:58 pm","client":"RSRAM","fileName":"400281939_201705261058.xml","logFile":"C:\\Projects\\EDIXML Files\\xmlarchive\\400281939_201705261058.xml","settingid":"1","batchid":1495819729336,"records":[{"messagesdr":"RSRAM","shipnum":"400281939","statuscd":"01-34--00-at-10","statusdt":"5/16/17 14:20:00","stsloccd":"CABRP","ufileid":"","contno":"","IsNew":true},{"messagesdr":"RSRAM","shipnum":"400281939","statuscd":"01-34--00-at-10","statusdt":"5/16/17 14:20:00","stsloccd":"CABRP","ufileid":"","contno":"","IsNew":true},{"messagesdr":"RSRAM","shipnum":"400281939","statuscd":"01-34--00-at-10","statusdt":"5/16/17 14:20:00","stsloccd":"CABRP","ufileid":"","contno":"","IsNew":true},{"messagesdr":"RSRAM","shipnum":"400281939","statuscd":"01-34--00-at-10","statusdt":"5/16/17 14:20:00","stsloccd":"CABRP","ufileid":"","contno":"","IsNew":true},{"messagesdr":"RSRAM","shipnum":"400281939","statuscd":"01-34--00-at-10","statusdt":"5/16/17 14:20:00","stsloccd":"CABRP","ufileid":"","contno":"","IsNew":true},{"messagesdr":"RSRAM","shipnum":"400281939","statuscd":"01-34--00-at-10","statusdt":"5/16/17 14:20:00","stsloccd":"CABRP","ufileid":"","contno":"","IsNew":true}]},
+{
+    "id": "c7ab3ee1-4238-11e7-8518-87a5761b8749",
+    "receiveTime": "05/26/2017 10:58 pm",
+    "client": "RSRAM",
+    "fileName": "400281939_201705261058.xml",
+    "logFile": "C:\\Projects\\EDIXML Files\\xmlarchive\\400281939_201705261058.xml",
+    "settingid": "1",
+    "batchid": 1495819729336,
+    "records": [{
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    },
+    {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    },{
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    },{
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    },{
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }, {
+        "messagesdr": "RSRAM",
+        "shipnum": "400281939",
+        "statuscd": "01-34--00-at-10",
+        "statusdt": "5/16/17 14:20:00",
+        "stsloccd": "CABRP",
+        "ufileid": "",
+        "contno": "",
+        "IsNew": true
+    }]
+},

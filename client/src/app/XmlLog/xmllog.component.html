@@ -39,8 +39,8 @@
 
 
                   <td class="text-center">
-                      <a (click)="onEdit(c,i)" class="fa fa-eye" style="margin-bottom:-2px;" title="View"></a>&nbsp;&nbsp;
-                      <a href="/api/xmldownload/{{c.id}}" class="fa fa-download" title="Download XML"></a>&nbsp;&nbsp;
+                      <a (click)="onEdit(c,i)" class="fa fa-eye" style="margin-bottom:-2px;" title="View"></a>&nbsp;&nbsp;&nbsp;
+                      <a href="/api/xmldownload/{{c.id}}" class="fa fa-download" title="Download XML"></a>&nbsp;&nbsp;&nbsp;
                       
                       <a class="fa fa-reply" title="Send XML" [swal]="{title:'Alert', text:'if you want to send all the XML from this batch or just the selected one.',type:'question',confirmButtonText:'Full Batch',cancelButtonText:'No Selected only',showCloseButton:true,showCancelButton:true,allowEscapeKey:false}"
         (confirm)="reSend(c.id,$event)"

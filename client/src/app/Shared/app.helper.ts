@@ -234,6 +234,7 @@ export function BindAll() {
     jQuery('.navbar-minimalize').on('click', function () {
 
         jQuery("body").toggleClass("mini-navbar");
+        jQuery('.fixed-header').toggleClass('navHeader-collapse');
         smoothlyMenu();
 
     });

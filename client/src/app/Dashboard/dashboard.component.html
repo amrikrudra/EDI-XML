@@ -1,3 +1,4 @@
+<div class="wrapper wrapper-content animated fadeInRight">
 <div class="row">
   <div class="col-lg-6">
     <div class="ibox float-e-margins">
@@ -127,7 +128,7 @@
                            <div class="centerDiv">
                               <div class="user_sec">
                                  <div class="contentBlock">
-                                    <a href="#" class="dd1"><img src="images/member_icon.png" alt=""></a>
+                                    <a [routerLink]="['/user']" class="dd1"><img src="images/member_icon.png" alt=""></a>
                                     <div class="sidetitle firstSide">
                                        <p><strong>User <br/>
                                           Setup</strong>
@@ -142,10 +143,8 @@
                               </div>
                               <div class="user_sec">
                                  <div class="contentBlock third-step">
-                                    <a href="#" class="dd1"><img src="images/cog.png" alt=""></a>
-                                    <div class="dott secondTooltip">
-                                       <p>System Setup</p>
-                                    </div>
+                                    <a [routerLink]="['/setting']"  class="dd1"><img src="images/cog.png" alt=""></a>
+                                   
                                     <div class="sidetitle secondSide">
                                        <p><strong>System <br/>
                                           Setup</strong>
@@ -157,7 +156,7 @@
                               </div>
                               <div class="shuttr_main ccp">
                                  <div class="shuttr_left copyp pull-left">
-                                    <a href="#" class="dd1"><img src="images/copypen.png" alt=""></a>
+                                    <a [routerLink]="['/freightscode']"  class="dd1"><img src="images/copypen.png" alt=""></a>
                                     
                                     <div class="sidetitle forthSide">
                                        <p><strong>Freight<br/> 
@@ -167,7 +166,7 @@
 
                                  </div>
                                  <div class="shuttr_left scndd pull-right">
-                                    <a href="#" class="dd1"><img src="images/location.png" alt=""></a>
+                                    <a [routerLink]="['/country']"  class="dd1"><img src="images/location.png" alt=""></a>
                                     <div class="sidetitle thirdSide">
                                        <p><strong>Canada<br/> 
                                           UNLOC <br/>
@@ -194,7 +193,7 @@
                                  <div class="right_sec1">
                                     <div class="log">
                                        <div class="contentBlock">
-                                          <a href="#" class="dd1"><img src="images/book.png" alt=""/></a>
+                                          <a [routerLink]="['/dailytran']"  class="dd1"><img src="images/book.png" alt=""/></a>
                                           <div class="sidetitle fifthSide">
                                              <p><strong>Transaction<br/> 
                                                 Log</strong>
@@ -208,7 +207,7 @@
                                  <div class="right_sec1 secondDiv pull-left">
                                     <div class="log lg1">
                                        <div class="contentBlock logAchive">
-                                          <a href="#" class="dd1"><img src="images/locker.png" alt=""/></a>
+                                          <a [routerLink]="['/dailytran']"  class="dd1"><img src="images/locker.png" alt=""/></a>
                                           <div class="sidetitle sixthSide">
                                              <p><strong>Transaction<br/> 
                                                 Log achive</strong>
@@ -223,7 +222,7 @@
                                     <div class="right_sec1">
                                        <div class="log">
                                           <div class="contentBlock transaction">
-                                             <a href="#" class="dd1"><img src="images/attach.png" alt=""/></a>
+                                             <a [routerLink]="['/xmllog']"  class="dd1"><img src="images/attach.png" alt=""/></a>
                                              <div class="sidetitle seventhSide">
                                                 <p><strong>Transaction<br/> 
                                                    XML</strong>
@@ -237,19 +236,17 @@
                                     </div>
                                     <div class="shuttr_main">
                                        <div class="shuttr_left bbag pull-left">
-                                          <a href="#" class="dd1"><img src="images/bag.png" alt=""></a>
+                                          <a [routerLink]="['/xmllog']"  class="dd1"><img src="images/bag.png" alt=""></a>
                                           <div class="sidetitle eightSide">
                                              <p><strong>XML<br/> 
                                                 Achive</strong>
-                                                
+
                                              </p>
                                           </div>
                                        </div>
                                        <div class="shuttr_left scndd ww pull-left">
-                                          <a href="#" class="dd1"><img class="img-responsive" src="images/cog-person.png" alt=""></a>
-                                          <div class="dott ninthTooltip">
-                                             <p>Client</p>
-                                          </div>
+                                          <a  class="dd1"><img class="img-responsive" src="images/cog-person.png" alt=""></a>
+                                         
                                           <div class="sidetitle ninthSide">
                                              <p><strong>Client</strong></p>
                                           </div>
@@ -270,4 +267,4 @@
                   <div class="clearfix"></div>
                </div>
             </div>
-
+</div>
