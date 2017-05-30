@@ -7,7 +7,7 @@
             <div class=col-sm-4>XML Hostory- Send Log(s) </div>
             <div class="col-sm-4 pull-right search-section">
               <input class="form-control" id="namesearch" placeholder="Search By Created Time" type="text" (keyup)="showCross()" [(ngModel)]="firstNameFilter">
-               <i class="fa fa-search" *ngIf="HideCross"></i> <i class="fa fa-times" *ngIf="!HideCross" (click)="onRemove()"></i>
+              <i class="fa fa-search" *ngIf="HideCross"></i> <i class="fa fa-times" *ngIf="!HideCross" (click)="onRemove()"></i>
             </div>
           </div>
         </div>
@@ -16,8 +16,8 @@
             <table class="table table-striped table-bordered table-hover dataTables-example">
               <thead>
                 <tr>
-                
-                    <ng-container *ngFor="let col of cols">
+
+                  <ng-container *ngFor="let col of cols">
                     <th *ngIf="col.sortable" class="text-center" (click)="SortColumn(col)">
                       {{col.title}}
                       <ng-container *ngIf="col.sorted==true && col.sortable==true">
@@ -29,24 +29,24 @@
                 </tr>
               </thead>
               <tbody>
-                <tr class="gradeX" *ngFor="let c of Settings |userFilter:firstNameFilter| paginate: { itemsPerPage: 10, currentPage: p };let i=index" [class.active]="i==selectedRow">
-              
-                   <td class="text-center">{{c.batchid}}</td>
+                <tr class="gradeX" *ngFor="let c of Settings |userFilter:firstNameFilter| paginate: { itemsPerPage: 10, currentPage: p };let i=index"
+                  [class.active]="i==selectedRow">
+
+                  <td class="text-center">{{c.batchid}}</td>
                   <td class="text-center">{{c.fileName}}</td>
                   <td class="text-center">{{c.client}}</td>
-                      <td>{{c.receiveTime}}</td>
+                  <td>{{c.receiveTime}}</td>
                   <td class="text-center">{{c.records.length}}</td>
 
 
                   <td class="text-center">
-                      <a (click)="onEdit(c,i)" class="fa fa-eye" style="margin-bottom:-2px;" title="View"></a>&nbsp;&nbsp;&nbsp;
-                      <a href="/api/xmldownload/{{c.id}}" class="fa fa-download" title="Download XML"></a>&nbsp;&nbsp;&nbsp;
-                      
-                      <a class="fa fa-reply" title="Send XML" [swal]="{title:'Alert', text:'if you want to send all the XML from this batch or just the selected one.',type:'question',confirmButtonText:'Full Batch',cancelButtonText:'No Selected only',showCloseButton:true,showCancelButton:true,allowEscapeKey:false}"
-        (confirm)="reSend(c.id,$event)"
-        (cancel)="Single(c.id,$event)" >
-  
-</a>
+                    <a (click)="onEdit(c,i)" class="fa fa-eye" style="margin-bottom:-2px;" title="View"></a>&nbsp;&nbsp;&nbsp;
+                    <a href="/api/xmldownload/{{c.id}}" class="fa fa-download" title="Download XML"></a>&nbsp;&nbsp;&nbsp;
+
+                    <a class="fa fa-reply" title="Send XML" [swal]="{title:'Alert', text:'if you want to send all the XML from this batch or just the selected one.',type:'question',confirmButtonText:'Full Batch',cancelButtonText:'No Selected only',showCloseButton:true,showCancelButton:true,allowEscapeKey:false}"
+                      (confirm)="reSend(c.id,$event)" (cancel)="Single(c.id,$event)">
+
+                    </a>
                   </td>
                 </tr>
 
@@ -63,50 +63,75 @@
           </div>
 
         </div>
-         </div>
+      </div>
     </div>
   </div>
 
-          <div class="row">
+  <div class="row" *ngIf="oSetting">
     <div class="col-lg-12">
       <div class="ibox float-e-margins">
+        <div class="ibox-content">
+          <div class="row">
+            <div class=col-sm-4></div>
+            <div class="col-sm-3 pull-right ">
+              <input class="" name="namecheck" type="radio" checked="checked" (click)="showNew(false)"  value="false"> Show All
+              <input class="" name="namecheck" type="radio" (click)="showNew(true)"  value="true"> New Only
+              
+            </div>
+          </div>
+        </div>
         <div class="ibox-content" *ngIf="oSetting">
 
           <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover dataTables-example">
               <thead>
                 <tr>
-                
-                   
-                    <th class="text-center">MessageDr</th>
-                    <th class="text-center">ufile ID</th>
-                    <th class="text-center">Contno</th>
-                    <th class="text-center">Shipnumber</th>
-                    <th class="text-center">Status CD</th>
-                    <th class="text-center">StatusDT</th>
-                    <th class="text-center">StatusLocCD</th>
-                    
 
-                  
+
+                  <th class="text-center">MessageDr</th>
+                  <th class="text-center">ufile ID</th>
+                  <th class="text-center">Contno</th>
+                  <th class="text-center">Shipnumber</th>
+                  <th class="text-center">Status CD</th>
+                  <th class="text-center">StatusDT</th>
+                  <th class="text-center">StatusLocCD</th>
+
+
+
                 </tr>
               </thead>
               <tbody>
-                <tr class="gradeX" *ngFor="let c of oSetting.records ">
-              
-                <td class="text-center">{{c.messagesdr}}</td>
-                <td class="text-center">{{c.ufileid}}</td>
-                <td class="text-center">{{c.contno}}</td>
-                <td class="text-center">{{c.shipnum}}</td>
-                <td class="text-center">{{c.statuscd}}</td>
-                <td class="text-center">{{c.statusdt}}</td>
-                <td class="text-center">{{c.stsloccd}}</td>        
-                  
+                <ng-container  *ngFor="let c of oSetting.records ">
+                <ng-container *ngIf="IsNew==c.IsNew && IsNew==true">
+                   <tr class="gradeX" >
+                  <td class="text-center">{{c.messagesdr}}</td>
+                  <td class="text-center">{{c.ufileid}}</td>
+                  <td class="text-center">{{c.contno}}</td>
+                  <td class="text-center">{{c.shipnum}}</td>
+                  <td class="text-center">{{c.statuscd}}</td>
+                  <td class="text-center">{{c.statusdt}}</td>
+                  <td class="text-center">{{c.stsloccd}}</td>
                 </tr>
 
+                </ng-container>
+                <ng-container *ngIf="IsNew==false">
+                   <tr class="gradeX" >
+                  <td class="text-center">{{c.messagesdr}}</td>
+                  <td class="text-center">{{c.ufileid}}</td>
+                  <td class="text-center">{{c.contno}}</td>
+                  <td class="text-center">{{c.shipnum}}</td>
+                  <td class="text-center">{{c.statuscd}}</td>
+                  <td class="text-center">{{c.statusdt}}</td>
+                  <td class="text-center">{{c.stsloccd}}</td>
+                </tr>
+
+                </ng-container>
+                </ng-container>
+               
               </tbody>
               <tfoot>
 
-               
+
               </tfoot>
             </table>
           </div>

@@ -2,6 +2,7 @@ var jFile = require('jsonfile');
 var filePath = './DataDB/daily.json';
 var uuidV1 = require('uuid/v1');
 var dateFormat = require('dateformat');
+var moment = require('moment');
 var fs = require('fs');
 var path = require('path');
 var mime = require('mime');
@@ -21,7 +22,7 @@ var Daily = {
 
     XMLRecordExistMultiple: function (data, cb) {
         fs.readFile(filePath, function (err, obj) {
-           
+
             var ddd = "[" + obj.toString().substr(0, obj.toString().length - 1) + "]";
             if (obj.toString().trim().length == 0) {
                 var TotalRecord = data.length;
@@ -68,6 +69,37 @@ var Daily = {
             cb(rec);
         });
     },
+    GetArchiveRecord: function (date, cb) {
+        fs.readFile(filePath, function (err, obj) {
+            if (obj.toString().length > 0) {
+                var ddd = "[" + obj.toString().substr(0, obj.toString().length - 1) + "]";
+                var jsonData = JSON.parse(ddd);
+                rec = jsonData.filter(m => m.created <= date);
+                cb(rec);
+            } else {
+                cb([]);
+            }
+        });
+    },
+    DeleteAndUpdate: function (DeleteSet, cb) {
+        fs.readFile(filePath, function (err, obj) {
+            if (obj.toString().length > 0) {
+                var ddd = "[" + obj.toString().substr(0, obj.toString().length - 1) + "]";
+                var jsonData = JSON.parse(ddd);
+                DeleteSet.forEach(function (Item) {
+                    // console.log("Founded",jsonData.indexOf( jsonData.filter(i=>i.id==Item.id)[0]));
+                    jsonData.splice(jsonData.indexOf(jsonData.filter(i => i.id == Item.id)[0]), 1);
+                });
+                datatoSave = JSON.stringify(jsonData);
+                datatoSave = datatoSave.substr(1, datatoSave.length - 2) + ",";
+                fs.writeFile(filePath, datatoSave, function (err, obj) {
+                    cb("done");
+                });
+            } else {
+                cb("done");
+            }
+        });
+    },
     GetDaily: function (req, res) {
         fs.readFile(filePath, function (err, obj) {
             if (err)
@@ -85,7 +117,8 @@ var Daily = {
 
         var Newobj = {
             "id": uuidV1(),
-            "receiveTime": dateFormat(Date.now(), "mm/dd/yyyy hh:MM tt"),
+            "receiveTime": dateFormat(Date.now(), "yyyy-mm-dd hh:MM:ss tt"),
+            "created": moment().format('X'),
             "client": ClientName,
             "fileName": fileName,
             "logFile": fullname,
@@ -167,7 +200,7 @@ var Daily = {
 }
 
 module.exports = Daily;
-
+// Compare does these record already have in db or not
 function CompareOld(FullData, data, cb) {
     var TotalRecord = FullData.length;
     var process = 0;

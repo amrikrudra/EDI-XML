@@ -1,0 +1,12 @@
+Application has thrown an uncaught exception and is terminated:
+Error: listen EACCES 0.0.0.0:3002
+    at Object.exports._errnoException (util.js:1050:11)
+    at exports._exceptionWithHostPort (util.js:1073:20)
+    at Server.setupListenHandle [as _listen2] (net.js:1243:19)
+    at listenInCluster (net.js:1307:12)
+    at Server.listen (net.js:1406:7)
+    at Function.listen (C:\Projects\EDIXML\node_modules\express\lib\application.js:618:24)
+    at Object.<anonymous> (C:\Projects\EDIXML\server.js:93:5)
+    at Module._compile (module.js:571:32)
+    at Object.Module._extensions..js (module.js:580:10)
+    at Module.load (module.js:488:32)

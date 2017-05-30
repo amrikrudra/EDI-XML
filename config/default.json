@@ -1,0 +1,14 @@
+{
+  // Customer module configs
+  "EmailServer": {
+      "host": "gmail",
+      "username": "amrik@rudrainnovatives.com",
+      "password": "amrik",
+      "from":"info@rudrainnovatives.com"
+    },
+    "Application":{
+        "portNumber":3002,
+         "OwnerName":"rarush"
+    }
+  
+}

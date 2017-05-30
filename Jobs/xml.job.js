@@ -7,7 +7,9 @@ var XMLService = require('./xml.job.service.js');
 var path = require('path');
 var nodemailer = require('nodemailer');
 var dateFormat = require('dateformat');
+var moment = require('moment');
 var fs = require('fs');
+var config = require('config');
 exports.CheckNewFiles = {
 
     after: { // Configuring this job to run after this period. 
@@ -23,18 +25,7 @@ exports.CheckNewFiles = {
             try {
                 if (data.length > 0)
                     CallSettingOneByOne(data, 0);
-                /* data.forEach(function (Setting) {
-                     var SourceFile = Setting.sourceFile + "\\PAFCL.xls";
-                     var SourceFileShip = Setting.sourceFile + "\\PALCL.xls";
 
-                     ProcessFile(SourceFile, Setting, "f", function () {
-                         ProcessFile(SourceFileShip, Setting, "h", function () {
-                             console.log("Data Base Updated");
-                         }); // helf  
-                     }); //full 
-
-
-                 });*/
             } catch (ex) {
                 console.log("Error", ex);
             }
@@ -51,37 +42,35 @@ exports.CheckNewFiles = {
 }
 
 exports.PurgeArchiveData = {
-
     after: { // Configuring this job to run after this period. 
-        seconds: 0,
-        minutes: 1,
-        hours: 0,
-        days: 0
-    }, // Cron tab instruction. 
-    job: function () {
-        console.log("PurgeArchiveData");
-    },
-    spawn: false // If false, the job will not run in a separate process. 
-}
-
-exports.CountryExcel = {
-
-    after: { // Configuring this job to run after this period. 
-        seconds: 10,
+        seconds: 15,
         minutes: 0,
         hours: 0,
         days: 0
     }, // Cron tab instruction. 
     job: function () {
+        setting.GetActiveSetting(function (data) {
+            // loop through all the setting  and Read Data for Source Location
+            try {
+                if (data.length > 0)
+                    DeleteArchiveOneByOne(data, 0);
 
-
-
-        ProcessCountryExcel();
-
+            } catch (ex) {
+                console.log("Error", ex);
+            }
+        });
     },
     spawn: false // If false, the job will not run in a separate process. 
 }
 
+// This is not a Job
+/*var CountryExcel= {
+  RunCountry: function () {
+       ProcessCountryExcel();
+    }
+}
+module.exports =CountryExcel;
+*/
 
 function RemoveAll(data, item) {
     for (var i = data.length - 1; i--;) {
@@ -92,20 +81,6 @@ function RemoveAll(data, item) {
 
 
 
-function ProcessCountryExcel(Data, SettingIndex) {
-    var basePath = __dirname.replace("jobs", "DataDB");
-    var SourceFile = basePath + "\\CountryDB.xls";
-    //   console.log("Source File Path", SourceFile);
-    if (fs.existsSync(SourceFile)) {
-        XMLService.ReadCountryExcel(SourceFile, "Dummay", function (excelData) {
-
-            fs.renameSync(SourceFile, basePath + "\\CountryDB_.xls");
-            CountryDB.SaveCountry(excelData, "", "", function () {
-
-            }); // Country Save
-        }); // Country Read Excel Data
-    }
-}
 
 
 function CallSettingOneByOne(Data, SettingIndex) {
@@ -115,7 +90,6 @@ function CallSettingOneByOne(Data, SettingIndex) {
 
     ProcessFile(SourceFile, Setting, "f", function () {
         ProcessFile(SourceFileShip, Setting, "h", function (data) {
-            console.log("Data Base Updated");
             SettingIndex++;
             if (Data[SettingIndex] != undefined)
                 CallSettingOneByOne(Data, SettingIndex);
@@ -141,18 +115,19 @@ function GetXMLFileName(Setting, fileobj) {
         }
     }
 
-    console.log("File name", FileName);
+    // console.log("File name", FileName);
     return FileName;
 }
 
 function ProcessFile(SourceFile, Setting, type, cb) {
     if (fs.existsSync(SourceFile)) {
-        console.log("Starting");
+
         XMLService.ReadExcel(SourceFile, Setting.clientName, function (ExcelJson) {
-            console.log("Read Excel");
+
+
             var fData = path.parse(SourceFile);
             Daily.XMLRecordExistMultiple(ExcelJson, function (JsonRecord) {
-                console.log("Compare");
+
                 XMLService.GroupByJsonData(JsonRecord, function (GRecord) {
 
 
@@ -163,10 +138,10 @@ function ProcessFile(SourceFile, Setting, type, cb) {
                     var xmlCol = [];
                     // console.log("GRecod out Foreach");
                     GRecord.forEach(function (Record) {
-                        console.log("GRecod in Foreach");
+                        //console.log("GRecod in Foreach");
                         XMLService.CreateXML(Record.Records, Setting.clientName, type == "f" ? true : false, function (xmlData) {
                             //   console.log("XML Creation");
-                            batchNumber= Date.now();
+                            batchNumber = Date.now();
                             ProcessGRecord++;
                             //  console.log("Total ProcessGRecord " +ProcessGRecord,TotalGRecord);
                             CombineXML += xmlData.xml;
@@ -175,14 +150,15 @@ function ProcessFile(SourceFile, Setting, type, cb) {
                             CombineLog.concat(xmlData.log);
                             if (TotalGRecord == ProcessGRecord) // Upload 
                             {
-                                console.log("Entererererererer r erer er er ", xmlCol.filter(m => m.xml.length == 0).length);
+
+                                // console.log("", xmlCol.filter(m => m.xml.length == 0).length);
                                 if (xmlCol.filter(m => m.xml.length == 0).length > 0) {
                                     if (fs.existsSync(SourceFile))
                                         fs.unlinkSync(SourceFile);
                                     // Send Error Email Stating that there is error in Source file unable to process.
                                     var msg = "Hi,\n\n";
                                     msg += " The file " + fData.base + " has found following error:\n\n";
-                                    msg += " Error: "+ xmlData.msg +"\n\n";
+                                    msg += " Error: " + xmlData.msg + "\n\n";
                                     msg += "\nFile process action is aborted. \n";
                                     msg += "Correct the error in the file or recreate the file \n";
                                     msg += "Drop the file at Source location : " + Setting.sourceFile + " \n";
@@ -212,7 +188,7 @@ function ProcessFile(SourceFile, Setting, type, cb) {
                                                     msg += "RS RUSH \n";
                                                     SendLogEmail(Setting.clientEmail + "," + Setting.userEmail, "XML files (" + xmlCol.length + ") Successfilly send :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
                                                 }
-                                                XML.SaveXmlLog(xmlData.log, FileName, ShipmentNumber, Setting.id,batchNumber, Setting.clientName, function (data) {
+                                                XML.SaveXmlLog(xmlData.log, FileName, ShipmentNumber, Setting.id, batchNumber, Setting.clientName, function (data) {
                                                     //    console.log("Saved XML ", FileName);
                                                     cb("Done");
                                                 });
@@ -286,16 +262,17 @@ function ProcessFile(SourceFile, Setting, type, cb) {
 
 
 function SendLogEmail(to, subject, body) {
+    var EmailConfig = config.get("EmailServer");
     var transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service:EmailConfig.host,
         auth: {
-            user: 'amrik@rudrainnovatives.com',
-            pass: 'Singh@rudra'
+            user: EmailConfig.username,
+            pass: EmailConfig.password
         }
     });
 
     var mailOptions = {
-        from: "info@rudrainnovatives.com",
+        from: EmailConfig.from,
         to: to,
         subject: subject,
         text: body
@@ -308,4 +285,62 @@ function SendLogEmail(to, subject, body) {
             console.log('Email sent: ' + info.response);
         }
     });
+}
+
+
+// Delete Archive Records
+
+// Step 1
+function DeleteArchiveOneByOne(Data, SettingIndex) {
+    var Setting = Data[SettingIndex];
+    var DailyDays = Setting.dailyArchive;
+    var XmlDays = Setting.xmlHistory;
+
+    DeleteDailyArchive(DailyDays, function () {
+        DeleteXMLHistory(XmlDays, function (data) {
+            SettingIndex++;
+            if (Data[SettingIndex] != undefined)
+                DeleteArchiveOneByOne(Data, SettingIndex);
+
+        }); // helf  
+    }); //full
+
+}
+
+// Delete Daily Log Entries and Files
+
+function DeleteDailyArchive(Days, cb) {
+    var date = moment().subtract(Days, 'days').format('X');
+   // console.log(date, " ", moment().format('X'));
+    Daily.GetArchiveRecord(date, function (list) {
+        list.forEach(function (oDelRecord) {
+            if (fs.existsSync(oDelRecord.logFile)) {
+                fs.unlinkSync(oDelRecord.logFile);
+            }
+        })
+        Daily.DeleteAndUpdate(list, function () {
+         //   console.log("Daily Done LA Removed");
+            cb(" Daily Archived File Removed");
+        })
+
+    });
+
+}
+
+function DeleteXMLHistory(Days, cb) {
+    var date = moment().subtract(Days, 'days').format('X');
+   // console.log(date, " ", moment().format('X'));
+    XML.GetArchiveRecord(date, function (list) {
+        list.forEach(function (oDelRecord) {
+            if (fs.existsSync(oDelRecord.logFile)) {
+                fs.unlinkSync(oDelRecord.logFile);
+            }
+        })
+        XML.DeleteAndUpdate(list, function () {
+        //    console.log("XML Done LA Removed");
+            cb("Archived File Removed");
+        })
+
+    });
+
 }

@@ -10607,7 +10607,7 @@ margin-top:50px;
 
 .thirdSide {
     right: -62px;
-    top: -16px;
+    top: 16px;
 }
 
 
@@ -10841,6 +10841,34 @@ table tr td .fa{font-size:18px;}
 
 
 }
+
+
+
+.login-section.middle-box{max-width: inherit; width: 50%;}
+.login-section.middle-box .ibox-content{border-radius: 10px;}
+
+.login-section.middle-box .ibox-content .ibox-content {
+    border-radius: 0;
+    padding: 15px 50px 10px;
+    width: 500px;
+    margin: 0 auto; text-align: center;
+}
+
+.wdth-50{min-width: 50%;}
+
+
+
+@media only screen and (max-width : 1179px){
+.login-section.middle-box .ibox-content .ibox-content{width:auto;}
+
+.login-section.middle-box{width: 80%;}
+
+
+
+
+}
+
+
 
 
 

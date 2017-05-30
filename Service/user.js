@@ -11,7 +11,7 @@ var User = {
     },
 
     SaveUser: function (req, res) {
-        console.log("Data ", req.body)
+     //   console.log("Data ", req.body)
         // spoofing the DB response for simplicity
         jFile.readFile(filePath, function (err, obj) {
             obj.push(req.body);
@@ -26,19 +26,19 @@ var User = {
 
     },
     DeleteUser: function (req, res) {
-           console.log('Data Record', req.body);
+        //   console.log('Data Record', req.body);
         jFile.readFile(filePath, function (err, obj) {
             index = obj.filter(function (item) {
                 return (item.id == req.params.id);
             });
             index = obj.indexOf(index[0]);
-            console.log('Index Of Record', index);
+           // console.log('Index Of Record', index);
             if (index > -1) {
                 obj.splice(index, 1);
                 jFile.writeFile(filePath, obj, {
 
                 }, function (err) {
-                    console.error("rror", err);
+                  //  console.error("rror", err);
                     if (err == null)
                         res.json(obj);
                 });
@@ -66,7 +66,7 @@ var User = {
     },
 
       ValidateUser: function (req,res) {
-           console.log('ValidateUser Data Record', req.body);
+      //     console.log('ValidateUser Data Record', req.body);
         jFile.readFile(filePath, function (err, obj) {
             index = obj.filter(function (item) {
                 return (item.userName ==req.body. userName && item.password==req.body.password);

@@ -4,21 +4,25 @@
       <div class="ibox float-e-margins">
         <div class="ibox-content">
           <div class="row">
-            <div class=col-sm-6>Country Codes <input type="file" ng2FileSelect [uploader]="uploader" *ngIf="uploader.queue.length==0" />
+            <div class="col-sm-2">Country Codes
+            </div>
+            <div class="col-sm-4 ">
+              <input type="file" ng2FileSelect [uploader]="uploader" *ngIf="uploader.queue.length==0" />
               <ng-container *ngIf="uploader.queue.length>0">
+
                 <button type="button" class="btn btn-success btn-xs" (click)="uploader.queue[0].upload()" *ngIf="!uploader.queue[0].isSuccess">
                             <span class="glyphicon glyphicon-upload"></span> Upload
                         </button>
-                         <span *ngIf="uploader.queue[0].isSuccess">[File Uploaded]</span>
+                <span *ngIf="uploader.queue[0].isSuccess">[File Uploaded]</span>
+
               </ng-container>
-              &nbsp;
-              <a href="/DataBD/CountryDB_.xls" class="fa fa-download" target="_blank" title="download">Download</a>
-
-
             </div>
+             <div class="col-sm-2">
+                <a href="/DataDB/CountryDB_.xls" class="fa fa-download" target="_blank" title="download">Download</a>
+              </div>
             <div class="col-sm-4 pull-right search-section">
               <input class="form-control" id="namesearch" placeholder="Search By Location Name" type="text" (keyup)="showCross()" [(ngModel)]="firstNameFilter">
-             <i class="fa fa-search" *ngIf="HideCross"></i> <i class="fa fa-times" *ngIf="!HideCross" (click)="onRemove()"></i>
+              <i class="fa fa-search" *ngIf="HideCross"></i> <i class="fa fa-times" *ngIf="!HideCross" (click)="onRemove()"></i>
             </div>
           </div>
         </div>
@@ -27,7 +31,7 @@
             <table class="table table-striped table-bordered table-hover dataTables-example">
               <thead>
                 <tr>
-                    <ng-container *ngFor="let col of cols">
+                  <ng-container *ngFor="let col of cols">
                     <th *ngIf="col.sortable" class="text-center" (click)="SortColumn(col)">
                       {{col.title}}
                       <ng-container *ngIf="col.sorted==true && col.sortable==true">

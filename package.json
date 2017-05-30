@@ -19,11 +19,13 @@
   "homepage": "https://github.com/manvirarethos/MEANDEV#readme",
   "dependencies": {
     "body-parser": "^1.17.1",
+    "config": "^1.26.1",
     "dateformat": "^2.0.0",
     "ejs": "^2.5.6",
     "express": "^4.15.2",
     "ftp": "^0.3.10",
     "jsonfile": "^3.0.0",
+    "moment": "^2.18.1",
     "multer": "^1.3.0",
     "node-cron-job": "^0.2.3",
     "nodemailer": "^4.0.1",

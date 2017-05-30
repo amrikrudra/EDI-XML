@@ -28,7 +28,7 @@ export class XmlLogComponent {
   oSetting: any;
   Settings: any[];
   prev: number = -1;
-
+  IsNew:boolean=false;
   cols: any[] = [{
 
       name: "batchid",
@@ -91,7 +91,9 @@ export class XmlLogComponent {
     this.oSetting = Object.assign({}, obj); // obj;
 
   }
-
+  showNew(data){
+    this.IsNew=data;
+  }
   showCross() {
 
     if (this.firstNameFilter.length > 0)

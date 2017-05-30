@@ -2,6 +2,7 @@ var jFile = require('jsonfile');
 var filePath = './DataDB/country.code.json';
 var uuidV1 = require('uuid/v1');
 var dateFormat = require('dateformat');
+var XLSX = require('xlsx');
 var fs = require('fs');
 
 var CountryDB = {
@@ -18,7 +19,7 @@ var CountryDB = {
 
     SaveCountry: function (data, fileName, ClientName, cb) {
         var str = JSON.stringify(data);
-        str = str.substr(1, str.length-2);
+        str = str.substr(1, str.length - 2);
         fs.writeFile(filePath, str + ",", function (err) {
             if (err == null)
                 cb("{\"Status\":\"OK\"}");
@@ -63,26 +64,84 @@ var CountryDB = {
                 });
             }
         });
-    }
-,
-    GetUnCode: function (COUNTRY,LOCNAME,SUBDIV,cb) {
-       
+    },
+    GetUnCode: function (COUNTRY, LOCNAME, SUBDIV, cb) {
+
         fs.readFile(filePath, function (err, obj) {
             if (err)
                 console.log("Error", err);
-            var ddd = JSON.parse( "[" + obj.toString().substr(0, obj.toString().length - 1) + "]");
-           
-           var res=  index = ddd.filter(function (item) {
-                return (item.COUNTRY.toString().toLowerCase() ==COUNTRY.toString().toLowerCase() && item.LOCNAME.toString().toLowerCase()==LOCNAME.toString().toLowerCase() && item.SUBDIV.toString().toLowerCase()==SUBDIV.toString().toLowerCase());
+            var ddd = JSON.parse("[" + obj.toString().substr(0, obj.toString().length - 1) + "]");
+
+            var res = index = ddd.filter(function (item) {
+                return (item.COUNTRY.toString().toLowerCase() == COUNTRY.toString().toLowerCase() && item.LOCNAME.toString().toLowerCase() == LOCNAME.toString().toLowerCase() && item.SUBDIV.toString().toLowerCase() == SUBDIV.toString().toLowerCase());
             });
-        
-           if(res.length>0)
-             cb(res[0]);
-             else
-             cb(null);
+
+            if (res.length > 0)
+                cb(res[0]);
+            else
+                cb(null);
         });
+    },
+    ProcessCountryExcel: function () {
+        var basePath = __dirname.replace("service", "DataDB");
+        var SourceFile = basePath + "\\CountryDB.xls";
+        //   console.log("Source File Path", SourceFile);
+        if (fs.existsSync(SourceFile)) {
+            ReadCountryExcel(SourceFile, "Dummay", function (excelData) {
+
+                fs.renameSync(SourceFile, basePath + "\\CountryDB_.xls");
+                CountryDB.SaveCountry(excelData, "", "", function () {
+
+                }); // Country Save
+            }); // Country Read Excel Data
+        }
     }
+
 
 }
 
 module.exports = CountryDB;
+
+
+function ReadCountryExcel(InputFile, Client, cb) {
+    var workbook = XLSX.readFile(InputFile);
+    var SheetName = workbook.Props.SheetNames[0];
+
+    var dataRows = [];
+    var row = 2;
+
+    while (GetData(workbook, SheetName, "A" + row) != "") {
+
+        try {
+            //console.log("Daa",workbook.Sheets.A["Q"+ row])
+            dataRows.push({
+                "ID": uuidV1(),
+                "COUNTRY": GetData(workbook, SheetName, "A" + row),
+                "UNCODE": GetData(workbook, SheetName, "B" + row),
+                "LOCNAME": GetData(workbook, SheetName, "C" + row),
+                "SUBDIV": GetData(workbook, SheetName, "D" + row),
+                "IATACODE": GetData(workbook, SheetName, "E" + row),
+                "IATANAME": GetData(workbook, SheetName, "F" + row),
+                "TIMEXONE": GetData(workbook, SheetName, "G" + row),
+                "PORT": GetData(workbook, SheetName, "H" + row),
+                "AIRPORT": GetData(workbook, SheetName, "I" + row),
+                "RAIL": GetData(workbook, SheetName, "J" + row),
+                "ROAD": GetData(workbook, SheetName, "K" + row),
+                "UNSTANDARD": GetData(workbook, SheetName, "L" + row),
+                "LOCALNAME": GetData(workbook, SheetName, "M" + row),
+                "NONIATA": GetData(workbook, SheetName, "N" + row),
+                "VALIDFROM": GetData(workbook, SheetName, "O" + row),
+                "VALIDTO": GetData(workbook, SheetName, "P" + row)
+
+            });
+        } catch (ex) {
+            console.log(ex);
+        }
+
+        row = row + 1;
+
+
+    }
+    console.log("Country DB", dataRows.length);
+    cb(dataRows);
+}
