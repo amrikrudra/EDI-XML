@@ -63,7 +63,10 @@ var XMLService = {
                     "Date": GetData(workbook, SheetName, "Q" + row),
                     "Time": GetData(workbook, SheetName, "R" + row),
                     "UNCODE": GetData(workbook, SheetName, "S" + row),
-                    "Client": Client
+                    "Client": Client,
+                    "RecordNo": row,
+                    "Error": false,
+                    "ErrorMsg": ""
                 });
             } catch (ex) {}
 
@@ -71,22 +74,24 @@ var XMLService = {
 
 
         }
+
         cb(dataRows);
     },
     CreateXML: function (JsonData, Client, isuFile, cb) {
-
         var interXML = "";
         var TotalRecord = JsonData.length;
         var Processed = 0;
         var logData = [];
         var Application = config.get("Application");
 
-        JsonData.forEach(function (item) {
+           JsonData.forEach(function (item) 
+           {
+       // for (i = 0; i < JsonData.length; i++) {
+      //      item = JsonData[i];
             FreighService.GetStatusAndLocDB(item.TType, item.TDirection, item.Freight, item.ShipType, function (data) {
 
+
                 //console.log("Date", moment(new Date(item.Date)).format("YYYY-MM-DD"));
-                item.Error = false;
-                item.ErrorMsg = "";
                 var country = "CA";
                 var locName;
                 var subdiv;
@@ -114,8 +119,9 @@ var XMLService = {
                     }
 
                     CountryService.GetUnCode(country, locName, subdiv, function (unCode) {
-                        Processed++;
+
                         if (unCode == null) {
+                            Processed++;
                             unCode = {};
                             unCode.COUNTRY = "CA";
                             unCode.UNCODE = "";
@@ -127,66 +133,90 @@ var XMLService = {
                              });*/
                             item.Error = true;
                             item.ErrorMsg = "Unable to find  stsloccd";
-                        } else {}
 
+                           // console.log("processed %d  Total %d", Processed, TotalRecord, item);
+                            if (Processed == TotalRecord) {
+                                if (interXML == "") {
 
-                        if (isuFile == false) {
-                            if (item.IsNew) {
-                                interXML += "<Scp_edistatusqueue><messagesdr>" + Application.OwnerName + "</messagesdr>" +
-                                    "<shipnum>" + item.PO + "</shipnum> " +
-                                    "<statuscd>" + data.scode + "</statuscd>" +
-                                    "<statusdt>" + moment(new Date(item.Date)).format("YYYY-MM-DD") + " " + item.Time + "</statusdt>" +
-                                    "<stsloccd>" + unCode.COUNTRY + unCode.UNCODE + "</stsloccd></Scp_edistatusqueue>";
+                                    cb({
+                                        "xml": interXML,
+                                        "log": logData,
+                                        "msg": "No  new record found"
+                                    });
+                                } else {
+                                    cb({
+                                        "xml": interXML,
+                                        "log": logData,
+                                        "msg": ""
+                                    });
+                                }
                             }
-                            logData.push({
-                                "messagesdr": Application.OwnerName,
-                                "shipnum": item.PO,
-                                "statuscd": data.scode,
-                                "statusdt": moment(new Date(item.Date)).format("YYYY-MM-DD") + " " + item.Time,
-                                "stsloccd": unCode.COUNTRY + unCode.UNCODE,
-                                "ufileid": "",
-                                "contno": "",
-                                "IsNew": item.IsNew
-                            });
                         } else {
-                            if (item.IsNew) {
-                                interXML += "<Scp_edistatusqueue><messagesdr>" + Application.OwnerName + "</messagesdr>" +
-                                    "<ufileid>" + item.PO + "</ufileid><contno>" + item.TraceCd + "</contno>" +
-                                    "<statuscd>" + data.scode + "</statuscd>" +
-                                    "<statusdt>" + moment(new Date(item.Date)).format("YYYY-MM-DD") + " " + item.Time + "</statusdt>" +
-                                    "<stsloccd>" + unCode.COUNTRY + unCode.UNCODE + "</stsloccd></Scp_edistatusqueue>";
+                            Processed++;
+
+                            if (isuFile == false) {
+                                if (item.IsNew) {
+                                    interXML += "<Scp_edistatusqueue><messagesdr>" + Application.OwnerName + "</messagesdr>" +
+                                        "<shipnum>" + item.PO + "</shipnum> " +
+                                        "<statuscd>" + data.scode + "</statuscd>" +
+                                        "<statusdt>" + moment(new Date(item.Date)).format("YYYY-MM-DD") + " " + item.Time + "</statusdt>" +
+                                        "<stsloccd>" + unCode.COUNTRY + unCode.UNCODE + "</stsloccd></Scp_edistatusqueue>";
+                                }
                                 logData.push({
                                     "messagesdr": Application.OwnerName,
-                                    "shipnum": "",
+                                    "shipnum": item.PO,
                                     "statuscd": data.scode,
                                     "statusdt": moment(new Date(item.Date)).format("YYYY-MM-DD") + " " + item.Time,
                                     "stsloccd": unCode.COUNTRY + unCode.UNCODE,
-                                    "ufileid": item.PO,
-                                    "contno": item.TraceCd,
+                                    "ufileid": "",
+                                    "contno": "",
                                     "IsNew": item.IsNew
                                 });
+                            } else {
+                                if (item.IsNew) {
+                                    interXML += "<Scp_edistatusqueue><messagesdr>" + Application.OwnerName + "</messagesdr>" +
+                                        "<ufileid>" + item.PO + "</ufileid><contno>" + item.TraceCd + "</contno>" +
+                                        "<statuscd>" + data.scode + "</statuscd>" +
+                                        "<statusdt>" + moment(new Date(item.Date)).format("YYYY-MM-DD") + " " + item.Time + "</statusdt>" +
+                                        "<stsloccd>" + unCode.COUNTRY + unCode.UNCODE + "</stsloccd></Scp_edistatusqueue>";
+                                    logData.push({
+                                        "messagesdr": Application.OwnerName,
+                                        "shipnum": "",
+                                        "statuscd": data.scode,
+                                        "statusdt": moment(new Date(item.Date)).format("YYYY-MM-DD") + " " + item.Time,
+                                        "stsloccd": unCode.COUNTRY + unCode.UNCODE,
+                                        "ufileid": item.PO,
+                                        "contno": item.TraceCd,
+                                        "IsNew": item.IsNew
+                                    });
+                                }
+
                             }
 
+                           // console.log("processed %d  Total %d", Processed, TotalRecord, item);
+                            if (Processed == TotalRecord) {
+                                if (interXML == "") {
+
+                                    cb({
+                                        "xml": interXML,
+                                        "log": logData,
+                                        "msg": "No  new record found"
+                                    });
+                                } else {
+                                    cb({
+                                        "xml": interXML,
+                                        "log": logData,
+                                        "msg": ""
+                                    });
+                                }
+                            }
                         }
 
-                        if (Processed == TotalRecord)
-                            if (interXML == "") {
-                                cb({
-                                    "xml": interXML,
-                                    "log": logData,
-                                    "msg": "No  new record found"
-                                });
-                            }
-                        else {
-                            cb({
-                                "xml": interXML,
-                                "log": logData,
-                                "msg": ""
-                            });
-                        }
+
                     }); // UnCode
                 } else {
 
+                    Processed++;
                     item.Error = true;
                     item.ErrorMsg = "Unable to find  stsloccd";
                     /* cb({
@@ -195,9 +225,30 @@ var XMLService = {
                          "msg": "Unable to find  statuscd"
                      });
                      return;*/
+                    console.log("processed %d  Total %d", Processed, TotalRecord, item);
+                    if (Processed == TotalRecord) {
+                        if (interXML == "") {
+
+                            cb({
+                                "xml": interXML,
+                                "log": logData,
+                                "msg": "No  new record found"
+                            });
+                        } else {
+                            cb({
+                                "xml": interXML,
+                                "log": logData,
+                                "msg": ""
+                            });
+                        }
+                    }
 
                 }
+
+
+
             });
+
 
         });
 

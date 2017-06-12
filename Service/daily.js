@@ -123,7 +123,7 @@ var Daily = {
             "client": ClientName,
             "fileName": fileName,
             "logFile": fullname,
-            "records": data
+            "records": data.filter(m=>m.Error==false)
         };
         // obj.push(Newobj);
 
