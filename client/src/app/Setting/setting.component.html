@@ -4,7 +4,7 @@
       <div class="ibox float-e-margins">
         <div class="ibox-content">
           <div class="row">
-            <div class=col-sm-4>Setting <input type="button" class="btn btn-primary" (click)="onNew()" value=" Add New"></div>
+            <div class=col-sm-4>Setting  &nbsp; &nbsp; &nbsp;<input type="button" class="btn btn-primary" (click)="onNew()" value=" Add New"></div>
             <div class="col-sm-4 pull-right search-section">
               <input class="form-control" id="namesearch" placeholder="Search By URL" type="text" (keyup)="showCross()" [(ngModel)]="firstNameFilter">
              <i class="fa fa-search" *ngIf="HideCross"></i> <i class="fa fa-times" *ngIf="!HideCross" (click)="onRemove()"></i>
@@ -30,8 +30,8 @@
               <tbody>
                 <tr class="gradeX" *ngFor="let c of Settings |userFilter:firstNameFilter| paginate: { itemsPerPage: 10, currentPage: p };let i=index;"
                   [class.active]="i==selectedRow">
-                  <td>{{c.serverName}}</td>
-                  <td>{{c.clientName}}</td>
+                  <td  class="text-center">{{c.serverName}}</td>
+                  <td  class="text-center">{{c.clientName}}</td>
 
                   <td class="text-center">{{c.endPoint}}</td>
                   <td class="text-center">{{c.sourceFile}}</td>
@@ -71,6 +71,7 @@
               </div>
             </div>
             <div class="row">
+              <div class="col-md-12 form-group">
               <div class="col-md-6">
                 <div class="col-md-4">Client Name</div>
                 <div class="col-md-8"><input class="form-control" [(ngModel)]="oSetting.clientName" name="clientName" id="clientName" required/>                  </div>
@@ -83,6 +84,7 @@
                       <option value="Inactive">Inactive</option>
                   </select> </div>
               </div>
+            </div>
             </div>
             <div class="row">
               <div class="col-md-12 form-group">
@@ -191,7 +193,7 @@
                 <div class="col-md-6">
                   <div class="col-md-4">Send Email</div>
                   <div class="col-md-8">
-                    <input class="" type="radio" [(ngModel)]="oSetting.sendEmail" value="1"/>Yes&nbsp;<input class="" type="radio" [(ngModel)]="oSetting.sendEmail" value="2"/> No
+                    <input class="" type="radio" [(ngModel)]="oSetting.sendEmail" value="1"/>&nbsp;Yes&nbsp;<input class="" type="radio" [(ngModel)]="oSetting.sendEmail" value="2"/>&nbsp;No
                     </div>
                 </div>
 

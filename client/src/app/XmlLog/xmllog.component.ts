@@ -61,7 +61,7 @@ export class XmlLogComponent {
     },
     {
       name: "records.length",
-      title: "No Of Records",
+      title: "No of Records",
       sorted: false,
       sortAs: "",
       sortable: true
@@ -86,6 +86,10 @@ export class XmlLogComponent {
 
   }
 
+ getNew(records)
+ {
+   return records.filter(m=>m.IsNew==true).length;
+ }
   onEdit(obj, i) {
     this.selectedRow = i;
     this.oSetting = Object.assign({}, obj); // obj;

@@ -24,12 +24,13 @@
                     </thead>
 
                     <tbody>
-                      <tr class="gradeX" *ngFor="let d of Dailytrans | slice : 0:4 ;let i=index" [class.active]="i==selectedRow">
-                        <td>{{d.receiveTime}}</td>
+                      <tr class="gradeX" *ngFor="let d of Dailytrans | slice : 0:3 ;let i=index" [class.active]="i==selectedRow">
+                        <td  class="text-center">{{d.receiveTime}}</td>
 
                         <td class="text-center">{{d.fileName}}</td>
 
-                        <td class="text-center">{{d.records.length}}</td>
+                          <td class="text-center">{{d.records.length}}/{{ getNew(d.records)}}</td>
+
 
                       </tr>
 
@@ -68,8 +69,8 @@
                 </thead>
 
                 <tbody>
-                  <tr class="gradeX" *ngFor="let x of Xmlhistory | slice : 0:4 ;let i=index" [class.active]="i==selectedRow">
-                    <td>{{x.fileName}}</td>
+                  <tr class="gradeX" *ngFor="let x of Xmlhistory | slice : 0:3 ;let i=index" [class.active]="i==selectedRow">
+                    <td class="text-center">{{x.fileName}}</td>
 
                     <td class="text-center">{{x.receiveTime}}</td>
 

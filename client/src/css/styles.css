@@ -9,7 +9,7 @@
 */
 tr.active td
 {
-  background-color:#777!important;
+  background-color:#ddd!important;
   color:#000!important;
 }
 .fa {
@@ -1132,6 +1132,7 @@ body.canvas-menu.mini-navbar nav.navbar-static-side {
     color: inherit;
     background: white;
     border: 1px solid #e7eaec;
+    margin-right: 15px;
 }
 
     .btn-white:hover,
@@ -4568,7 +4569,7 @@ code {
 .ibox-content {
     background-color: #ffffff;
     color: inherit;
-    padding: 15px 20px 10px 10px;
+    padding: 15px 10px 10px 10px;
     border-color:#e7eaec;
     border-image: none;
     border-style: solid solid none;
@@ -10519,8 +10520,7 @@ margin-top:50px;
 .leftDiv {
     width: 360px;
     text-align: center;
-    float: left;
-    margin-left: 46px;
+  margin: 0 auto;
 }
 .secondDiv {
     padding-top: 86px;
@@ -10833,7 +10833,7 @@ table tr td .fa{font-size:18px;}
 
 @media (min-width: 768px){
 
-.fixed-header{position: fixed; left: 0; right: 0; z-index: 1; padding-left: 245px; } 
+.fixed-header{position: fixed; left: 0; right: 0; z-index: 1; padding-left: 245px; padding-right: 15px;} 
 
 .wrapper.wrapper-content{padding-top: 68px;}
 

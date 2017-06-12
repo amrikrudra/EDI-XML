@@ -1,14 +1,16 @@
 {
   // Customer module configs
   "EmailServer": {
-      "host": "gmail",
-      "username": "amrik@rudrainnovatives.com",
-      "password": "amrik",
-      "from":"info@rudrainnovatives.com"
+      "host": "smtp.office365.com",
+      "username": "donotreply@rsrush.com",
+      "password": "Zayu7811",
+      "from":"donotreply@rsrush.com",
+      "port":"587"
     },
     "Application":{
-        "portNumber":3002,
-         "OwnerName":"rarush"
+        "portNumber":83,
+         "OwnerName":"rsrush",
+         "AppUrl":"http://localhost:3000"
     }
   
 }

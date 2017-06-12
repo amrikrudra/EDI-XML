@@ -74,7 +74,7 @@ export class DashboardComponent {
     },
      {
       name:"records.length",
-      title:"No Of Records",
+      title:"Total/New",
       sorted:false,
       sortAs:"",
        sortable:false
@@ -89,6 +89,7 @@ clientItemList:any[];
 
   userService.GetDailyTran().subscribe(m => {
        this.Dailytrans = m;
+       this.sortService.direction=1;
         this.sortService.sort(this.cols[0],this.Dailytrans);
 
 });
@@ -96,6 +97,7 @@ clientItemList:any[];
 
  XmlService.GetXmlLog().subscribe( h => {
       this.Xmlhistory = h;
+      this.sortService.direction=1;
         this.sortService.sort(this.cols[0],this.Xmlhistory);
     });
 
@@ -105,7 +107,10 @@ clientItemList:any[];
 
       this.clientItemList=[{id:'1',name:'Amrik'}];
 }
-
+ getNew(records)
+ {
+   return records.filter(m=>m.IsNew==true).length;
+ }
 
 SortColumn(key)
 {

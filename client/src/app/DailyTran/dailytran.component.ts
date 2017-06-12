@@ -41,7 +41,7 @@ export class DailyTranComponent {
     },
     {
       name:"records.length",
-      title:"No Of Records",
+      title:"Total/New",
       sorted:false,
       sortAs:"",
        sortable:true
@@ -55,12 +55,14 @@ export class DailyTranComponent {
        sortable:false
     }
    ];
+   IsNew:boolean=false;
    selectedRow:number;
    firstNameFilter:string;
    HideCross:boolean=true;
   constructor(private _route: ActivatedRoute, private _router: Router, private userService: DailyTranService,private sortService:Sorter) {
     userService.GetDailyTran().subscribe(m => {
       this.Settings = m;
+      this.sortService.direction=1;
         this.sortService.sort(this.cols[0],this.Settings);
     });
 
@@ -71,6 +73,13 @@ export class DailyTranComponent {
     this.oSetting = Object.assign({}, obj); // obj;
 
   }
+  showNew(data){
+    this.IsNew=data;
+  }
+ getNew(records)
+ {
+   return records.filter(m=>m.IsNew==true).length;
+ }
 
 SortColumn(key)
 {

@@ -5,8 +5,8 @@ var XLSX = require('xlsx');
 var uuidV1 = require('uuid/v1');
 var FreighService = require('../Service/freight.js');
 var CountryService = require('../Service/country.js');
-var config= require('config');
-
+var config = require('config');
+var moment = require('moment');
 
 var XMLService = {
     SendEmail: function () {
@@ -52,14 +52,14 @@ var XMLService = {
                     "TraceCd": GetData(workbook, SheetName, "F" + row),
                     "Freight": GetData(workbook, SheetName, "G" + row),
                     "Finance": GetData(workbook, SheetName, "H" + row),
-                    "Status": GetData(workbook, SheetName, "I" + row),
+                    "ShipType": GetData(workbook, SheetName, "I" + row),
                     "Customer": GetData(workbook, SheetName, "J" + row),
                     "Shipper": GetData(workbook, SheetName, "K" + row),
                     "Consignee": GetData(workbook, SheetName, "L" + row),
                     "Note": GetData(workbook, SheetName, "M" + row),
                     "ContainerNumber": GetData(workbook, SheetName, "N" + row),
-                    "OriginZone": GetData(workbook, SheetName, "O" + row),
-                    "DestinationZone": GetData(workbook, SheetName, "P" + row),
+                    "TType": GetData(workbook, SheetName, "O" + row),
+                    "TDirection": GetData(workbook, SheetName, "P" + row),
                     "Date": GetData(workbook, SheetName, "Q" + row),
                     "Time": GetData(workbook, SheetName, "R" + row),
                     "UNCODE": GetData(workbook, SheetName, "S" + row),
@@ -79,22 +79,38 @@ var XMLService = {
         var TotalRecord = JsonData.length;
         var Processed = 0;
         var logData = [];
-        var  Application= config.get("Application");
+        var Application = config.get("Application");
 
         JsonData.forEach(function (item) {
-            FreighService.GetStatusAndLocDB(item.OriginZone, item.DestinationZone, item.Freight, function (data) {
+            FreighService.GetStatusAndLocDB(item.TType, item.TDirection, item.Freight, item.ShipType, function (data) {
 
+                //console.log("Date", moment(new Date(item.Date)).format("YYYY-MM-DD"));
+                item.Error = false;
+                item.ErrorMsg = "";
                 var country = "CA";
                 var locName;
                 var subdiv;
                 if (data != null) {
                     //if (data.length > 0) {
                     if (data.floc.toString().toLowerCase() == "origin") {
-                        locName = item.Origin.split(',')[0].trim();
-                        subdiv = item.Origin.split(',')[1].trim();
+                        if (item.Origin.split(',').length > 0) {
+
+                            locName = item.Origin.split(',')[0].trim();
+                            subdiv = item.Origin.split(',')[1].trim();
+                        } else {
+                            locName = item.Origin.toString().trim();
+                            subdiv = ""; //item.Origin.split(',')[1].trim();
+                        }
                     } else {
-                        locName = item.Destination.split(',')[0].trim();
-                        subdiv = item.Destination.split(',')[1].trim();
+
+                        if (item.Destination.split(',').length > 0) {
+
+                            locName = item.Destination.split(',')[0].trim();
+                            subdiv = item.Destination.split(',')[1].trim();
+                        } else {
+                            locName = item.Destination.toString().trim();
+                            subdiv = ""; //item.Origin.split(',')[1].trim();
+                        }
                     }
 
                     CountryService.GetUnCode(country, locName, subdiv, function (unCode) {
@@ -104,13 +120,14 @@ var XMLService = {
                             unCode.COUNTRY = "CA";
                             unCode.UNCODE = "";
 
-                            cb({
-                                "xml": "",
-                                "log": [],
-                                "msg": "Unable to find  stsloccd"
-                            });
-                            return;
-                        }
+                            /* cb({
+                                 "xml": "",
+                                 "log": [],
+                                 "msg": "Unable to find  stsloccd"
+                             });*/
+                            item.Error = true;
+                            item.ErrorMsg = "Unable to find  stsloccd";
+                        } else {}
 
 
                         if (isuFile == false) {
@@ -118,14 +135,14 @@ var XMLService = {
                                 interXML += "<Scp_edistatusqueue><messagesdr>" + Application.OwnerName + "</messagesdr>" +
                                     "<shipnum>" + item.PO + "</shipnum> " +
                                     "<statuscd>" + data.scode + "</statuscd>" +
-                                    "<statusdt>" + item.Date + " " + item.Time + "</statusdt>" +
+                                    "<statusdt>" + moment(new Date(item.Date)).format("YYYY-MM-DD") + " " + item.Time + "</statusdt>" +
                                     "<stsloccd>" + unCode.COUNTRY + unCode.UNCODE + "</stsloccd></Scp_edistatusqueue>";
                             }
                             logData.push({
                                 "messagesdr": Application.OwnerName,
                                 "shipnum": item.PO,
                                 "statuscd": data.scode,
-                                "statusdt": item.Date + " " + item.Time,
+                                "statusdt": moment(new Date(item.Date)).format("YYYY-MM-DD") + " " + item.Time,
                                 "stsloccd": unCode.COUNTRY + unCode.UNCODE,
                                 "ufileid": "",
                                 "contno": "",
@@ -136,19 +153,20 @@ var XMLService = {
                                 interXML += "<Scp_edistatusqueue><messagesdr>" + Application.OwnerName + "</messagesdr>" +
                                     "<ufileid>" + item.PO + "</ufileid><contno>" + item.TraceCd + "</contno>" +
                                     "<statuscd>" + data.scode + "</statuscd>" +
-                                    "<statusdt>" + item.Date + " " + item.Time + "</statusdt>" +
+                                    "<statusdt>" + moment(new Date(item.Date)).format("YYYY-MM-DD") + " " + item.Time + "</statusdt>" +
                                     "<stsloccd>" + unCode.COUNTRY + unCode.UNCODE + "</stsloccd></Scp_edistatusqueue>";
+                                logData.push({
+                                    "messagesdr": Application.OwnerName,
+                                    "shipnum": "",
+                                    "statuscd": data.scode,
+                                    "statusdt": moment(new Date(item.Date)).format("YYYY-MM-DD") + " " + item.Time,
+                                    "stsloccd": unCode.COUNTRY + unCode.UNCODE,
+                                    "ufileid": item.PO,
+                                    "contno": item.TraceCd,
+                                    "IsNew": item.IsNew
+                                });
                             }
-                            logData.push({
-                                "messagesdr": Application.OwnerName,
-                                "shipnum": "",
-                                "statuscd": data.scode,
-                                "statusdt": item.Date + " " + item.Time,
-                                "stsloccd": unCode.COUNTRY + unCode.UNCODE,
-                                "ufileid": item.PO,
-                                "contno": item.TraceCd,
-                                "IsNew": item.IsNew
-                            });
+
                         }
 
                         if (Processed == TotalRecord)
@@ -169,13 +187,15 @@ var XMLService = {
                     }); // UnCode
                 } else {
 
-                    cb({
-                        "xml": "",
-                        "log": [],
-                        "msg": "Unable to find  statuscd"
-                    });
-                    return;
-                 
+                    item.Error = true;
+                    item.ErrorMsg = "Unable to find  stsloccd";
+                    /* cb({
+                         "xml": "",
+                         "log": [],
+                         "msg": "Unable to find  statuscd"
+                     });
+                     return;*/
+
                 }
             });
 

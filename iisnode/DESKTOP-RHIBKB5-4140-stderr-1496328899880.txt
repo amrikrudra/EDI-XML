@@ -1,0 +1,4 @@
+Application has thrown an uncaught exception and is terminated:
+ReferenceError: path is not defined
+    at C:\Projects\EDIXML\Service\country.js:110:28
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:439:3)

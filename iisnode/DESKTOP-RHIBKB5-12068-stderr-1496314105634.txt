@@ -1,0 +1,5 @@
+Application has thrown an uncaught exception and is terminated:
+SyntaxError: Unexpected token u in JSON at position 0
+    at JSON.parse (<anonymous>)
+    at C:\Projects\EDIXML\Service\daily.js:183:33
+    at FSReqWrap.readFileAfterClose [as oncomplete] (fs.js:439:3)

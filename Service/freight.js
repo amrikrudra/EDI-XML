@@ -64,12 +64,12 @@ var Freight = {
             }
         });
     },
-    GetStatusAndLocDB: function (Origin, Destination, Freight, cb) {
+    GetStatusAndLocDB: function (TType, TDirection, Freight,ShipType, cb) {
         jFile.readFile(filePath, function (err, obj) {
         
         
             index = obj.filter(function (item) {
-                return (item.tdirection.toString().toLowerCase() == Destination.toString().toLowerCase() && item.shiptype.toString().toLowerCase() == Origin.toString().toLowerCase() && item.fcode.toString().toLowerCase() == Freight.toString().toLowerCase());
+                return (item.ttype.toString().toLowerCase() == TType.toString().toLowerCase() && item.tdirection.toString().toLowerCase() == TDirection.toString().toLowerCase() && item.shiptype.toString().toLowerCase() == ShipType.toString().toLowerCase() && item.fcode.toString().toLowerCase() == Freight.toString().toLowerCase());
             });
           console.log(index);
             if (index.length > 0)

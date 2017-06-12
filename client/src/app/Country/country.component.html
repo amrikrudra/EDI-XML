@@ -6,7 +6,7 @@
           <div class="row">
             <div class="col-sm-2">Country Codes
             </div>
-            <div class="col-sm-4 ">
+            <div class="col-sm-3 ">
               <input type="file" ng2FileSelect [uploader]="uploader" *ngIf="uploader.queue.length==0" />
               <ng-container *ngIf="uploader.queue.length>0">
 
@@ -17,8 +17,8 @@
 
               </ng-container>
             </div>
-             <div class="col-sm-2">
-                <a href="/DataDB/CountryDB_.xls" class="fa fa-download" target="_blank" title="download">Download</a>
+             <div class="col-sm-3">
+                <a href="/api/country/download"  target="_blank" title="download"> <span class="fa fa-download" style="font-size:18px"></span>  <span>Download</span></a>
               </div>
             <div class="col-sm-4 pull-right search-section">
               <input class="form-control" id="namesearch" placeholder="Search By Location Name" type="text" (keyup)="showCross()" [(ngModel)]="firstNameFilter">
@@ -44,25 +44,33 @@
               </thead>
               <tbody>
                 <tr class="gradeX" *ngFor="let c of Settings |userFilter:firstNameFilter| paginate: { itemsPerPage: 20, currentPage: p }">
-                  <td>{{c.COUNTRY}}</td>
-
+                  <td  class="text-center">{{c.COUNTRY}}</td>
                   <td class="text-center">{{c.UNCODE}}</td>
                   <td class="text-center">{{c.LOCNAME}}</td>
                   <td class="text-center">{{c.SUBDIV}}</td>
-                  <td class="text-center">{{c.LOCALNAME}}</td>
+                  <td class="text-center">{{c.IATACODE}}</td>
 
-                  <td class="text-center">
-                    <!-- <a (click)="onEdit(c)" class="btn btn-success listcss" style="margin-bottom:-2px;">View</a>-->
+                  <td  class="text-center">{{c.IATANAME}}</td>
+                  <td class="text-center">{{c.TIMEXONE}}</td>
+                  <td class="text-center">{{c.PORT}}</td>
+                  <td class="text-center">{{c.AIRPORT}}</td>
+                  <td class="text-center">{{c.RAIL}}</td>
+
+                  <td  class="text-center">{{c.ROAD}}</td>
+                  <td class="text-center">{{c.UNSTANDARD}}</td>
+                  <td class="text-center">{{c.LOCNAME}}</td>
+                  <td class="text-center">{{c.NONIATA}}</td>
+                  <td class="text-center">{{c.VALIDFROM}}</td>
+ <td class="text-center">{{c.VALIDTO}}</td>
 
 
-                  </td>
                 </tr>
 
               </tbody>
               <tfoot>
 
                 <tr>
-                  <td colspan="6" class="footable-visible text-right">
+                  <td colspan="16" class="footable-visible text-right">
                     <pagination-controls (pageChange)="p = $event"></pagination-controls>
                   </td>
                 </tr>

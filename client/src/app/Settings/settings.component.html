@@ -30,8 +30,8 @@
               <tbody>
                 <tr class="gradeX" *ngFor="let c of Settings |userFilter:firstNameFilter| paginate: { itemsPerPage: 10, currentPage: p };let i=index;"
                   [class.active]="i==selectedRow">
-                  <td>{{c.serverName}}</td>
-                  <td>{{c.clientName}}</td>
+                  <td  class="text-center">{{c.serverName}}</td>
+                  <td class="text-center">{{c.clientName}}</td>
 
                   <td class="text-center">{{c.endPoint}}</td>
                   <td class="text-center">{{c.sourceFile}}</td>

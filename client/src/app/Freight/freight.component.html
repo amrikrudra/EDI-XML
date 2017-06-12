@@ -30,7 +30,7 @@
               </thead>
               <tbody>
                 <tr class="gradeX" *ngFor="let c of Settings |userFilter:firstNameFilter| paginate: { itemsPerPage: 10, currentPage: p };let i=index" [class.active]="i==selectedRow">
-                <td>{{c.fcode}}</td>
+                <td  class="text-center">{{c.fcode}}</td>
                 <td class="text-center">{{c.floc}}</td>
                 <td class="text-center">{{c.ttype}}</td>
                 <td class="text-center">{{c.scode}}</td>
