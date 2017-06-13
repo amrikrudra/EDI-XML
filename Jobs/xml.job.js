@@ -147,7 +147,7 @@ function ProcessFile(SourceFile, Setting, type, cb) {
                     msg += "\nEDI-XML Team \n";
 
                     msg += "RS RUSH \n";
-                    SendLogEmail(Setting.userEmail, "XML files Processing  :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
+                    SendLogEmail(Setting.userEmail, "XML files processing  :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
                     cb("Done With Errors");
 
                 } else {
@@ -161,7 +161,7 @@ function ProcessFile(SourceFile, Setting, type, cb) {
                         var xmlCol = [];
                         // console.log("GRecod out Foreach");
                         GRecord.forEach(function (Record) {
-                            console.log("GRecod in Foreach", Record.Records.length);
+                            //  console.log("GRecod in Foreach", Record.Records.length);
                             XMLService.CreateXML(Record.Records, Setting.clientName, type == "f" ? true : false, function (xmlData) {
                                 //     console.log("XML Creation");
                                 batchNumber = Date.now();
@@ -172,7 +172,13 @@ function ProcessFile(SourceFile, Setting, type, cb) {
                                     xmlData.ID = Record.ID;
                                     xmlCol.push(xmlData);
                                 }
-                                CombineLog.concat(xmlData.log);
+
+                                if (CombineLog.length == 0)
+                                    CombineLog = xmlData.log;
+                                else
+                                  CombineLog=  CombineLog.concat(xmlData.log);
+                                console.log("Current Log %d Total Log %d", xmlData.log.length, CombineLog.length);
+
                                 if (TotalGRecord == ProcessGRecord) // Upload 
                                 {
 
@@ -216,7 +222,7 @@ function ProcessFile(SourceFile, Setting, type, cb) {
                                             if (Setting.sendEmail === "1") {
                                                 EmailToUser("", Setting.userEmail, AppSetting, fData, JsonRecord);
                                             }
-                                            console.log("Saved XML ", FileName);
+                                            // console.log("Saved XML ", FileName);
                                             cb("Done");
 
 
@@ -239,11 +245,11 @@ function ProcessFile(SourceFile, Setting, type, cb) {
                                                         msg += "\nFor complete history or more details : " + AppSetting.AppUrl + " \n";
                                                         msg += "\nEDI-XML Team \n";
                                                         msg += "RS RUSH \n";
-                                                        SendLogEmail(Setting.clientEmail, "XML files (" + xmlCol.length + ") Successfilly send :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
+                                                        SendLogEmail(Setting.clientEmail, "XML file has  (" + xmlCol.length + ") records successfully send :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
                                                         EmailToUser(FileName + "  " + ftpInfo + "\n\n", Setting.userEmail, AppSetting, fData, JsonRecord);
 
                                                     }
-                                                    XML.SaveXmlLog(xmlData.log, FileName, ShipmentNumber, Setting.id, batchNumber, Setting.clientName, function (data) {
+                                                    XML.SaveXmlLog(CombineLog, FileName, ShipmentNumber, Setting.id, batchNumber, Setting.clientName, function (data) {
                                                         //    console.log("Saved XML ", FileName);
                                                         cb("Done");
                                                     });
@@ -253,7 +259,7 @@ function ProcessFile(SourceFile, Setting, type, cb) {
                                         }
                                     } // Combine End
                                     else {
-                                        console.log("Single File", xmlCol.length);
+                                        //  console.log("Single File", xmlCol.length);
                                         if (xmlCol.length == 0) {
                                             var DailyArchive = Setting.dailyLog + "\\" + fData.name + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + fData.ext;
 
@@ -287,7 +293,7 @@ function ProcessFile(SourceFile, Setting, type, cb) {
                                                     var ShipmentNumber = Setting.xmlFile + "\\" + FileName;
                                                     fs.appendFileSync(ShipmentNumber, XMLString); // Archiving XML file
                                                     XML.SaveXmlLog(Item.log, FileName, ShipmentNumber, Setting.id, batchNumber, Setting.clientName, function (data) {
-                                                        console.log("Saved XML ", FileName);
+                                                        //   console.log("Saved XML ", FileName);
                                                         files += FileName + "  " + ftpInfo + "\n";
                                                         PS++;
                                                         if (TotalS == PS) {
@@ -302,7 +308,7 @@ function ProcessFile(SourceFile, Setting, type, cb) {
                                                                     msg += "\nFor complete history or more details : " + AppSetting.AppUrl + " \n";
                                                                     msg += "\nEDI-XML Team \n";
                                                                     msg += "RS RUSH \n";
-                                                                    SendLogEmail(Setting.clientEmail, "XML files (" + xmlCol.length + ") Successfilly send :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
+                                                                    SendLogEmail(Setting.clientEmail, "XML files (" + xmlCol.length + ") successfully send :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
                                                                     EmailToUser(files, Setting.userEmail, AppSetting, fData, JsonRecord);
                                                                 }
                                                             }); // Daily
