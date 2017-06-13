@@ -356,7 +356,7 @@ function EmailToUser(Sucessfullmsg, ToEmailAddress, AppSetting, fData, JsonData)
 
         m = JsonData[i];
         console.log(m);
-        error += " Record No: " + m.RecordNo + "  has error   " + m.ErrorMsg + "\n";
+        error += " Record No :" + m.RecordNo + " PO Number :"+ m.PO+  " Error :" + m.ErrorMsg + "\n";
     }
 
     var msg = "Hi,\n\n";
