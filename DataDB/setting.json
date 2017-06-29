@@ -1,1 +1,25 @@
-[{"id":"1","serviceType":"1","clientName":"RSRAM","serverName":"my.infoquestfg.com","endPoint":"PanalpinaDest","userName":"rs-rush","password":"Test12341","interval":2,"status":"Active","sourceFile":"C:\\Projects\\EDIXML Files","dailyLog":"C:\\Projects\\EDIXML Files\\dailyarchive","xmlFile":"C:\\Projects\\EDIXML Files\\xmlarchive","compareFile":"Yes","dailyArchive":10,"xmlHistory":10,"fullFileName":"PAFCL.xls","halfFileName":"PALCL.xls","sendEmail":"1","userEmail":"amrik@rudrainnovatives.com","clientEmail":"amrik@rudrainnovatives.com","combineXML":"Yes","combinefullFile":"aaaa","combinehalfFile":"bbbb"}]
+[{
+    "id": "1",
+    "serviceType": "1",
+    "clientName": "RSRAM",
+    "serverName": "ftp://localhost",
+    "endPoint": "ftp",
+    "userName": "amrik@rudrainnovatives.com",
+    "password": "Singh@001",
+    "interval": 2,
+    "status": "Active",
+    "sourceFile": "C:\\Projects\\EDIXML Files",
+    "dailyLog": "C:\\Projects\\EDIXML Files\\dailyarchive",
+    "xmlFile": "C:\\Projects\\EDIXML Files\\xmlarchive",
+    "compareFile": "Yes",
+    "dailyArchive": 10,
+    "xmlHistory": 10,
+    "fullFileName": "PAFCL.xls",
+    "halfFileName": "PALCL.xls",
+    "sendEmail": "1",
+    "userEmail": "amrik@rudrainnovatives.com",
+    "clientEmail": "amrik@rudrainnovatives.com",
+    "combineXML": "No",
+    "combinefullFile": "aaaa",
+    "combinehalfFile": "bbbb"
+}]

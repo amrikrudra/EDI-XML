@@ -8,8 +8,8 @@
       "port":"587"
     },
     "Application":{
-        "portNumber":83,
-         "OwnerName":"rsrush",
+        "portNumber":3000,
+         "OwnerName":"RSRUSH",
          "AppUrl":"http://localhost:3000"
     }
   

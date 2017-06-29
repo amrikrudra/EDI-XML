@@ -43,7 +43,7 @@ var XMLService = {
         while (GetData(workbook, SheetName, "A" + row) != "") {
             try {
                 //console.log("Daa",workbook.Sheets.A["Q"+ row])
-                dataRows.push({
+             dataRows.push(  {
                     "ID": GetData(workbook, SheetName, "A" + row),
                     "Origin": GetData(workbook, SheetName, "B" + row),
                     "Destination": GetData(workbook, SheetName, "C" + row),
@@ -68,13 +68,17 @@ var XMLService = {
                     "Error": false,
                     "ErrorMsg": ""
                 });
+                
+               
+               // dataRows.push(row);
+
             } catch (ex) {}
 
             row = row + 1;
 
 
         }
-
+        console.log("Total Excel Reocrds",dataRows);
         cb(dataRows);
     },
     CreateXML: function (JsonData, Client, isuFile, cb) {
@@ -218,7 +222,7 @@ var XMLService = {
 
                     Processed++;
                     item.Error = true;
-                    item.ErrorMsg = "Unable to find  stsloccd";
+                    item.ErrorMsg = "Unable to find  statuscd";
                     /* cb({
                          "xml": "",
                          "log": [],
@@ -280,6 +284,9 @@ var XMLService = {
 
 function GetData(obj, SheetName, col) {
     try {
+        if(col.toString().indexOf('R')==0)
+        return moment(new Date("2017-10-10 "+obj.Sheets[SheetName][col].w.trim())).format("HH:mm:ss");
+        else
         return obj.Sheets[SheetName][col].w; //obj.Sheets[SheetName][col].w;
     } catch (ex) {
         return "";

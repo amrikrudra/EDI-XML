@@ -125,349 +125,356 @@ function ProcessFile(SourceFile, Setting, type, cb) {
         //    console.log("Next Read Excel");
         XMLService.ReadExcel(SourceFile, Setting.clientName, function (ExcelJson) {
 
-            //  console.log("Excel", ExcelJson);
-            var fData = path.parse(SourceFile);
-            Daily.XMLRecordExistMultiple(ExcelJson, function (JsonRecord) {
-                // console.log("Total New Record", JsonRecord.length);
-                if (JsonRecord.length == 0) {
+                //  console.log("Excel", ExcelJson);
+                var fData = path.parse(SourceFile);
+                Daily.XMLRecordExistMultiple(ExcelJson, function (JsonRecord) {
+                        // console.log("Total New Record", JsonRecord.length);
+                        if (JsonRecord.length == 0) {
 
 
-                    var DailyArchive = Setting.dailyLog + "\\" + fData.name + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + fData.ext;
-                    fs.renameSync(SourceFile, DailyArchive); // Daily Archiving
-                    Daily.SaveDaily(ExcelJson, fData.base, DailyArchive, Setting.clientName, function () {
+                            var DailyArchive = Setting.dailyLog + "\\" + fData.name + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + fData.ext;
+                            fs.renameSync(SourceFile, DailyArchive); // Daily Archiving
+                            Daily.SaveDaily(ExcelJson, fData.base, DailyArchive, Setting.clientName, function () {
 
-                    });
-                    // Send Error Email Stating that there is error in Source file unable to process.
-                    var msg = "Hi,\n\n";
-                    msg += " The file " + fData.base + " has found following :\n\n";
-                    msg += "  No new record found \n\n";
-                    msg += "\nFile process action is aborted. \n";
-                    msg += "Correct the error in the file or recreate the file \n";
-                    msg += "Drop the file at Source location : " + Setting.sourceFile + " \n";
-                    msg += "\nEDI-XML Team \n";
+                            });
+                            // Send Error Email Stating that there is error in Source file unable to process.
+                            var msg = "Hi,\n\n";
+                            msg += " The file " + fData.base + " has found following :\n\n";
+                            msg += "  No new record found \n\n";
+                            msg += "\nFile process action is aborted. \n";
+                            msg += "Correct the error in the file or recreate the file \n";
+                            msg += "Drop the file at Source location : " + Setting.sourceFile + " \n";
+                            msg += "\nEDI-XML Team \n";
 
-                    msg += "RS RUSH \n";
-                    SendLogEmail(Setting.userEmail, "XML files processing  :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
-                    cb("Done With Errors");
+                            msg += "RS RUSH \n";
+                            SendLogEmail(Setting.userEmail, "XML files processing  :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
+                            cb("Done With Errors");
 
-                } else {
-                    XMLService.GroupByJsonData(JsonRecord, function (GRecord) {
-
-
-                        var TotalGRecord = GRecord.length;
-                        var ProcessGRecord = 0;
-                        var CombineXML = "";
-                        var CombineLog = [];
-                        var xmlCol = [];
-                        // console.log("GRecod out Foreach");
-                        GRecord.forEach(function (Record) {
-                            //  console.log("GRecod in Foreach", Record.Records.length);
-                            XMLService.CreateXML(Record.Records, Setting.clientName, type == "f" ? true : false, function (xmlData) {
-                                //     console.log("XML Creation");
-                                batchNumber = Date.now();
-                                ProcessGRecord++;
-                                //    console.log("Total ProcessGRecord " + ProcessGRecord, TotalGRecord);
-                                CombineXML += xmlData.xml;
-                                if (xmlData.xml != "") { // Only Add if Successfully created XML without any error(s)
-                                    xmlData.ID = Record.ID;
-                                    xmlCol.push(xmlData);
-                                }
-
-                                if (CombineLog.length == 0)
-                                    CombineLog = xmlData.log;
-                                else
-                                  CombineLog=  CombineLog.concat(xmlData.log);
-                                console.log("Current Log %d Total Log %d", xmlData.log.length, CombineLog.length);
-
-                                if (TotalGRecord == ProcessGRecord) // Upload 
-                                {
-
-                                    // console.log("", xmlCol.filter(m => m.xml.length == 0).length);
-                                    /*  if (combineXML==) {
-
-                                          if (xmlData.msg == "No  new record found") {
-                                              var DailyArchive = Setting.dailyLog + "\\" + fData.name + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + fData.ext;
-                                              fs.renameSync(SourceFile, DailyArchive); // Daily Archiving
-                                              Daily.SaveDaily(JsonRecord, fData.base, DailyArchive, Setting.clientName, function () {
-
-                                              });
-                                          } else {
-                                              if (fs.existsSync(SourceFile))
-                                                 {     var DailyArchive = Setting.dailyLog + "\\" + fData.name + "_Error_" + dateFormat(Date.now(), "yyyymmddhhMM") + fData.ext;
-                                             
-                                                      fs.renameSync(SourceFile, DailyArchive);
-                                                 }
-                                                  // Daily Archiving
-                                          }
-                                          // Send Error Email Stating that there is error in Source file unable to process.
-                                          var msg = "Hi,\n\n";
-                                          msg += " The file " + fData.base + " has found following error:\n\n";
-                                          msg += " Error: " + xmlData.msg + "\n\n";
-                                          msg += "\nFile process action is aborted. \n";
-                                          msg += "Correct the error in the file or recreate the file \n";
-                                          msg += "Drop the file at Source location : " + Setting.sourceFile + " \n";
-                                          msg += "\nEDI-XML Team \n";
-
-                                          msg += "RS RUSH \n";
-                                          SendLogEmail(Setting.userEmail, "XML files Processing error :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
-                                          cb("Done With Errors");
+                        } else {
+                            XMLService.GroupByJsonData(JsonRecord, function (GRecord) {
 
 
-                                      } else
-                                       {*/
-                                    if (Setting.combineXML == "Yes") {
-
-                                        if (CombineXML == "") {
-
-                                            if (Setting.sendEmail === "1") {
-                                                EmailToUser("", Setting.userEmail, AppSetting, fData, JsonRecord);
-                                            }
-                                            // console.log("Saved XML ", FileName);
-                                            cb("Done");
-
-
-                                        } else {
-                                            FileName = GetXMLFileName(Setting, fData);
-                                            var XMLString = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?> <scp_edistatusqueue>" + CombineXML + "</scp_edistatusqueue>";
-                                            XMLService.UploadToFtp(Setting.serverName, Setting.userName, Setting.password, Setting.endPoint + "/" + FileName, XMLString, function (ftpInfo) {
-                                                var DailyArchive = Setting.dailyLog + "\\" + fData.name + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + fData.ext;
-                                                if (fs.existsSync(SourceFile))
-                                                    fs.renameSync(SourceFile, DailyArchive); // Daily Archiving
-                                                Daily.SaveDaily(JsonRecord, fData.base, DailyArchive, Setting.clientName, function () {
-                                                    var ShipmentNumber = Setting.xmlFile + "\\" + FileName;
-                                                    fs.appendFileSync(ShipmentNumber, XMLString); // Archiving XML file
-                                                    if (Setting.sendEmail === "1") {
-                                                        var msg = "Hi,\n\n";
-                                                        msg += " Incoming file :" + fData.base + "\n\n";
-                                                        msg += " The following XMLs has been send send successfully:\n\n";
-                                                        msg += FileName + "  " + ftpInfo + "\n\n";
-
-                                                        msg += "\nFor complete history or more details : " + AppSetting.AppUrl + " \n";
-                                                        msg += "\nEDI-XML Team \n";
-                                                        msg += "RS RUSH \n";
-                                                        SendLogEmail(Setting.clientEmail, "XML file has  (" + xmlCol.length + ") records successfully send :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
-                                                        EmailToUser(FileName + "  " + ftpInfo + "\n\n", Setting.userEmail, AppSetting, fData, JsonRecord);
-
+                                    var TotalGRecord = GRecord.length;
+                                    var ProcessGRecord = 0;
+                                    var CombineXML = "";
+                                    var CombineLog = [];
+                                    var xmlCol = [];
+                                    // console.log("GRecod out Foreach");
+                                    GRecord.forEach(function (Record) {
+                                            //  console.log("GRecod in Foreach", Record.Records.length);
+                                            XMLService.CreateXML(Record.Records, Setting.clientName, type == "f" ? true : false, function (xmlData) {
+                                                    //     console.log("XML Creation");
+                                                    batchNumber = Date.now();
+                                                    ProcessGRecord++;
+                                                    //    console.log("Total ProcessGRecord " + ProcessGRecord, TotalGRecord);
+                                                    CombineXML += xmlData.xml;
+                                                    if (xmlData.xml != "") { // Only Add if Successfully created XML without any error(s)
+                                                        xmlData.ID = Record.ID;
+                                                        xmlCol.push(xmlData);
                                                     }
-                                                    XML.SaveXmlLog(CombineLog, FileName, ShipmentNumber, Setting.id, batchNumber, Setting.clientName, function (data) {
-                                                        //    console.log("Saved XML ", FileName);
-                                                        cb("Done");
-                                                    });
 
-                                                }); // Save Daily Reacords
-                                            }); // ftp Upload
-                                        }
-                                    } // Combine End
-                                    else {
-                                        //  console.log("Single File", xmlCol.length);
-                                        if (xmlCol.length == 0) {
-                                            var DailyArchive = Setting.dailyLog + "\\" + fData.name + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + fData.ext;
+                                                    if (CombineLog.length == 0)
+                                                        CombineLog = xmlData.log;
+                                                    else
+                                                        CombineLog = CombineLog.concat(xmlData.log);
+                                                    console.log("Current Log %d Total Log %d", xmlData.log.length, CombineLog.length);
 
-                                            if (fs.existsSync(SourceFile))
-                                                fs.renameSync(SourceFile, DailyArchive); // Daily Archiving
+                                                    if (TotalGRecord == ProcessGRecord) // Upload 
+                                                    {
+
+                                                        // console.log("", xmlCol.filter(m => m.xml.length == 0).length);
+                                                        /*  if (combineXML==) {
+
+                                                              if (xmlData.msg == "No  new record found") {
+                                                                  var DailyArchive = Setting.dailyLog + "\\" + fData.name + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + fData.ext;
+                                                                  fs.renameSync(SourceFile, DailyArchive); // Daily Archiving
+                                                                  Daily.SaveDaily(JsonRecord, fData.base, DailyArchive, Setting.clientName, function () {
+
+                                                                  });
+                                                              } else {
+                                                                  if (fs.existsSync(SourceFile))
+                                                                     {     var DailyArchive = Setting.dailyLog + "\\" + fData.name + "_Error_" + dateFormat(Date.now(), "yyyymmddhhMM") + fData.ext;
+                                                                 
+                                                                          fs.renameSync(SourceFile, DailyArchive);
+                                                                     }
+                                                                      // Daily Archiving
+                                                              }
+                                                              // Send Error Email Stating that there is error in Source file unable to process.
+                                                              var msg = "Hi,\n\n";
+                                                              msg += " The file " + fData.base + " has found following error:\n\n";
+                                                              msg += " Error: " + xmlData.msg + "\n\n";
+                                                              msg += "\nFile process action is aborted. \n";
+                                                              msg += "Correct the error in the file or recreate the file \n";
+                                                              msg += "Drop the file at Source location : " + Setting.sourceFile + " \n";
+                                                              msg += "\nEDI-XML Team \n";
+
+                                                              msg += "RS RUSH \n";
+                                                              SendLogEmail(Setting.userEmail, "XML files Processing error :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
+                                                              cb("Done With Errors");
 
 
-                                            if (Setting.sendEmail === "1") {
-                                                //  EmailToUser("", Setting.userEmail, JsonRecord);
-                                                EmailToUser("", Setting.userEmail, AppSetting, fData, JsonRecord);
+                                                          } else
+                                                           {*/
+                                                        if (Setting.combineXML == "Yes") {
 
-                                            }
-                                            //  console.log("Saved XML ", FileName);
-                                            cb("Done");
+                                                            if (CombineXML == "") {
 
-
-                                        } else {
-
-                                            var TotalS = xmlCol.length;
-                                            var PS = 0;
-                                            var FileNames = "";
-                                            var files = "";
-                                            xmlCol.forEach(function (Item) {
-                                                var FileName = Item.ID + "_" + dateFormat(Date.now(), 'yyyymmddhhMM') + ".xml";
-
-                                                var XMLString = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?> <scp_edistatusqueue>" + Item.xml + "</scp_edistatusqueue>";
-                                                XMLService.UploadToFtp(Setting.serverName, Setting.userName, Setting.password, Setting.endPoint + "/" + FileName, XMLString, function (ftpInfo) {
-                                                    var DailyArchive = Setting.dailyLog + "\\" + fData.name + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + fData.ext;
-                                                    if (fs.existsSync(SourceFile))
-                                                        fs.renameSync(SourceFile, DailyArchive); // Daily Archiving
-                                                    var ShipmentNumber = Setting.xmlFile + "\\" + FileName;
-                                                    fs.appendFileSync(ShipmentNumber, XMLString); // Archiving XML file
-                                                    XML.SaveXmlLog(Item.log, FileName, ShipmentNumber, Setting.id, batchNumber, Setting.clientName, function (data) {
-                                                        //   console.log("Saved XML ", FileName);
-                                                        files += FileName + "  " + ftpInfo + "\n";
-                                                        PS++;
-                                                        if (TotalS == PS) {
-                                                            Daily.SaveDaily(ExcelJson, fData.base, DailyArchive, Setting.clientName, function () {
-
-                                                                cb("Done");
                                                                 if (Setting.sendEmail === "1") {
-                                                                    var msg = "Hi,\n\n";
-                                                                    msg += " Incoming file :" + fData.base + "\n\n";
-                                                                    msg += " The following XMLs has been send send successfully:\n\n";
-                                                                    msg += files + "\n";
-                                                                    msg += "\nFor complete history or more details : " + AppSetting.AppUrl + " \n";
-                                                                    msg += "\nEDI-XML Team \n";
-                                                                    msg += "RS RUSH \n";
-                                                                    SendLogEmail(Setting.clientEmail, "XML files (" + xmlCol.length + ") successfully send :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
-                                                                    EmailToUser(files, Setting.userEmail, AppSetting, fData, JsonRecord);
+                                                                    EmailToUser("", Setting.userEmail, AppSetting, fData, JsonRecord);
                                                                 }
-                                                            }); // Daily
+                                                                // console.log("Saved XML ", FileName);
+                                                                cb("Done");
+
+
+                                                            } else {
+                                                                FileName = GetXMLFileName(Setting, fData);
+                                                                var XMLString = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?> <scp_edistatusqueue>" + CombineXML + "</scp_edistatusqueue>";
+                                                                XMLService.UploadToFtp(Setting.serverName, Setting.userName, Setting.password, Setting.endPoint + "/" + FileName, XMLString, function (ftpInfo) {
+                                                                    var DailyArchive = Setting.dailyLog + "\\" + fData.name + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + fData.ext;
+                                                                    if (fs.existsSync(SourceFile))
+                                                                        fs.renameSync(SourceFile, DailyArchive); // Daily Archiving
+                                                                    Daily.SaveDaily(JsonRecord, fData.base, DailyArchive, Setting.clientName, function () {
+                                                                        var ShipmentNumber = Setting.xmlFile + "\\" + FileName;
+                                                                        fs.appendFileSync(ShipmentNumber, XMLString); // Archiving XML file
+                                                                        if (Setting.sendEmail === "1") {
+                                                                            var msg = "Hi,\n\n";
+                                                                            msg += " Incoming file :" + fData.base + "\n\n";
+                                                                            msg += " The following XMLs has been send send successfully:\n\n";
+                                                                            msg += FileName + "  " + ftpInfo + "\n\n";
+
+                                                                            msg += "\nFor complete history or more details : " + AppSetting.AppUrl + " \n";
+                                                                            msg += "\nEDI-XML Team \n";
+                                                                            msg += "RS RUSH \n";
+                                                                            SendLogEmail(Setting.clientEmail, "XML file has  (" + xmlCol.length + ") records successfully send :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
+                                                                            EmailToUser(FileName + "  " + ftpInfo + "\n\n", Setting.userEmail, AppSetting, fData, JsonRecord);
+
+                                                                        }
+                                                                        XML.SaveXmlLog(CombineLog, FileName, ShipmentNumber, Setting.id, batchNumber, Setting.clientName, function (data) {
+                                                                            //    console.log("Saved XML ", FileName);
+                                                                            cb("Done");
+                                                                        });
+
+                                                                    }); // Save Daily Reacords
+                                                                }); // ftp Upload
+                                                            }
+                                                        } // Combine End
+                                                        else {
+                                                            //  console.log("Single File", xmlCol.length);
+                                                            if (xmlCol.length == 0) {
+                                                                var DailyArchive = Setting.dailyLog + "\\" + fData.name + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + fData.ext;
+
+                                                                if (fs.existsSync(SourceFile))
+                                                                    fs.renameSync(SourceFile, DailyArchive); // Daily Archiving
+
+
+                                                                if (Setting.sendEmail === "1") {
+                                                                    //  EmailToUser("", Setting.userEmail, JsonRecord);
+                                                                    Daily.SaveDaily(ExcelJson, fData.base, DailyArchive, Setting.clientName, function () {
+
+                                                                            
+                                                                                EmailToUser("", Setting.userEmail, AppSetting, fData, JsonRecord);
+                                                                            });
+
+                                                                    }
+                                                                    //  console.log("Saved XML ", FileName);
+                                                                    cb("Done");
+
+
+                                                                } else {
+
+                                                                    var TotalS = xmlCol.length;
+                                                                    var PS = 0;
+                                                                    var FileNames = "";
+                                                                    var files = "";
+                                                                    xmlCol.forEach(function (Item) {
+                                                                        var FileName = Item.ID + "_" + dateFormat(Date.now(), 'yyyymmddhhMM') + ".xml";
+
+                                                                        var XMLString = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?> <scp_edistatusqueue>" + Item.xml + "</scp_edistatusqueue>";
+                                                                        XMLService.UploadToFtp(Setting.serverName, Setting.userName, Setting.password, Setting.endPoint + "/" + FileName, XMLString, function (ftpInfo) {
+                                                                            var DailyArchive = Setting.dailyLog + "\\" + fData.name + "_" + dateFormat(Date.now(), "yyyymmddhhMM") + fData.ext;
+                                                                            if (fs.existsSync(SourceFile))
+                                                                                fs.renameSync(SourceFile, DailyArchive); // Daily Archiving
+                                                                            var ShipmentNumber = Setting.xmlFile + "\\" + FileName;
+                                                                            fs.appendFileSync(ShipmentNumber, XMLString); // Archiving XML file
+                                                                            XML.SaveXmlLog(Item.log, FileName, ShipmentNumber, Setting.id, batchNumber, Setting.clientName, function (data) {
+                                                                                //   console.log("Saved XML ", FileName);
+                                                                                files += FileName + "  " + ftpInfo + "\n";
+                                                                                PS++;
+                                                                                if (TotalS == PS) {
+                                                                                    Daily.SaveDaily(ExcelJson, fData.base, DailyArchive, Setting.clientName, function () {
+
+                                                                                        cb("Done");
+                                                                                        if (Setting.sendEmail === "1") {
+                                                                                            var msg = "Hi,\n\n";
+                                                                                            msg += " Incoming file :" + fData.base + "\n\n";
+                                                                                            msg += " The following XMLs has been send send successfully:\n\n";
+                                                                                            msg += files + "\n";
+                                                                                            msg += "\nFor complete history or more details : " + AppSetting.AppUrl + " \n";
+                                                                                            msg += "\nEDI-XML Team \n";
+                                                                                            msg += "RS RUSH \n";
+                                                                                            SendLogEmail(Setting.clientEmail, "XML files (" + xmlCol.length + ") successfully send :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
+                                                                                            EmailToUser(files, Setting.userEmail, AppSetting, fData, JsonRecord);
+                                                                                        }
+                                                                                    }); // Daily
+                                                                                }
+                                                                            });
+
+
+                                                                        }); // ftp Upload
+
+                                                                    })
+                                                                }
+                                                            }
+
+                                                            // } // Let Process All Records
                                                         }
-                                                    });
-
-
-                                                }); // ftp Upload
-
-                                            })
-                                        }
-                                    }
-
-                                    // } // Let Process All Records
-                                }
 
 
 
 
-                            }); // Create XML
-                        }); // Group Data One By One
+                                                    }); // Create XML
+                                            }); // Group Data One By One
 
-                    }); // Group By PO
-                } // else Has new Records
+                                    }); // Group By PO
+                            } // else Has new Records
 
-            }) // Reach IsNew Multiple
+                        }) // Reach IsNew Multiple
 
 
 
 
 
-        }); // Read Exl
+                }); // Read Exl
 
 
-    } else {
-        cb("data");
-    }
-}
-
-
-function EmailToUser(Sucessfullmsg, ToEmailAddress, AppSetting, fData, JsonData) {
-
-    var error = "";
-    for (i = 0; i < JsonData.filter(m => m.Error == true).length; i++) {
-
-        m = JsonData[i];
-        console.log(m);
-        error += " Record No :" + m.RecordNo + " PO Number :"+ m.PO+  " Error :" + m.ErrorMsg + "\n";
+        }
+        else {
+            cb("data");
+        }
     }
 
-    var msg = "Hi,\n\n";
-    msg += " Incoming file :" + fData.base + "\n\n";
-    msg += " The following XMLs has been send send successfully:\n\n";
-    msg += Sucessfullmsg + "\n\n";
-    msg += " The following log records has erros while processing: \n\n";
-    msg += error + "\n\n";
-    msg += "\nFor complete history or more details : " + AppSetting.AppUrl + " \n";
-    msg += "\nEDI-XML Team \n";
-    msg += "RS RUSH \n";
-    SendLogEmail(ToEmailAddress, "XML files processing status :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
+
+    function EmailToUser(Sucessfullmsg, ToEmailAddress, AppSetting, fData, JsonData) {
+
+        var error = "";
+        for (i = 0; i < JsonData.length; i++) {
+
+            m = JsonData[i];
+
+            if (m.Error == true) {
+                error += " Record No :" + m.RecordNo + " PO Number :" + m.PO + " Error :" + m.ErrorMsg + "\n";
+            }
+        }
+
+        var msg = "Hi,\n\n";
+        msg += " Incoming file :" + fData.base + "\n\n";
+        msg += " The following XMLs has been send send successfully:\n\n";
+        msg += Sucessfullmsg + "\n\n";
+        msg += " The following transcation records has erros while processing: \n\n";
+        msg += error + "\n\n";
+        msg += "\nFor complete history or more details : " + AppSetting.AppUrl + " \n";
+        msg += "\nEDI-XML Team \n";
+        msg += "RS RUSH \n";
+        SendLogEmail(ToEmailAddress, "XML files processing status :" + dateFormat(Date.now(), 'yyyy-mm-dd hh:MM'), msg);
 
 
-}
+    }
 
 
 
-function SendLogEmail(to, subject, body) {
-    var EmailConfig = config.get("EmailServer");
-    /*    var transporter = nodemailer.createTransport({
-            service: EmailConfig.host,
+    function SendLogEmail(to, subject, body) {
+        var EmailConfig = config.get("EmailServer");
+        /*    var transporter = nodemailer.createTransport({
+                service: EmailConfig.host,
+                auth: {
+                    user: EmailConfig.username,
+                    pass: EmailConfig.password
+                }
+            });
+        */
+        var transporter = nodemailer.createTransport({
+            host: EmailConfig.host, // hostname
+            secureConnection: false, // TLS requires secureConnection to be false
+            port: EmailConfig.port, // port for secure SMTP
             auth: {
                 user: EmailConfig.username,
                 pass: EmailConfig.password
+            },
+            tls: {
+                ciphers: 'SSLv3'
             }
         });
-    */
-    var transporter = nodemailer.createTransport({
-        host: EmailConfig.host, // hostname
-        secureConnection: false, // TLS requires secureConnection to be false
-        port: EmailConfig.port, // port for secure SMTP
-        auth: {
-            user: EmailConfig.username,
-            pass: EmailConfig.password
-        },
-        tls: {
-            ciphers: 'SSLv3'
-        }
-    });
-    var mailOptions = {
-        from: EmailConfig.from,
-        to: to,
-        subject: subject,
-        text: body
-    };
+        var mailOptions = {
+            from: EmailConfig.from,
+            to: to,
+            subject: subject,
+            text: body
+        };
 
 
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('Email sent: ' + info.response);
-        }
-    });
-}
-
-
-// Delete Archive Records
-
-// Step 1
-function DeleteArchiveOneByOne(Data, SettingIndex) {
-    var Setting = Data[SettingIndex];
-    var DailyDays = Setting.dailyArchive;
-    var XmlDays = Setting.xmlHistory;
-
-    DeleteDailyArchive(DailyDays, function () {
-        DeleteXMLHistory(XmlDays, function (data) {
-            SettingIndex++;
-            if (Data[SettingIndex] != undefined)
-                DeleteArchiveOneByOne(Data, SettingIndex);
-
-        }); // helf  
-    }); //full
-
-}
-
-// Delete Daily Log Entries and Files
-
-function DeleteDailyArchive(Days, cb) {
-    var date = moment().subtract(Days, 'days').format('X');
-    // console.log(date, " ", moment().format('X'));
-    Daily.GetArchiveRecord(date, function (list) {
-        list.forEach(function (oDelRecord) {
-            if (fs.existsSync(oDelRecord.logFile)) {
-                fs.unlinkSync(oDelRecord.logFile);
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
             }
-        })
-        Daily.DeleteAndUpdate(list, function () {
-            //   console.log("Daily Done LA Removed");
-            cb(" Daily Archived File Removed");
-        })
+        });
+    }
 
-    });
 
-}
+    // Delete Archive Records
 
-function DeleteXMLHistory(Days, cb) {
-    var date = moment().subtract(Days, 'days').format('X');
-    // console.log(date, " ", moment().format('X'));
-    XML.GetArchiveRecord(date, function (list) {
-        list.forEach(function (oDelRecord) {
-            if (fs.existsSync(oDelRecord.logFile)) {
-                fs.unlinkSync(oDelRecord.logFile);
-            }
-        })
-        XML.DeleteAndUpdate(list, function () {
-            //    console.log("XML Done LA Removed");
-            cb("Archived File Removed");
-        })
+    // Step 1
+    function DeleteArchiveOneByOne(Data, SettingIndex) {
+        var Setting = Data[SettingIndex];
+        var DailyDays = Setting.dailyArchive;
+        var XmlDays = Setting.xmlHistory;
 
-    });
+        DeleteDailyArchive(DailyDays, function () {
+            DeleteXMLHistory(XmlDays, function (data) {
+                SettingIndex++;
+                if (Data[SettingIndex] != undefined)
+                    DeleteArchiveOneByOne(Data, SettingIndex);
 
-}
+            }); // helf  
+        }); //full
+
+    }
+
+    // Delete Daily Log Entries and Files
+
+    function DeleteDailyArchive(Days, cb) {
+        var date = moment().subtract(Days, 'days').format('X');
+        // console.log(date, " ", moment().format('X'));
+        Daily.GetArchiveRecord(date, function (list) {
+            list.forEach(function (oDelRecord) {
+                if (fs.existsSync(oDelRecord.logFile)) {
+                    fs.unlinkSync(oDelRecord.logFile);
+                }
+            })
+            Daily.DeleteAndUpdate(list, function () {
+                //   console.log("Daily Done LA Removed");
+                cb(" Daily Archived File Removed");
+            })
+
+        });
+
+    }
+
+    function DeleteXMLHistory(Days, cb) {
+        var date = moment().subtract(Days, 'days').format('X');
+        // console.log(date, " ", moment().format('X'));
+        XML.GetArchiveRecord(date, function (list) {
+            list.forEach(function (oDelRecord) {
+                if (fs.existsSync(oDelRecord.logFile)) {
+                    fs.unlinkSync(oDelRecord.logFile);
+                }
+            })
+            XML.DeleteAndUpdate(list, function () {
+                //    console.log("XML Done LA Removed");
+                cb("Archived File Removed");
+            })
+
+        });
+
+    }
